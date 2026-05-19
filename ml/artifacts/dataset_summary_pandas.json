@@ -1,0 +1,55 @@
+{
+  "repo": "pandas-dev/pandas",
+  "processed_dataset_size": 1178,
+  "class_distribution": {
+    "bug": 319,
+    "docs": 289,
+    "question": 286,
+    "feature": 284
+  },
+  "split_distribution": {
+    "bug": {
+      "test": 48,
+      "train": 223,
+      "val": 48
+    },
+    "docs": {
+      "test": 44,
+      "train": 202,
+      "val": 43
+    },
+    "feature": {
+      "test": 43,
+      "train": 198,
+      "val": 43
+    },
+    "question": {
+      "test": 43,
+      "train": 200,
+      "val": 43
+    }
+  },
+  "fetch_report": [
+    {
+      "target_label": "bug",
+      "github_label": "Bug",
+      "fetched_count": 300
+    },
+    {
+      "target_label": "feature",
+      "github_label": "Enhancement",
+      "fetched_count": 300
+    },
+    {
+      "target_label": "docs",
+      "github_label": "Docs",
+      "fetched_count": 300
+    },
+    {
+      "target_label": "question",
+      "github_label": "Usage Question",
+      "fetched_count": 300
+    }
+  ],
+  "created_at": "2026-05-18T13:48:09.599880Z"
+}
