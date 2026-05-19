@@ -1,0 +1,70 @@
+{
+  "repo": "pandas-dev/pandas",
+  "model": "gpt-4o-mini",
+  "task": "GitHub issue classification",
+  "run_mode": "full",
+  "num_examples": 178,
+  "labels": [
+    "bug",
+    "feature",
+    "docs",
+    "question"
+  ],
+  "accuracy": 0.6292134831460674,
+  "macro_f1": 0.5884031838399856,
+  "weighted_f1": 0.5891043406716121,
+  "per_class_report": {
+    "bug": {
+      "precision": 0.45555555555555555,
+      "recall": 0.8541666666666666,
+      "f1-score": 0.5942028985507246,
+      "support": 48.0
+    },
+    "feature": {
+      "precision": 0.8333333333333334,
+      "recall": 0.9302325581395349,
+      "f1-score": 0.8791208791208791,
+      "support": 43.0
+    },
+    "docs": {
+      "precision": 0.8125,
+      "recall": 0.5909090909090909,
+      "f1-score": 0.6842105263157895,
+      "support": 44.0
+    },
+    "question": {
+      "precision": 0.625,
+      "recall": 0.11627906976744186,
+      "f1-score": 0.19607843137254902,
+      "support": 43.0
+    },
+    "accuracy": 0.6292134831460674,
+    "macro avg": {
+      "precision": 0.6815972222222222,
+      "recall": 0.6228968463706837,
+      "f1-score": 0.5884031838399856,
+      "support": 178.0
+    },
+    "weighted avg": {
+      "precision": 0.6759831460674157,
+      "recall": 0.6292134831460674,
+      "f1-score": 0.5891043406716121,
+      "support": 178.0
+    }
+  },
+  "latency": {
+    "average_seconds": 1.5806217348820053,
+    "median_seconds": 1.3219590379999318,
+    "total_seconds": 281.35066880899694
+  },
+  "tokens": {
+    "total_input_tokens": 85233,
+    "total_output_tokens": 5111
+  },
+  "cost": {
+    "estimated_total_usd": 0.01585155,
+    "input_cost_per_1m_tokens": 0.15,
+    "output_cost_per_1m_tokens": 0.6
+  },
+  "created_at": "2026-05-18T16:59:28.322964Z"
+}

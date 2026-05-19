@@ -1,0 +1,713 @@
+github_issue_id,url,title,true_label,predicted_label,reason,status,error,latency_seconds,input_tokens,output_tokens,estimated_cost_usd,raw_response
+629,https://github.com/pandas-dev/pandas/issues/629,Add level argument to DataFrame.xs,feature,feature,request for a new capability (level argument) in DataFrame.xs,ok,,1.3624003189997893,189,30,4.635e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability (level argument) in DataFrame.xs""
+}"
+631,https://github.com/pandas-dev/pandas/issues/631,Add JSON export option for DataFrame,feature,feature,request for a new capability to export DataFrame as JSON,ok,,1.0701143159999447,187,27,4.424999999999999e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to export DataFrame as JSON""
+}"
+633,https://github.com/pandas-dev/pandas/issues/633,Add ability to build secondary indexes inside MultiIndex,feature,feature,request for a new capability to build secondary indexes,ok,,1.1530981619998784,209,25,4.635e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to build secondary indexes""
+}"
+642,https://github.com/pandas-dev/pandas/issues/642,More flexible multiple function application with DataFrameGroupBy,feature,feature,request for a new capability to enhance multiple function application with DataFrameGroupBy,ok,,1.5352027670001007,257,31,5.715000000000001e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to enhance multiple function application with DataFrameGroupBy""
+}"
+652,https://github.com/pandas-dev/pandas/issues/652,Implement flex comparison operators on DataFrame,feature,feature,request for new comparison operators on DataFrame,ok,,1.454123946999971,203,24,4.485e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for new comparison operators on DataFrame""
+}"
+654,https://github.com/pandas-dev/pandas/issues/654,Bug with irow and list of indices,feature,bug,The issue describes a broken behavior with the irow method resulting in a TypeError.,ok,,1.8738561750001281,584,32,0.0001068,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a broken behavior with the irow method resulting in a TypeError.""
+}"
+657,https://github.com/pandas-dev/pandas/issues/657,Implement isin on Index,feature,feature,request for a new capability (isin on Index),ok,,1.0521951210002953,181,25,4.215e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability (isin on Index)""
+}"
+658,https://github.com/pandas-dev/pandas/issues/658,Add unique as a Series instance method,feature,feature,request for a new capability as a Series instance method,ok,,2.0866363790000833,194,26,4.47e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability as a Series instance method""
+}"
+659,https://github.com/pandas-dev/pandas/issues/659,Add some intelligence about passing lists of values to groupby,feature,feature,request for a new capability regarding groupby functionality,ok,,1.7762134639997385,195,25,4.425e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability regarding groupby functionality""
+}"
+661,https://github.com/pandas-dev/pandas/issues/661,Enable pass dict to DataFrame.fillna,feature,feature,request for a new capability to pass a dict to DataFrame.fillna,ok,,1.1785849719999533,189,30,4.635e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to pass a dict to DataFrame.fillna""
+}"
+667,https://github.com/pandas-dev/pandas/issues/667,Support dtypes other than float in sparse data structures,feature,feature,request for support of additional data types in sparse data structures,ok,,1.272859736999635,193,27,4.515e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for support of additional data types in sparse data structures""
+}"
+682,https://github.com/pandas-dev/pandas/issues/682,"Optimize joins for primitive join key types, like int64",feature,feature,request for optimization of join operations for specific data types,ok,,1.3770383620003486,195,26,4.485e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for optimization of join operations for specific data types""
+}"
+686,https://github.com/pandas-dev/pandas/issues/686,Create efficient binary storage format alternative to pickle,feature,feature,request for a new capability to create an alternative binary storage format,ok,,1.9139694639998197,204,28,4.74e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to create an alternative binary storage format""
+}"
+692,https://github.com/pandas-dev/pandas/issues/692,Allow skiprows in parsers to be an integer instead of a list,feature,feature,Request for enhancement to allow skiprows to be an integer.,ok,,1.2163949569999204,201,27,4.635e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for enhancement to allow skiprows to be an integer.""
+}"
+693,https://github.com/pandas-dev/pandas/issues/693,Add alternative 'delimiter' argument to parsers,feature,feature,request for a new capability (alternative 'delimiter' argument),ok,,1.5598674190000565,197,27,4.5749999999999994e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability (alternative 'delimiter' argument)""
+}"
+694,https://github.com/pandas-dev/pandas/issues/694,"Make sep=',' the default in read_csv",feature,feature,request for a new capability to change the default separator in read_csv,ok,,4.7017609109998375,191,29,4.6049999999999994e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to change the default separator in read_csv""
+}"
+695,https://github.com/pandas-dev/pandas/issues/695,Add Panel method to rearrange axes,feature,feature,request for a new capability to rearrange axes,ok,,1.9665109379998285,187,25,4.3049999999999996e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to rearrange axes""
+}"
+698,https://github.com/pandas-dev/pandas/issues/698,Add option to create indexes in HDFStore if user is using PyTables Pro / PyTables 2.3+,feature,feature,request for a new capability to create indexes in HDFStore,ok,,1.3590521579999404,251,28,5.4449999999999995e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to create indexes in HDFStore""
+}"
+699,https://github.com/pandas-dev/pandas/issues/699,"Resetting Index on DataFrame after DataFrame.set_index(..., drop=False)",feature,feature,Request for a new parameter in reset_index to control behavior after set_index.,ok,,1.6513002199999391,233,30,5.295e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new parameter in reset_index to control behavior after set_index.""
+}"
+701,https://github.com/pandas-dev/pandas/issues/701,"Use templating to create a khash-based HashSet for each dtype (for implementing better unique, factorize, etc.)",feature,feature,request for a new capability to improve functionality,ok,,1.2193964439998126,221,24,4.755e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to improve functionality""
+}"
+720,https://github.com/pandas-dev/pandas/issues/720,Speed up MultiIndex.sortlevel using enhanced tools,feature,feature,request for performance enhancement in MultiIndex.sortlevel,ok,,1.2734174550000716,210,25,4.65e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for performance enhancement in MultiIndex.sortlevel""
+}"
+724,https://github.com/pandas-dev/pandas/issues/724,"Integrate numexpr VM to implement fast ""where"" expressions (as strings) on DataFrame",feature,feature,request for a new capability to integrate numexpr for faster 'where' expressions,ok,,1.5515813419997357,246,31,5.550000000000001e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to integrate numexpr for faster 'where' expressions""
+}"
+731,https://github.com/pandas-dev/pandas/issues/731,Add sort option to DataFrame.join,feature,feature,request for a new capability (sort option) in DataFrame.join,ok,,1.3180461199999627,187,29,4.5449999999999993e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability (sort option) in DataFrame.join""
+}"
+736,https://github.com/pandas-dev/pandas/issues/736,Create a generic version of convert_to_annual function in scikits.timeseries,feature,feature,request for a new capability to create a generic version of a function,ok,,5.374669162999908,219,29,5.025e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to create a generic version of a function""
+}"
+737,https://github.com/pandas-dev/pandas/issues/737,More NA handling in binary ops with object Series,feature,bug,TypeError in binary operations with object Series indicates broken behavior.,ok,,1.1084694000001036,707,27,0.00012225,"{
+  ""label"": ""bug"",
+  ""reason"": ""TypeError in binary operations with object Series indicates broken behavior.""
+}"
+739,https://github.com/pandas-dev/pandas/issues/739,Add method to sort *within* a single MultiIndex level,feature,feature,request for a new capability to sort within a MultiIndex level,ok,,1.9206384990002334,197,28,4.6349999999999995e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to sort within a MultiIndex level""
+}"
+740,https://github.com/pandas-dev/pandas/issues/740,Maybe add an abs instance method to pandas objects,feature,feature,request for a new capability (abs instance method),ok,,1.6026271330001691,191,25,4.365e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability (abs instance method)""
+}"
+744,https://github.com/pandas-dev/pandas/issues/744,Using non-scalar converters with read_table,feature,feature,Request for enhancement to support non-scalar converters in read_table.,ok,,1.7652535239999452,1063,28,0.00017624999999999997,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for enhancement to support non-scalar converters in read_table.""
+}"
+745,https://github.com/pandas-dev/pandas/issues/745,Optimize groupby Cython routines for 2D blocks,feature,feature,request for optimization and enhancement of existing functionality,ok,,1.0520096340001146,195,24,4.365e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for optimization and enhancement of existing functionality""
+}"
+749,https://github.com/pandas-dev/pandas/issues/749,Optimize ufunc application on SparseDataFrame (if possible...),feature,feature,request for optimization of ufunc application on SparseDataFrame,ok,,1.1287709500002165,195,27,4.5449999999999993e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for optimization of ufunc application on SparseDataFrame""
+}"
+751,https://github.com/pandas-dev/pandas/issues/751,Speed up DataFrame._get_numeric_data,feature,feature,request for performance enhancement to improve existing functionality,ok,,1.2058673300002738,225,24,4.815e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for performance enhancement to improve existing functionality""
+}"
+754,https://github.com/pandas-dev/pandas/issues/754,"Allow different na_sentinels via dict in read_csv, etc.",feature,feature,request for a new capability to allow different na_sentinels via dict,ok,,2.693268576000264,199,30,4.785e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to allow different na_sentinels via dict""
+}"
+760,https://github.com/pandas-dev/pandas/issues/760,Non-matching join operation,feature,question,User is seeking help for a more efficient way to perform a non-matching join operation in pandas.,ok,,5.319928780999817,1147,35,0.00019305,"{
+  ""label"": ""question"",
+  ""reason"": ""User is seeking help for a more efficient way to perform a non-matching join operation in pandas.""
+}"
+765,https://github.com/pandas-dev/pandas/issues/765,Enable Series/DataFrame.to_csv to accept a file-handle like argument,feature,feature,request for a new capability to accept a file-handle in to_csv,ok,,1.4715630579999015,221,30,5.1149999999999996e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to accept a file-handle in to_csv""
+}"
+774,https://github.com/pandas-dev/pandas/issues/774,add to_clipboard method,feature,feature,"request for a new capability, specifically a method to copy to clipboard",ok,,1.1895601490000445,190,29,4.5900000000000004e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability, specifically a method to copy to clipboard""
+}"
+775,https://github.com/pandas-dev/pandas/issues/775,Eliminate redundant groupby computation on applying different functions to each column,feature,feature,request for an enhancement to improve performance by eliminating redundant computations,ok,,0.9133747779997066,199,27,4.6049999999999994e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for an enhancement to improve performance by eliminating redundant computations""
+}"
+776,https://github.com/pandas-dev/pandas/issues/776,Figure out reasonable threshold for compressing group index or not,feature,feature,request for enhancement regarding compression threshold for group index,ok,,1.3030507070002386,208,25,4.62e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for enhancement regarding compression threshold for group index""
+}"
+781,https://github.com/pandas-dev/pandas/issues/781,Handle European decimal formats in to_csv,feature,feature,request for a new capability to handle European decimal formats,ok,,0.9764253239995924,194,26,4.47e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""request for a new capability to handle European decimal formats""
+}"
+783,https://github.com/pandas-dev/pandas/issues/783,ENH: Add ohlc / candlestick plotting option for DataFrame,feature,feature,Request for a new capability to add ohlc/candlestick plotting option.,ok,,1.4516630170001008,228,31,5.2799999999999996e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to add ohlc/candlestick plotting option.""
+}"
+784,https://github.com/pandas-dev/pandas/issues/784,Add fill_value option to reindex,feature,feature,Request for a new capability to add a fill_value option to reindex.,ok,,1.192345345999911,216,30,5.039999999999999e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to add a fill_value option to reindex.""
+}"
+1037,https://github.com/pandas-dev/pandas/issues/1037,Arrays of datetime64 not handled in DataFrame constructor with passed dict,bug,bug,broken behavior with datetime64 in DataFrame constructor,ok,,1.2774975570000606,199,25,4.485e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""broken behavior with datetime64 in DataFrame constructor""
+}"
+1045,https://github.com/pandas-dev/pandas/issues/1045,NumPy reductions don't work with convert / TimeGrouper,bug,bug,The issue describes a broken behavior resulting in an AttributeError when using NumPy reductions with TimeGrouper.,ok,,1.2939431839999997,739,37,0.00013304999999999998,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a broken behavior resulting in an AttributeError when using NumPy reductions with TimeGrouper.""
+}"
+1046,https://github.com/pandas-dev/pandas/issues/1046,Alignment ops with irregular DatetimeIndex performance problems,bug,bug,Performance problems with alignment operations indicate broken behavior.,ok,,1.4356653670001833,1157,24,0.00018795,"{
+  ""label"": ""bug"",
+  ""reason"": ""Performance problems with alignment operations indicate broken behavior.""
+}"
+1048,https://github.com/pandas-dev/pandas/issues/1048,Segfault in .groupby() with empty groups,bug,bug,Segmentation fault and IndexError when using .groupby() with empty groups,ok,,1.0544476210002358,398,31,7.83e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Segmentation fault and IndexError when using .groupby() with empty groups""
+}"
+1049,https://github.com/pandas-dev/pandas/issues/1049,Adding float32 series to dataframe and then attempting to join(),bug,bug,The issue describes a broken behavior when joining DataFrames after adding a float32 series.,ok,,3.2854607360000045,1291,32,0.00021285,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a broken behavior when joining DataFrames after adding a float32 series.""
+}"
+1051,https://github.com/pandas-dev/pandas/issues/1051,nosetests fails one test,bug,bug,nosetests failing indicates broken behavior or incorrect result,ok,,1.1575097380000443,499,26,9.044999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""nosetests failing indicates broken behavior or incorrect result""
+}"
+1053,https://github.com/pandas-dev/pandas/issues/1053,Bug in DataFrame.to_html with MultiIndex,bug,bug,broken behavior in DataFrame.to_html with MultiIndex,ok,,1.172251906999918,503,26,9.104999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""broken behavior in DataFrame.to_html with MultiIndex""
+}"
+1055,https://github.com/pandas-dev/pandas/issues/1055,statsmodels incompatibility,bug,bug,indicates a compatibility issue which suggests broken behavior,ok,,1.2866513409999243,199,25,4.485e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""indicates a compatibility issue which suggests broken behavior""
+}"
+1062,https://github.com/pandas-dev/pandas/issues/1062,KeyError raised out of DatetimeEngine formatted as int64,bug,bug,KeyError indicates broken behavior when accessing a datetime index.,ok,,1.27010664799991,585,26,0.00010335,"{
+  ""label"": ""bug"",
+  ""reason"": ""KeyError indicates broken behavior when accessing a datetime index.""
+}"
+1063,https://github.com/pandas-dev/pandas/issues/1063,"Series.shift bugs, set default to periods=1",bug,bug,The issue describes broken behavior related to the Series.shift function and mentions a deprecation warning.,ok,,1.4525136379998003,455,33,8.805e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes broken behavior related to the Series.shift function and mentions a deprecation warning.""
+}"
+1065,https://github.com/pandas-dev/pandas/issues/1065,Group By datatype screwed when group consists of one value,bug,bug,Incorrect data type output when grouping by a single value,ok,,0.9887774819999322,304,26,6.12e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Incorrect data type output when grouping by a single value""
+}"
+1068,https://github.com/pandas-dev/pandas/issues/1068,Partial date indexing off by one error,bug,bug,off by one error in partial date indexing,ok,,1.598475800000415,285,24,5.714999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""off by one error in partial date indexing""
+}"
+1074,https://github.com/pandas-dev/pandas/issues/1074,Crash when combining columns containing NaNs,bug,bug,"The issue describes a crash and error when performing operations on columns containing NaNs, indicating broken behavior.",ok,,1.2271516000000702,640,35,0.000117,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a crash and error when performing operations on columns containing NaNs, indicating broken behavior.""
+}"
+1078,https://github.com/pandas-dev/pandas/issues/1078,A bug in HDFStore with MultiIndex,bug,bug,"The issue describes a broken behavior when using HDFStore with MultiIndex, resulting in a ValueError.",ok,,1.3351333999999042,283,36,6.405e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a broken behavior when using HDFStore with MultiIndex, resulting in a ValueError.""
+}"
+1079,https://github.com/pandas-dev/pandas/issues/1079,Can't compare Dataframe to None,bug,bug,Error when comparing DataFrame to None raises an unexpected exception.,ok,,1.1590374819998033,246,27,5.31e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Error when comparing DataFrame to None raises an unexpected exception.""
+}"
+1081,https://github.com/pandas-dev/pandas/issues/1081,duplicated time series index entries after hdf5 store (dayligth saving time related),bug,bug,"Duplicated time series index entries after saving and reloading from HDF5, likely due to daylight saving time handling.",ok,,1.6418982130003315,1571,39,0.00025905,"{
+  ""label"": ""bug"",
+  ""reason"": ""Duplicated time series index entries after saving and reloading from HDF5, likely due to daylight saving time handling.""
+}"
+1085,https://github.com/pandas-dev/pandas/issues/1085,Empty string -> NaT in to_datetime,bug,bug,The behavior of converting an empty string to a datetime is incorrect.,ok,,1.3498590949998288,221,28,4.9949999999999994e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The behavior of converting an empty string to a datetime is incorrect.""
+}"
+1090,https://github.com/pandas-dev/pandas/issues/1090,negative variances,bug,bug,negative variances due to numerical inaccuracies causing incorrect results,ok,,1.2085248260000299,386,26,7.35e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""negative variances due to numerical inaccuracies causing incorrect results""
+}"
+1095,https://github.com/pandas-dev/pandas/issues/1095,Better error message when date_range improperly specified,bug,bug,Improper error message when date_range is specified incorrectly,ok,,1.0308028939998621,388,26,7.38e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Improper error message when date_range is specified incorrectly""
+}"
+1100,https://github.com/pandas-dev/pandas/issues/1100,Datetime formatting for year < 1900,bug,bug,Error occurs when formatting dates for years before 1900,ok,,1.4440321249999215,1187,27,0.00019424999999999998,"{
+  ""label"": ""bug"",
+  ""reason"": ""Error occurs when formatting dates for years before 1900""
+}"
+1101,https://github.com/pandas-dev/pandas/issues/1101,TimeSeries.take loses tz,bug,bug,The behavior of TimeSeries.take is incorrect as it loses the timezone information.,ok,,2.4002460609999616,361,30,7.214999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The behavior of TimeSeries.take is incorrect as it loses the timezone information.""
+}"
+1107,https://github.com/pandas-dev/pandas/issues/1107,nosetests  pandas.tseries.tests.test_resample 'double free or corruption',bug,bug,"The issue describes a crash with a 'double free or corruption' error during tests, indicating broken behavior.",ok,,1.2243926920000376,1748,36,0.00028379999999999996,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a crash with a 'double free or corruption' error during tests, indicating broken behavior.""
+}"
+1110,https://github.com/pandas-dev/pandas/issues/1110,DatetimeIndex.repeat needs to be overridden,bug,bug,The repeat method does not behave as expected for DatetimeIndex.,ok,,3.2009777219996067,323,28,6.525e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The repeat method does not behave as expected for DatetimeIndex.""
+}"
+1112,https://github.com/pandas-dev/pandas/issues/1112,Poor weekofyear performance,bug,bug,performance issue with weekofyear method,ok,,1.530293754000013,303,23,5.9250000000000004e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""performance issue with weekofyear method""
+}"
+1113,https://github.com/pandas-dev/pandas/issues/1113,Check that quarterly time rules don't normalize away time of day,bug,bug,"The issue suggests a potential problem with time normalization in quarterly time rules, indicating broken behavior.",ok,,1.435137166000004,195,33,4.905e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue suggests a potential problem with time normalization in quarterly time rules, indicating broken behavior.""
+}"
+1116,https://github.com/pandas-dev/pandas/issues/1116,Test/fix Period.to_timestamp issues,bug,bug,The issue describes problems with the behavior of the Period.to_timestamp method that need fixing.,ok,,1.2805878789999952,359,32,7.305e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes problems with the behavior of the Period.to_timestamp method that need fixing.""
+}"
+1117,https://github.com/pandas-dev/pandas/issues/1117,Implement take on PeriodIndex,bug,feature,Request for a new capability to implement 'take' on PeriodIndex.,ok,,1.100962212000013,470,29,8.79e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to implement 'take' on PeriodIndex.""
+}"
+1118,https://github.com/pandas-dev/pandas/issues/1118,PeriodIndex constructor should take frequency from start period if has one,bug,bug,The issue describes a broken behavior related to the PeriodIndex constructor and suggests a need for a better error message.,ok,,1.4479188880000038,374,37,7.829999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a broken behavior related to the PeriodIndex constructor and suggests a need for a better error message.""
+}"
+1123,https://github.com/pandas-dev/pandas/issues/1123,Integer overflow with period_asfreq on 32-bit system,bug,bug,Integer overflow causing test failures on 32-bit system,ok,,1.0824616720001359,694,26,0.0001197,"{
+  ""label"": ""bug"",
+  ""reason"": ""Integer overflow causing test failures on 32-bit system""
+}"
+1337,https://github.com/pandas-dev/pandas/issues/1337,created normed time info,feature,feature,Request for a new utility function to normalize time series data.,ok,,1.1624395919998278,244,27,5.2799999999999996e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new utility function to normalize time series data.""
+}"
+1760,https://github.com/pandas-dev/pandas/issues/1760,google search returns old documentation,bug,docs,issue related to outdated documentation links in search results,ok,,1.4051588570000604,246,25,5.19e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""issue related to outdated documentation links in search results""
+}"
+1866,https://github.com/pandas-dev/pandas/issues/1866,Doc build bug,bug,bug,There is a TypeError occurring during the documentation build process.,ok,,1.0924062029998822,902,27,0.0001515,"{
+  ""label"": ""bug"",
+  ""reason"": ""There is a TypeError occurring during the documentation build process.""
+}"
+2011,https://github.com/pandas-dev/pandas/issues/2011,io.data._sanitize_dates behavior vs. docs,bug,bug,The behavior of _sanitize_dates does not match the documentation regarding the default start date.,ok,,1.219260189999659,298,32,6.39e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The behavior of _sanitize_dates does not match the documentation regarding the default start date.""
+}"
+2459,https://github.com/pandas-dev/pandas/issues/2459,read_csv with names arg not implicitly setting header=None,bug,bug,The behavior of read_csv with names argument not setting header=None is incorrect.,ok,,0.9822155619999648,258,30,5.6699999999999996e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The behavior of read_csv with names argument not setting header=None is incorrect.""
+}"
+3083,https://github.com/pandas-dev/pandas/issues/3083,Integer partial slicing on multiindex bug,bug,bug,Incorrect behavior when using integer partial slicing on a multiindex,ok,,1.2795697759997893,411,27,7.785e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Incorrect behavior when using integer partial slicing on a multiindex""
+}"
+3341,https://github.com/pandas-dev/pandas/issues/3341,BUG/ENH: to_datetime dayfirst ought to be strict,bug,bug,"Incorrect behavior when parsing dates with dayfirst=True, leading to potential incorrect results.",ok,,0.9883065059998444,732,31,0.0001284,"{
+  ""label"": ""bug"",
+  ""reason"": ""Incorrect behavior when parsing dates with dayfirst=True, leading to potential incorrect results.""
+}"
+3518,https://github.com/pandas-dev/pandas/issues/3518,"PDF for 0.11.0 is missing, points users to 0.10.1 version",bug,docs,PDF link points to an outdated version of the documentation,ok,,0.9992205039998225,312,26,6.24e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""PDF link points to an outdated version of the documentation""
+}"
+3541,https://github.com/pandas-dev/pandas/issues/3541,max_rows seems to have max value of 60,bug,bug,"max_rows setting not functioning as expected, indicating a potential regression",ok,,1.1563152649996482,676,28,0.00011819999999999999,"{
+  ""label"": ""bug"",
+  ""reason"": ""max_rows setting not functioning as expected, indicating a potential regression""
+}"
+4318,https://github.com/pandas-dev/pandas/issues/4318,DOC/BUG: NA string in data gets read as NaN,bug,docs,request for better documentation on handling specific NA values,ok,,1.0396103779999066,266,25,5.49e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request for better documentation on handling specific NA values""
+}"
+4362,https://github.com/pandas-dev/pandas/issues/4362,BUG: Series/Dataframe  to_json not returning miliseconds,bug,bug,to_json is returning epoch nanoseconds instead of milliseconds as documented,ok,,1.0780732900002477,358,28,7.049999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""to_json is returning epoch nanoseconds instead of milliseconds as documented""
+}"
+4807,https://github.com/pandas-dev/pandas/issues/4807,DOC: example in 'Custom Business Days' shows errors in the built dev docs,bug,docs,documentation problem with example code in the dev docs,ok,,3.919974596999964,244,25,5.1599999999999994e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""documentation problem with example code in the dev docs""
+}"
+5168,https://github.com/pandas-dev/pandas/issues/5168,ENH/DOC: call for Timestamp,bug,bug,silent failure when creating a timestamp with a timezone,ok,,2.505733423000038,246,25,5.19e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""silent failure when creating a timestamp with a timezone""
+}"
+5420,https://github.com/pandas-dev/pandas/issues/5420,BUG: loc should not fallback for integer indexing for multi-index,bug,bug,broken behavior related to integer indexing for multi-index,ok,,1.206776932000139,221,25,4.815e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""broken behavior related to integer indexing for multi-index""
+}"
+5888,https://github.com/pandas-dev/pandas/issues/5888,API/DOC: status of low_memory kwarg of read_csv/table,bug,docs,missing documentation for the low_memory kwarg in read_csv/table,ok,,1.0249044219999632,305,28,6.254999999999999e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""missing documentation for the low_memory kwarg in read_csv/table""
+}"
+6035,https://github.com/pandas-dev/pandas/issues/6035,"to_csv chokes if not passed sep as a string, even when encoding is set to unicode",bug,bug,to_csv fails with TypeError when sep is not a string,ok,,1.322831257999951,584,28,0.0001044,"{
+  ""label"": ""bug"",
+  ""reason"": ""to_csv fails with TypeError when sep is not a string""
+}"
+6257,https://github.com/pandas-dev/pandas/issues/6257,Improve documentation for pandas.core.groupby.GroupBy.transform,docs,docs,Missing documentation for a specific method,ok,,3.8143760640000437,226,22,4.709999999999999e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""Missing documentation for a specific method""
+}"
+6260,https://github.com/pandas-dev/pandas/issues/6260,BUG: misplaced index_label with DF.to_excel(),docs,bug,misplaced index_label in DF.to_excel() causing incorrect output,ok,,1.37326794899991,881,28,0.00014895,"{
+  ""label"": ""bug"",
+  ""reason"": ""misplaced index_label in DF.to_excel() causing incorrect output""
+}"
+6288,https://github.com/pandas-dev/pandas/issues/6288,[Docs] GroupsBy Example: Group by value of sum of columns,docs,docs,Request for adding a relevant example to the documentation.,ok,,1.1373514790002446,440,25,8.1e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""Request for adding a relevant example to the documentation.""
+}"
+6336,https://github.com/pandas-dev/pandas/issues/6336,Add Clarification to Docs of Difference Between merge and join,docs,docs,request for clarification in documentation,ok,,1.177626820000114,210,21,4.41e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request for clarification in documentation""
+}"
+6361,https://github.com/pandas-dev/pandas/issues/6361,DOC: more groupby examples,docs,docs,request for additional examples in documentation,ok,,1.3934117849998984,191,22,4.185e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request for additional examples in documentation""
+}"
+6384,https://github.com/pandas-dev/pandas/issues/6384,DOC: API docs for PeriodIndex,docs,docs,request for API documentation for PeriodIndex,ok,,1.0352892019996034,187,23,4.185e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request for API documentation for PeriodIndex""
+}"
+6456,https://github.com/pandas-dev/pandas/issues/6456,read_html and read_json should provide a cache,docs,feature,Request for a new capability to add caching to read_html and read_json functions.,ok,,1.2999392619999526,349,31,7.095e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to add caching to read_html and read_json functions.""
+}"
+6457,https://github.com/pandas-dev/pandas/issues/6457,isnull() and notnull() - documentation,docs,docs,Request for clarification and enhancement of existing documentation regarding isnull() and notnull() functions.,ok,,1.1097113730002093,344,33,7.14e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""Request for clarification and enhancement of existing documentation regarding isnull() and notnull() functions.""
+}"
+6491,https://github.com/pandas-dev/pandas/issues/6491,to_latex truncates string names,docs,bug,to_latex is truncating string names unexpectedly,ok,,1.1037850449997677,225,25,4.875e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""to_latex is truncating string names unexpectedly""
+}"
+6515,https://github.com/pandas-dev/pandas/issues/6515,ENH: allow dict to name columns for multiple-aggregations in groupby,feature,feature,Request for a new capability to allow naming columns for multiple aggregations in groupby.,ok,,1.6662166880000768,530,32,9.869999999999999e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to allow naming columns for multiple aggregations in groupby.""
+}"
+6554,https://github.com/pandas-dev/pandas/issues/6554,DOC: option to set the default table io.hdf.default_format starts in 0.13.0,docs,docs,missing documentation about the default table io.hdf.default_format starting in version 0.13.0,ok,,1.6762538719999611,248,36,5.8800000000000006e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""missing documentation about the default table io.hdf.default_format starting in version 0.13.0""
+}"
+6721,https://github.com/pandas-dev/pandas/issues/6721,Regression in DataFrameGroupBy.head(),docs,bug,Regression in behavior of DataFrameGroupBy.head() between versions,ok,,1.3754100329997527,467,28,8.685e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Regression in behavior of DataFrameGroupBy.head() between versions""
+}"
+6753,https://github.com/pandas-dev/pandas/issues/6753,The apply function of a DataFrame is called twice on the first row,docs,bug,The apply function is exhibiting unexpected behavior by being called twice on the first row.,ok,,1.4645772290000423,663,31,0.00011805,"{
+  ""label"": ""bug"",
+  ""reason"": ""The apply function is exhibiting unexpected behavior by being called twice on the first row.""
+}"
+6763,https://github.com/pandas-dev/pandas/issues/6763,DOC: DataFrame MERGE Example,docs,docs,"The issue points out a problem with the documentation example for the Merge method, specifically regarding the accuracy of the output.",ok,,1.7040500909997718,334,38,7.29e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""The issue points out a problem with the documentation example for the Merge method, specifically regarding the accuracy of the output.""
+}"
+6781,https://github.com/pandas-dev/pandas/issues/6781,DataFrame.convert_objects(copy=False) is ignored,docs,bug,The behavior of DataFrame.convert_objects(copy=False) is not functioning as expected.,ok,,1.3238710089999586,615,31,0.00011085,"{
+  ""label"": ""bug"",
+  ""reason"": ""The behavior of DataFrame.convert_objects(copy=False) is not functioning as expected.""
+}"
+6838,https://github.com/pandas-dev/pandas/issues/6838,DOC: set_option docstring,docs,docs,"The issue discusses improvements needed for the documentation of the set_option function, specifically the docstring format.",ok,,1.3147123829999146,742,35,0.0001323,"{
+  ""label"": ""docs"",
+  ""reason"": ""The issue discusses improvements needed for the documentation of the set_option function, specifically the docstring format.""
+}"
+6855,https://github.com/pandas-dev/pandas/issues/6855,"DOC: ""Invalid datetime unit in metadata string ""[d]""""",docs,bug,"Error related to invalid datetime unit in the function, indicating broken behavior.",ok,,1.5687701880001441,507,29,9.345e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Error related to invalid datetime unit in the function, indicating broken behavior.""
+}"
+6891,https://github.com/pandas-dev/pandas/issues/6891,ENH: Updating a dataframe counting the cells that will be updated.,docs,feature,Request for a new capability to count updated cells in a dataframe.,ok,,1.0991422490001241,276,28,5.819999999999999e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to count updated cells in a dataframe.""
+}"
+6895,https://github.com/pandas-dev/pandas/issues/6895,DOC: Incorrect whatsnew entry for GH6459,docs,docs,The issue reports an incorrect documentation entry regarding the behavior of a function.,ok,,0.9621809999998732,526,29,9.63e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""The issue reports an incorrect documentation entry regarding the behavior of a function.""
+}"
+6901,https://github.com/pandas-dev/pandas/issues/6901,SyntaxError on HDF queries where right-hand contains string delimiter,docs,bug,SyntaxError occurs during HDF queries due to string delimiters in index,ok,,1.205040437000207,414,30,8.01e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""SyntaxError occurs during HDF queries due to string delimiters in index""
+}"
+6903,https://github.com/pandas-dev/pandas/issues/6903,Docstring for Series missing description on 'fastpath',docs,docs,missing description for a parameter in the docstring,ok,,1.2319599709999238,324,25,6.36e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""missing description for a parameter in the docstring""
+}"
+6918,https://github.com/pandas-dev/pandas/issues/6918,DOC: provide more inline examples for cookbook.rst,docs,docs,request for more inline examples in documentation,ok,,1.2164062169999852,254,23,5.19e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request for more inline examples in documentation""
+}"
+6920,https://github.com/pandas-dev/pandas/issues/6920,DOC: docstring / API for the indexers ([]/ix/loc/iloc),docs,docs,missing documentation for indexers in the API,ok,,1.2569326299999375,242,24,5.07e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""missing documentation for indexers in the API""
+}"
+6944,https://github.com/pandas-dev/pandas/issues/6944,DOC: improve groupby reference docs,docs,docs,request for improvements and clarifications in documentation,ok,,1.0875490480002554,769,24,0.00012975,"{
+  ""label"": ""docs"",
+  ""reason"": ""request for improvements and clarifications in documentation""
+}"
+6950,https://github.com/pandas-dev/pandas/issues/6950,ENH/CLN: Make df.pivot to the mapping of pivot_table,docs,feature,Request to enhance df.pivot to support the same keywords as pivot_table.,ok,,1.4420383520000541,261,30,5.714999999999999e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request to enhance df.pivot to support the same keywords as pivot_table.""
+}"
+6993,https://github.com/pandas-dev/pandas/issues/6993,DOC: add matplotlib links for plot functions,docs,docs,request to improve documentation by adding links to matplotlib for plot functions,ok,,1.0860973339999873,223,28,5.025e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request to improve documentation by adding links to matplotlib for plot functions""
+}"
+6994,https://github.com/pandas-dev/pandas/issues/6994,DOC: Reorganize plotting.rst,docs,docs,request to reorganize and improve documentation for clarity,ok,,0.7797476289997576,295,25,5.925e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request to reorganize and improve documentation for clarity""
+}"
+6998,https://github.com/pandas-dev/pandas/issues/6998,Add datetimeindex accessors to timeseries documentation (timeseries.rst),docs,docs,Missing documentation for datetimeindex accessors in timeseries documentation.,ok,,1.163908359999823,338,27,6.689999999999999e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""Missing documentation for datetimeindex accessors in timeseries documentation.""
+}"
+7013,https://github.com/pandas-dev/pandas/issues/7013,DOC/BLD: dev docs not available,docs,docs,missing documentation links leading to 404 errors,ok,,1.9707410119999622,243,24,5.0849999999999996e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""missing documentation links leading to 404 errors""
+}"
+7048,https://github.com/pandas-dev/pandas/issues/7048,read_csv is inefficient for wide tables,docs,docs,Request for broader documentation on handling wide vs tall CSV formats.,ok,,1.0187097580001137,360,27,7.02e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""Request for broader documentation on handling wide vs tall CSV formats.""
+}"
+7154,https://github.com/pandas-dev/pandas/issues/7154,DOC: looks like wiki can have improved formatting,docs,docs,suggestion for improving documentation formatting,ok,,1.254699110999809,206,22,4.41e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""suggestion for improving documentation formatting""
+}"
+7175,https://github.com/pandas-dev/pandas/issues/7175,GOTCHA: You can't use dot notation to add a column to a DataFrame,docs,question,User is seeking clarification on the behavior of dot notation when adding a column to a DataFrame.,ok,,1.5429342369998267,421,34,8.354999999999998e-05,"{
+  ""label"": ""question"",
+  ""reason"": ""User is seeking clarification on the behavior of dot notation when adding a column to a DataFrame.""
+}"
+7194,https://github.com/pandas-dev/pandas/issues/7194,"DOC: df.iterrows() returns view for homogenous columns, and copy for heterogenous / perf warning",docs,docs,The issue discusses documentation related to the behavior of df.iterrows() and its performance implications.,ok,,1.4039323659999354,446,33,8.669999999999999e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""The issue discusses documentation related to the behavior of df.iterrows() and its performance implications.""
+}"
+7213,https://github.com/pandas-dev/pandas/issues/7213,DOC: fix doc errors from removing datetime-like Series ops,docs,docs,documentation problem due to errors from removing datetime-like Series operations,ok,,1.1891115220000756,244,27,5.2799999999999996e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""documentation problem due to errors from removing datetime-like Series operations""
+}"
+7231,https://github.com/pandas-dev/pandas/issues/7231,Docs do not compile,docs,docs,Documentation fails to compile due to errors in the build process.,ok,,1.2051547440000832,1108,27,0.0001824,"{
+  ""label"": ""docs"",
+  ""reason"": ""Documentation fails to compile due to errors in the build process.""
+}"
+7249,https://github.com/pandas-dev/pandas/issues/7249,DOC: add to ecosytem (in sql-interface category?),docs,docs,request to add documentation for ecosystem suggestions,ok,,1.3297429600002033,260,23,5.2799999999999996e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request to add documentation for ecosystem suggestions""
+}"
+7287,https://github.com/pandas-dev/pandas/issues/7287,v0.14 group.head() not really grouped,docs,bug,The output of group.head() does not match the expected grouped display.,ok,,1.5850953629997093,534,29,9.75e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The output of group.head() does not match the expected grouped display.""
+}"
+7413,https://github.com/pandas-dev/pandas/issues/7413,DOC: clarify the behavior of the .as_matrix method,docs,docs,request to clarify documentation regarding the behavior of the .as_matrix method,ok,,1.2830726560000585,375,29,7.365e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""request to clarify documentation regarding the behavior of the .as_matrix method""
+}"
+7426,https://github.com/pandas-dev/pandas/issues/7426,"ENH: Create dataframes using every combination of given values, like R's expand.grid()",docs,feature,Request for a new capability to create dataframes using combinations of given values.,ok,,1.1783786219998547,573,30,0.00010395,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to create dataframes using combinations of given values.""
+}"
+7439,https://github.com/pandas-dev/pandas/issues/7439,Arithmetic by DataFrame index,docs,bug,Error when performing arithmetic operations on DataFrame index,ok,,1.77213889199993,1218,25,0.00019769999999999998,"{
+  ""label"": ""bug"",
+  ""reason"": ""Error when performing arithmetic operations on DataFrame index""
+}"
+7472,https://github.com/pandas-dev/pandas/issues/7472,DOC: cython example producing numpy deprecation warning,docs,docs,Documentation issue related to a deprecation warning in an example,ok,,1.6426891430000978,927,27,0.00015524999999999998,"{
+  ""label"": ""docs"",
+  ""reason"": ""Documentation issue related to a deprecation warning in an example""
+}"
+7860,https://github.com/pandas-dev/pandas/issues/7860,ENH: indexing support for reversed is_monotonic,feature,feature,Request for enhancement to support indexing for reversed is_monotonic,ok,,1.244999764000113,1188,28,0.000195,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for enhancement to support indexing for reversed is_monotonic""
+}"
+8039,https://github.com/pandas-dev/pandas/issues/8039,Stacking MultiIndex DataFrame columns with Timestamps levels fails,bug,bug,"The issue describes broken behavior when stacking a MultiIndex DataFrame, resulting in an empty DataFrame.",ok,,1.6068791289999353,353,35,7.395e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes broken behavior when stacking a MultiIndex DataFrame, resulting in an empty DataFrame.""
+}"
+8615,https://github.com/pandas-dev/pandas/issues/8615,to_datetime conversion inconsistency in 0.15.0,docs,bug,inconsistent behavior in to_datetime conversion,ok,,1.2893987140000718,330,23,6.33e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""inconsistent behavior in to_datetime conversion""
+}"
+8730,https://github.com/pandas-dev/pandas/issues/8730,Improve clarity around when SettingWithCopyWarning can be ignored (if ever?),bug,docs,Request for clearer documentation regarding the conditions under which SettingWithCopyWarning can be ignored.,ok,,1.318894678000106,510,32,9.57e-05,"{
+  ""label"": ""docs"",
+  ""reason"": ""Request for clearer documentation regarding the conditions under which SettingWithCopyWarning can be ignored.""
+}"
+9235,https://github.com/pandas-dev/pandas/issues/9235,Apply vs Transform on a group object,docs,question,User is seeking clarification on the difference between apply and transform methods in a group object.,ok,,1.444295893999879,737,32,0.00012975,"{
+  ""label"": ""question"",
+  ""reason"": ""User is seeking clarification on the difference between apply and transform methods in a group object.""
+}"
+9376,https://github.com/pandas-dev/pandas/issues/9376,read_csv: date_parser called once with arrays and then many times with strings (from each single row) as arguments,docs,bug,Unexpected behavior of date_parser being called with both arrays and individual strings,ok,,1.3833808180002052,1391,29,0.00022605,"{
+  ""label"": ""bug"",
+  ""reason"": ""Unexpected behavior of date_parser being called with both arrays and individual strings""
+}"
+9524,https://github.com/pandas-dev/pandas/issues/9524,"Bad x-axis dates when plotting two time-series with different indexes (start, end, and freq)",bug,bug,Incorrect x-axis dates when plotting time-series with different indexes,ok,,5.215188573999967,530,27,9.57e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Incorrect x-axis dates when plotting time-series with different indexes""
+}"
+9710,https://github.com/pandas-dev/pandas/issues/9710,read_csv skips rows with value 0 if having initial space,bug,bug,read_csv incorrectly skips rows with value 0 when there is an initial space,ok,,1.9124777140000333,543,31,0.00010004999999999999,"{
+  ""label"": ""bug"",
+  ""reason"": ""read_csv incorrectly skips rows with value 0 when there is an initial space""
+}"
+9963,https://github.com/pandas-dev/pandas/issues/9963,asfreq() issue with 'method' parameter,docs,bug,Incorrect behavior of asfreq() method with NaN values,ok,,1.1119848409998667,369,27,7.155e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Incorrect behavior of asfreq() method with NaN values""
+}"
+11952,https://github.com/pandas-dev/pandas/issues/11952,"Categorical.from_codes(codes, categories, ordered=False, name=None)",question,bug,Unexpected behavior when using dictionaries as categories in Categorical.from_codes,ok,,1.1127771750002466,599,28,0.00010665,"{
+  ""label"": ""bug"",
+  ""reason"": ""Unexpected behavior when using dictionaries as categories in Categorical.from_codes""
+}"
+11958,https://github.com/pandas-dev/pandas/issues/11958,Performance issue with DataFrames with numpy fortran-order arrays and pd.concat,question,bug,Performance issue due to inefficient handling of Fortran-order arrays in pd.concat,ok,,1.1898873689997345,377,30,7.455e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Performance issue due to inefficient handling of Fortran-order arrays in pd.concat""
+}"
+11971,https://github.com/pandas-dev/pandas/issues/11971,What processing is involved in transposing a dataframe?,question,question,User is asking for clarification on the processing involved in transposing a dataframe.,ok,,1.3210868179999125,252,30,5.58e-05,"{
+  ""label"": ""question"",
+  ""reason"": ""User is asking for clarification on the processing involved in transposing a dataframe.""
+}"
+11973,https://github.com/pandas-dev/pandas/issues/11973,Datetime index error?,question,bug,Error related to datetime index after upgrading pandas,ok,,1.8877482249999957,339,24,6.525e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Error related to datetime index after upgrading pandas""
+}"
+11982,https://github.com/pandas-dev/pandas/issues/11982,How to concatenate two Panels without duplicating Items axis (i.e. like columns in DataFrames)?,question,question,User is asking for clarification on how to concatenate Panels without duplicating the Items axis.,ok,,1.913522821999777,863,32,0.00014865,"{
+  ""label"": ""question"",
+  ""reason"": ""User is asking for clarification on how to concatenate Panels without duplicating the Items axis.""
+}"
+12016,https://github.com/pandas-dev/pandas/issues/12016,to_hdf emits PerformanceWarning when column names are unicode,question,bug,PerformanceWarning when using unicode column names in Python 2 is unexpected behavior compared to Python 3.,ok,,1.5899464200001603,654,35,0.00011909999999999998,"{
+  ""label"": ""bug"",
+  ""reason"": ""PerformanceWarning when using unicode column names in Python 2 is unexpected behavior compared to Python 3.""
+}"
+12028,https://github.com/pandas-dev/pandas/issues/12028,Plotting dataframe: vertical gridlines not shown,question,bug,"Vertical gridlines are not showing up when plotting a specific DataFrame, indicating a potential issue with the plotting functionality.",ok,,1.4991255370000545,642,38,0.0001191,"{
+  ""label"": ""bug"",
+  ""reason"": ""Vertical gridlines are not showing up when plotting a specific DataFrame, indicating a potential issue with the plotting functionality.""
+}"
+12076,https://github.com/pandas-dev/pandas/issues/12076,Export DataFrame with objects to Excel creates error.,question,bug,Error occurs when exporting DataFrame with custom objects to Excel.,ok,,1.362258489999931,516,27,9.36e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Error occurs when exporting DataFrame with custom objects to Excel.""
+}"
+12108,https://github.com/pandas-dev/pandas/issues/12108,assert_frame_equal fails when dtype is categorical,question,bug,"assert_frame_equal fails with categorical dtype, indicating broken behavior",ok,,1.5476477180000074,331,27,6.585e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""assert_frame_equal fails with categorical dtype, indicating broken behavior""
+}"
+12143,https://github.com/pandas-dev/pandas/issues/12143,Series.map does not work with defaultdicts,question,bug,"Series.map does not handle defaultdicts correctly, leading to unexpected NaN values.",ok,,1.5264849899999717,744,31,0.0001302,"{
+  ""label"": ""bug"",
+  ""reason"": ""Series.map does not handle defaultdicts correctly, leading to unexpected NaN values.""
+}"
+12155,https://github.com/pandas-dev/pandas/issues/12155,BUG: GroupBy.apply iterates over first group twice,question,bug,"GroupBy.apply() incorrectly iterates over the first group twice, indicating broken behavior.",ok,,4.171940332000304,683,32,0.00012165,"{
+  ""label"": ""bug"",
+  ""reason"": ""GroupBy.apply() incorrectly iterates over the first group twice, indicating broken behavior.""
+}"
+12167,https://github.com/pandas-dev/pandas/issues/12167,Pandas sum column with scalar results in zeros,question,bug,"Incorrect behavior when summing a column with a scalar, resulting in unexpected zeros.",ok,,1.4881185220001498,360,31,7.26e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Incorrect behavior when summing a column with a scalar, resulting in unexpected zeros.""
+}"
+12172,https://github.com/pandas-dev/pandas/issues/12172,Why does Series.plot() not have a kind='scatter' option?,question,feature,Request for a new capability (scatter plot option in Series.plot()),ok,,1.5662979120002092,245,29,5.415e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability (scatter plot option in Series.plot())""
+}"
+12200,https://github.com/pandas-dev/pandas/issues/12200,read_sql ignore type,question,feature,Request for a new capability to control automatic typing in read_sql.,ok,,2.059710521999932,291,28,6.0450000000000006e-05,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to control automatic typing in read_sql.""
+}"
+12201,https://github.com/pandas-dev/pandas/issues/12201,Reiindex_axis with copy=False return new object when expecting to change it inplace,question,bug,Expected inplace modification with copy=False but received a new object instead.,ok,,1.3482837319997998,366,28,7.17e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Expected inplace modification with copy=False but received a new object instead.""
+}"
+12220,https://github.com/pandas-dev/pandas/issues/12220,DataFrame.idxmax may return modified index/column dtype,question,bug,Unexpected dtype change in idxmax output may lead to confusion and errors.,ok,,1.118681228999776,736,29,0.0001278,"{
+  ""label"": ""bug"",
+  ""reason"": ""Unexpected dtype change in idxmax output may lead to confusion and errors.""
+}"
+12229,https://github.com/pandas-dev/pandas/issues/12229,BadZipfile: File is not a zip file on Windows not on Mac OS,question,bug,The error indicates a broken behavior when reading a file that should be a zip format on Windows.,ok,,1.1863074409998262,496,34,9.48e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""The error indicates a broken behavior when reading a file that should be a zip format on Windows.""
+}"
+12230,https://github.com/pandas-dev/pandas/issues/12230,Regarding pd.DataFrame.std() function,question,question,The issue seeks clarification on the behavior of the pd.DataFrame.std() function.,ok,,1.4124915749998763,316,31,6.599999999999999e-05,"{
+  ""label"": ""question"",
+  ""reason"": ""The issue seeks clarification on the behavior of the pd.DataFrame.std() function.""
+}"
+12231,https://github.com/pandas-dev/pandas/issues/12231,datetime index list when pd.concat does not infer frequency,question,bug,pd.concat does not preserve frequency of datetime index,ok,,1.0868311670001276,301,25,6.015e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""pd.concat does not preserve frequency of datetime index""
+}"
+12254,https://github.com/pandas-dev/pandas/issues/12254,BUG:  Groupby on categorical column with date and period producing unexpected result,question,bug,Unexpected rows appear when grouping a categorical column with both a period and date column.,ok,,1.1277445159998933,1524,31,0.0002472,"{
+  ""label"": ""bug"",
+  ""reason"": ""Unexpected rows appear when grouping a categorical column with both a period and date column.""
+}"
+12262,https://github.com/pandas-dev/pandas/issues/12262,high temporary memory usage on creation of DataFrame from list,question,bug,high temporary memory usage when creating DataFrame from list indicates broken behavior,ok,,1.4029151799995816,916,29,0.0001548,"{
+  ""label"": ""bug"",
+  ""reason"": ""high temporary memory usage when creating DataFrame from list indicates broken behavior""
+}"
+12264,https://github.com/pandas-dev/pandas/issues/12264,timezones discarded when calling .values and .unique(),question,bug,Timezone information is being discarded when using .values and .unique() methods.,ok,,1.4482035780001752,594,30,0.0001071,"{
+  ""label"": ""bug"",
+  ""reason"": ""Timezone information is being discarded when using .values and .unique() methods.""
+}"
+12265,https://github.com/pandas-dev/pandas/issues/12265,Reading table with chunksize still pumps the memory,question,bug,Memory usage is not behaving as expected when using chunksize.,ok,,1.5894089909998002,395,27,7.544999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Memory usage is not behaving as expected when using chunksize.""
+}"
+12282,https://github.com/pandas-dev/pandas/issues/12282,BUG: Series.reindex using TimedeltaIndex/PeriodIndex/DatetimeIndex as index will erase the data to np.NaN,question,bug,Reindexing with TimedeltaIndex/PeriodIndex/DatetimeIndex results in unexpected NaN values.,ok,,1.208130785999856,923,36,0.00016005000000000001,"{
+  ""label"": ""bug"",
+  ""reason"": ""Reindexing with TimedeltaIndex/PeriodIndex/DatetimeIndex results in unexpected NaN values.""
+}"
+12313,https://github.com/pandas-dev/pandas/issues/12313,Assigning from other NDFrame broken on multiple MultiIndex columns,question,bug,broken behavior when assigning from another NDFrame with MultiIndex columns,ok,,1.0503050209999856,378,28,7.35e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""broken behavior when assigning from another NDFrame with MultiIndex columns""
+}"
+12340,https://github.com/pandas-dev/pandas/issues/12340,read_csv behavior with large floats,question,bug,Incorrect behavior when reading large floats in pandas compared to numpy.,ok,,1.4889019479996932,982,27,0.0001635,"{
+  ""label"": ""bug"",
+  ""reason"": ""Incorrect behavior when reading large floats in pandas compared to numpy.""
+}"
+12346,https://github.com/pandas-dev/pandas/issues/12346,Inconsistencies in index comparisons,question,bug,Inconsistent behavior in index comparisons leading to unexpected data types.,ok,,1.1443810739997389,441,27,8.235e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""Inconsistent behavior in index comparisons leading to unexpected data types.""
+}"
+12347,https://github.com/pandas-dev/pandas/issues/12347,"How to remove the "" punctuation using .to_csv method?",question,question,User is asking for help on how to remove specific punctuation when using a method.,ok,,1.1008470270003272,372,31,7.439999999999999e-05,"{
+  ""label"": ""question"",
+  ""reason"": ""User is asking for help on how to remove specific punctuation when using a method.""
+}"
+12369,https://github.com/pandas-dev/pandas/issues/12369,KeyError when retrieving columns with lists of incomplete tuples from MultiIndex,question,bug,KeyError indicates broken behavior when using a list of incomplete tuples with MultiIndex.,ok,,1.3515410909999446,672,31,0.0001194,"{
+  ""label"": ""bug"",
+  ""reason"": ""KeyError indicates broken behavior when using a list of incomplete tuples with MultiIndex.""
+}"
+12387,https://github.com/pandas-dev/pandas/issues/12387,`DataFrame.from_dict()` does not behave as documented.,question,bug,"The behavior of DataFrame.from_dict() does not match the documentation, leading to a crash when using a dict with orient='columns'.",ok,,1.923303813000075,1258,43,0.0002145,"{
+  ""label"": ""bug"",
+  ""reason"": ""The behavior of DataFrame.from_dict() does not match the documentation, leading to a crash when using a dict with orient='columns'.""
+}"
+12420,https://github.com/pandas-dev/pandas/issues/12420,BUG: Simultaneous access to different DataFrame instances by different threads should be safe,question,bug,"The issue describes a crash occurring due to race conditions when accessing separate DataFrame instances in multiple threads, indicating broken behavior.",ok,,1.6094507600000725,1310,39,0.00021989999999999998,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a crash occurring due to race conditions when accessing separate DataFrame instances in multiple threads, indicating broken behavior.""
+}"
+12427,https://github.com/pandas-dev/pandas/issues/12427,HDFStore doesn't record correct pandas version in store attributes,question,bug,HDFStore is recording an incorrect pandas version in store attributes.,ok,,1.12739775,683,28,0.00011925,"{
+  ""label"": ""bug"",
+  ""reason"": ""HDFStore is recording an incorrect pandas version in store attributes.""
+}"
+12435,https://github.com/pandas-dev/pandas/issues/12435,read_csv false_values only partially applied,question,bug,"The behavior of read_csv with false_values is not functioning as expected, leading to incorrect results.",ok,,1.2396494869999515,683,34,0.00012285,"{
+  ""label"": ""bug"",
+  ""reason"": ""The behavior of read_csv with false_values is not functioning as expected, leading to incorrect results.""
+}"
+12441,https://github.com/pandas-dev/pandas/issues/12441,ImportError after installing rc18 -- help,question,bug,ImportError indicates broken behavior after installing a specific version of pandas.,ok,,2.1431497520002267,898,28,0.0001515,"{
+  ""label"": ""bug"",
+  ""reason"": ""ImportError indicates broken behavior after installing a specific version of pandas.""
+}"
+12444,https://github.com/pandas-dev/pandas/issues/12444,Cannot set with indexer when indexer is of length 1,question,bug,Encountering an AttributeError when setting with an indexer of length 1 indicates broken behavior.,ok,,1.5440084329998172,1015,34,0.00017265000000000002,"{
+  ""label"": ""bug"",
+  ""reason"": ""Encountering an AttributeError when setting with an indexer of length 1 indicates broken behavior.""
+}"
+12445,https://github.com/pandas-dev/pandas/issues/12445,to_html local float_format decimal representation,question,question,User is asking for a workaround regarding float formatting in HTML output.,ok,,2.8936755110003105,743,28,0.00012824999999999997,"{
+  ""label"": ""question"",
+  ""reason"": ""User is asking for a workaround regarding float formatting in HTML output.""
+}"
+12446,https://github.com/pandas-dev/pandas/issues/12446,tz_localize NonExistentTimeError: 2013-03-31 02:00:00,question,bug,The issue describes a broken behavior with the tz_localize function resulting in a NonExistentTimeError.,ok,,1.5928368700001556,559,36,0.00010545,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a broken behavior with the tz_localize function resulting in a NonExistentTimeError.""
+}"
+12447,https://github.com/pandas-dev/pandas/issues/12447,pandas_for_finance TypeError: [unicode] is not implemented as a table column,question,bug,TypeError indicates broken behavior when saving to HDF.,ok,,1.6217506729999513,726,26,0.0001245,"{
+  ""label"": ""bug"",
+  ""reason"": ""TypeError indicates broken behavior when saving to HDF.""
+}"
+12464,https://github.com/pandas-dev/pandas/issues/12464,Missing data and np.seterr(all='raise'): Viewing the missing yields FloatingPointError,question,bug,The issue describes a broken behavior where viewing missing data raises a FloatingPointError.,ok,,2.397232059000089,657,31,0.00011715,"{
+  ""label"": ""bug"",
+  ""reason"": ""The issue describes a broken behavior where viewing missing data raises a FloatingPointError.""
+}"
+12470,https://github.com/pandas-dev/pandas/issues/12470,[Feature Request] Pass array of timezones to pandas.Series.tz_convert,question,feature,Request for a new capability to pass an array of timezones to tz_convert.,ok,,1.2336533359998612,963,31,0.00016304999999999998,"{
+  ""label"": ""feature"",
+  ""reason"": ""Request for a new capability to pass an array of timezones to tz_convert.""
+}"
+12475,https://github.com/pandas-dev/pandas/issues/12475,Pandas for Finance FileNotFoundError: [Errno 2] No such file or directory: 'quotes/AMZN.csv',question,bug,FileNotFoundError indicates broken behavior when trying to save a file.,ok,,1.1254623470003935,498,29,9.209999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""FileNotFoundError indicates broken behavior when trying to save a file.""
+}"
+12478,https://github.com/pandas-dev/pandas/issues/12478,Pandas for Finance AttributeError: 'DataFrame' object has no attribute 'rolling',question,bug,AttributeError indicates broken behavior related to DataFrame's rolling method,ok,,10.04920984599994,347,28,6.884999999999999e-05,"{
+  ""label"": ""bug"",
+  ""reason"": ""AttributeError indicates broken behavior related to DataFrame's rolling method""
+}"
+12495,https://github.com/pandas-dev/pandas/issues/12495,transform() drops groupby columns if not in index or if not numeric,question,bug,transform() incorrectly drops groupby columns when not in index or not numeric,ok,,1.2262147800001912,1074,30,0.00017910000000000002,"{
+  ""label"": ""bug"",
+  ""reason"": ""transform() incorrectly drops groupby columns when not in index or not numeric""
+}"
