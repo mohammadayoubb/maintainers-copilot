@@ -1,0 +1,99 @@
+{
+  "model_name": "fine-tuned-distilbert-pandas-issue-classifier",
+  "architecture": "distilbert-base-uncased",
+  "task": "GitHub issue classification",
+  "dataset": {
+    "repository": "pandas-dev/pandas",
+    "total_issues": 1178,
+    "labels": ["bug", "feature", "docs", "question"],
+    "label_mapping": {
+      "Bug": "bug",
+      "Enhancement": "feature",
+      "Docs": "docs",
+      "Usage Question": "question"
+    },
+    "split_strategy": "class-wise time-aware split",
+    "split_ratio": {
+      "train": 0.7,
+      "validation": 0.15,
+      "test": 0.15
+    },
+    "split_distribution": {
+      "train": {
+        "bug": 223,
+        "docs": 202,
+        "feature": 198,
+        "question": 200
+      },
+      "validation": {
+        "bug": 48,
+        "docs": 43,
+        "feature": 43,
+        "question": 43
+      },
+      "test": {
+        "bug": 48,
+        "docs": 44,
+        "feature": 43,
+        "question": 43
+      }
+    }
+  },
+  "training": {
+    "epochs": 3,
+    "learning_rate": 0.00002,
+    "batch_size": 16,
+    "max_length": 256,
+    "weight_decay": 0.01,
+    "seed": 42,
+    "freeze_policy": "No freezing. The full DistilBERT encoder and classification head were fine-tuned."
+  },
+  "metrics": {
+    "test_accuracy": 0.691,
+    "test_macro_f1": 0.6892,
+    "test_weighted_f1": 0.6861,
+    "per_class_f1": {
+      "bug": 0.5854,
+      "feature": 0.8889,
+      "docs": 0.6444,
+      "question": 0.6383
+    }
+  },
+  "comparison": {
+    "classical_ml": {
+      "model": "TF-IDF + Logistic Regression",
+      "test_accuracy": 0.6292,
+      "test_macro_f1": 0.6287
+    },
+    "fine_tuned_transformer": {
+      "model": "Fine-tuned DistilBERT",
+      "test_accuracy": 0.691,
+      "test_macro_f1": 0.6892
+    },
+    "llm_baseline": {
+      "model": "gpt-4o-mini",
+      "test_accuracy": 0.6292,
+      "test_macro_f1": 0.5884,
+      "average_latency_seconds": 1.58,
+      "estimated_total_cost_usd": 0.0159
+    }
+  },
+  "deployment_decision": {
+    "selected_model": "Fine-tuned DistilBERT",
+    "reason": "Fine-tuned DistilBERT achieved the highest macro-F1 while avoiding recurring LLM cost and latency."
+  },
+  "artifact_files": {
+    "model_directory": "ml/artifacts/transformer_model/",
+    "metrics_file": "ml/artifacts/transformer_metrics_pandas.json",
+    "confusion_matrix": "ml/artifacts/transformer_confusion_matrix_pandas.png"
+  },
+  "sha256": {
+    "status": "pending",
+    "note": "Fill this after placing the final saved model artifact in ml/artifacts/transformer_model/."
+  },
+  "limitations": [
+    "The bug class has the weakest F1 score, so bug/question confusion should be monitored.",
+    "The classifier was trained on pandas issues, so performance may drop on other repositories without retraining.",
+    "The current model-server classifier placeholder must be replaced with the real saved DistilBERT artifact before final submission."
+  ]
+}
