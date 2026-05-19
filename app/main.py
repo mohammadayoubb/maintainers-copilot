@@ -1,25 +1,56 @@
 """Main FastAPI application entry point.
 
-This file creates the main API application and registers all API routers.
-For now, this file registers:
-- health route
-- domain error handler
+This file creates the main API application and registers:
+- startup checks
+- exception handlers
+- API routers
 
-Later, this file will also include startup checks, auth routes, chat routes,
-memory routes, widget routes, and tracing middleware.
+The app startup uses FastAPI lifespan so infrastructure checks run before
+the API is considered ready.
+
+For now, startup checks verify that:
+- Vault is reachable
+- required Vault secrets exist
+
+Later, startup checks can also verify:
+- classifier model artifact exists
+- classifier SHA-256 matches the model card
+- tracing backend is configured
+- eval thresholds are not disabled
 """
+
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
 from app.api.exception_handlers import domain_error_handler
 from app.api.routes.health import router as health_router
 from app.domain.errors import DomainError
+from app.infra.startup_checks import run_startup_checks
+from app.api.routes.classification import router as classification_router
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    """Run startup and shutdown logic for the FastAPI app.
+
+    FastAPI calls this function when the API starts.
+
+    If run_startup_checks() raises an error, the API refuses to boot.
+    This matches the project requirement that unsafe or incomplete
+    infrastructure should block startup instead of failing later at runtime.
+    """
+    run_startup_checks()
+
+    yield
+
 
 # Create the FastAPI application object.
 # This is the object Uvicorn runs when we start the API container.
 app = FastAPI(
     title="Maintainer's Copilot API",
     version="0.1.0",
+    lifespan=lifespan,
 )
 
 
@@ -32,3 +63,4 @@ app.add_exception_handler(DomainError, domain_error_handler)
 # Register the health router.
 # This makes GET /health available.
 app.include_router(health_router)
+app.include_router(classification_router)
