@@ -1,0 +1,74 @@
+{
+  "repo": "pandas-dev/pandas",
+  "model": "distilbert-base-uncased",
+  "task": "GitHub issue classification",
+  "labels": [
+    "bug",
+    "feature",
+    "docs",
+    "question"
+  ],
+  "validation_metrics": {
+    "eval_loss": 0.7869672775268555,
+    "eval_accuracy": 0.6949152542372882,
+    "eval_macro_f1": 0.6928905917411665,
+    "eval_weighted_f1": 0.6921498028972541,
+    "eval_runtime": 67.1517,
+    "eval_samples_per_second": 2.636,
+    "eval_steps_per_second": 0.179,
+    "epoch": 3.0
+  },
+  "test_metrics_from_trainer": {
+    "eval_loss": 1.0286533832550049,
+    "eval_accuracy": 0.6910112359550562,
+    "eval_macro_f1": 0.6892492648330739,
+    "eval_weighted_f1": 0.6860794790113811,
+    "eval_runtime": 70.1422,
+    "eval_samples_per_second": 2.538,
+    "eval_steps_per_second": 0.171,
+    "epoch": 3.0
+  },
+  "test_accuracy": 0.6910112359550562,
+  "test_macro_f1": 0.6892492648330739,
+  "test_weighted_f1": 0.6860794790113811,
+  "per_class_report": {
+    "bug": {
+      "precision": 0.7058823529411765,
+      "recall": 0.5,
+      "f1-score": 0.5853658536585366,
+      "support": 48.0
+    },
+    "feature": {
+      "precision": 0.851063829787234,
+      "recall": 0.9302325581395349,
+      "f1-score": 0.8888888888888888,
+      "support": 43.0
+    },
+    "docs": {
+      "precision": 0.6304347826086957,
+      "recall": 0.6590909090909091,
+      "f1-score": 0.6444444444444445,
+      "support": 44.0
+    },
+    "question": {
+      "precision": 0.5882352941176471,
+      "recall": 0.6976744186046512,
+      "f1-score": 0.6382978723404256,
+      "support": 43.0
+    },
+    "accuracy": 0.6910112359550562,
+    "macro avg": {
+      "precision": 0.6939040648636884,
+      "recall": 0.6967494714587738,
+      "f1-score": 0.6892492648330739,
+      "support": 178.0
+    },
+    "weighted avg": {
+      "precision": 0.6938839646284773,
+      "recall": 0.6910112359550562,
+      "f1-score": 0.6860794790113811,
+      "support": 178.0
+    }
+  },
+  "created_at": "2026-05-18T16:31:39.029584Z"
+}

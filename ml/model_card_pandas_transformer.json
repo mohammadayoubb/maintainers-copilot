@@ -1,0 +1,67 @@
+{
+  "architecture": "distilbert-base-uncased",
+  "task": "issue classification",
+  "repo": "pandas-dev/pandas",
+  "labels": [
+    "bug",
+    "feature",
+    "docs",
+    "question"
+  ],
+  "hyperparameters": {
+    "epochs": 3,
+    "learning_rate": 2e-05,
+    "batch_size": 16,
+    "max_length": 256,
+    "weight_decay": 0.01,
+    "seed": 42
+  },
+  "freeze_policy": "No freezing. Full DistilBERT encoder and classification head were fine-tuned.",
+  "training_data": {
+    "file": "/content/issues_processed_pandas_label_fetch.csv",
+    "train_size": 823,
+    "validation_size": 177,
+    "test_size": 178,
+    "class_distribution": {
+      "bug": 319,
+      "docs": 289,
+      "question": 286,
+      "feature": 284
+    },
+    "split_distribution": {
+      "bug": {
+        "test": 48,
+        "train": 223,
+        "val": 48
+      },
+      "docs": {
+        "test": 44,
+        "train": 202,
+        "val": 43
+      },
+      "feature": {
+        "test": 43,
+        "train": 198,
+        "val": 43
+      },
+      "question": {
+        "test": 43,
+        "train": 200,
+        "val": 43
+      }
+    }
+  },
+  "final_metrics": {
+    "test_accuracy": 0.6910112359550562,
+    "test_macro_f1": 0.6892492648330739,
+    "test_weighted_f1": 0.6860794790113811
+  },
+  "artifact_hashes": {
+    "final_transformer_model_pandas/config.json": "e9b96b8578062ad229829a25893a241b4f7941bf81ddd61708b7e25a2e38e1ba",
+    "final_transformer_model_pandas/model.safetensors": "cbc57db3432115ac3cc676ce1e17c99830913ef6702021715584272eb321c31e",
+    "final_transformer_model_pandas/tokenizer.json": "8b79639ec74b46604e730f505186eaafb1006d2fd00f2c4930d168bb7f894680",
+    "final_transformer_model_pandas/tokenizer_config.json": "797ed9ba72b500001971b827b0040b8743def8ec38f9cd4cda4c4945734d3596",
+    "final_transformer_model_pandas/training_args.bin": "c6f980433c101af83b3280a0ba5d8b397d8dca32ac2909d5fe0b1c06294216ca"
+  },
+  "created_at": "2026-05-18T16:31:39.158247Z"
+}
