@@ -26,7 +26,6 @@ chatbot = [
 ]
 
 model = [
-    "torch>=2.3.0",
     "transformers>=4.44.0",
     "safetensors>=0.4.0",
 ]
