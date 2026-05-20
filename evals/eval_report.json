@@ -268,9 +268,9 @@
   ],
   "rag": {
     "total_examples": 25,
-    "hit_at_5": 0.0,
-    "mrr_at_10": 0.0,
-    "skipped_examples": 25,
+    "hit_at_5": 1.0,
+    "mrr_at_10": 1.0,
+    "skipped_examples": 23,
     "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
     "embeddings_file": "rag\\data\\embeddings_sentence-transformers_all-MiniLM-L6-v2.jsonl"
   }
