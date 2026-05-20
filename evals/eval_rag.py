@@ -6,8 +6,7 @@ Current retrieval metrics:
 - hit@5
 - MRR@10
 
-Later, answer-generation metrics such as faithfulness and answer relevancy can
-be added once the final LLM answer generation path is connected.
+This version uses the same MiniLM embedding file used by RagService.
 """
 
 from __future__ import annotations
@@ -18,13 +17,18 @@ from pathlib import Path
 from typing import Any
 
 from rag.build_embeddings import load_embeddings
+from rag.embeddings import build_embedder
 from rag.ingest import DEFAULT_CHUNKS_PATH, load_chunks_jsonl
 from rag.pipeline import build_local_rag_pipeline
 
 
 GOLDEN_PATH = Path("evals/golden/rag_golden.jsonl")
 REPORT_PATH = Path("evals/eval_report.json")
-DEFAULT_EMBEDDINGS_PATH = Path("rag/data/embeddings_simple.jsonl")
+
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+DEFAULT_EMBEDDINGS_PATH = Path(
+    "rag/data/embeddings_sentence-transformers_all-MiniLM-L6-v2.jsonl"
+)
 
 
 @dataclass(frozen=True)
@@ -134,7 +138,7 @@ def run_local_retrieval_eval(
     chunks_path: Path = DEFAULT_CHUNKS_PATH,
     embeddings_path: Path = DEFAULT_EMBEDDINGS_PATH,
 ) -> RagEvalResult:
-    """Run retrieval eval using local chunks and saved embeddings."""
+    """Run retrieval eval using local chunks and MiniLM embeddings."""
 
     examples = load_rag_golden_set(golden_path)
     chunks = load_chunks_jsonl(chunks_path)
@@ -152,24 +156,28 @@ def run_local_retrieval_eval(
     if not embeddings_path.exists():
         raise FileNotFoundError(
             f"Embeddings file not found: {embeddings_path}. "
-            "Run python rag/build_embeddings.py --backend simple first."
+            "Run python rag/build_embeddings.py --backend sentence-transformers "
+            "--model-name sentence-transformers/all-MiniLM-L6-v2 first."
         )
 
     chunk_embeddings = load_embeddings(embeddings_path)
+    embedder = build_embedder(EMBEDDING_MODEL_NAME)
 
     pipeline = build_local_rag_pipeline(
         chunks=chunks,
         chunk_embeddings=chunk_embeddings,
-        retrieval_top_k=10,
+        retrieval_top_k=20,
         rerank_top_k=10,
     )
 
     retrieved_chunk_ids_by_example: dict[str, list[str]] = {}
 
     for example in examples:
+        query_embedding = embedder.encode([example.question])[0]
+
         result = pipeline.retrieve(
             question=example.question,
-            query_embedding=_simple_text_embedding(example.question),
+            query_embedding=query_embedding,
         )
 
         retrieved_chunk_ids_by_example[example.example_id] = [
@@ -195,6 +203,7 @@ def save_rag_eval_report(result: RagEvalResult, path: Path = REPORT_PATH) -> Non
         "hit_at_5": result.hit_at_5,
         "mrr_at_10": result.mrr_at_10,
         "skipped_examples": result.skipped_examples,
+        "embedding_model": EMBEDDING_MODEL_NAME,
         "embeddings_file": str(DEFAULT_EMBEDDINGS_PATH),
     }
 
@@ -234,17 +243,6 @@ def _has_placeholder_ground_truth(example: RagGoldenExample) -> bool:
         chunk_id.startswith("TODO_REPLACE_WITH_REAL_CHUNK_ID")
         for chunk_id in example.ground_truth_chunks
     )
-
-
-def _simple_text_embedding(text: str, dimensions: int = 32) -> list[float]:
-    """Create the same deterministic query embedding as the simple backend."""
-
-    vector = [0.0] * dimensions
-
-    for index, character in enumerate(text.lower()):
-        vector[index % dimensions] += ord(character) / 1000.0
-
-    return vector
 
 
 def main() -> None:
