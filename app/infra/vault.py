@@ -22,12 +22,13 @@ from app.config import get_settings
 
 
 def get_vault_host() -> str:
-    """Return the Vault host used by local development.
+    """Return the configured Vault host.
 
-    When running scripts from your laptop, Vault is reachable through localhost.
-    Later, when the API runs inside Docker, we can use the Docker service name.
+    From the laptop, this is usually localhost.
+    Inside Docker Compose, this is the Vault service name: vault.
     """
-    return "localhost"
+    settings = get_settings()
+    return settings.vault_host
 
 
 def get_vault_url() -> str:

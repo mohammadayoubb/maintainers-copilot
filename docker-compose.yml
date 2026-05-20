@@ -1,6 +1,7 @@
 # Docker Compose file for the Week 7 Maintainer's Copilot project.
 #
 # This file starts the base local development stack:
+# - migrate: runs Alembic migrations and exits
 # - api: main FastAPI backend
 # - model-server: ML/NLP inference server
 # - chatbot: Streamlit internal/admin app
@@ -10,6 +11,31 @@
 # - vault: local dev secrets manager
 
 services:
+  migrate:
+    # Migration service runs Alembic and then exits.
+    # This makes database schema setup part of Docker Compose.
+    image: python:3.11-slim
+
+    working_dir: /app
+
+    # Install the project dependencies, then apply all database migrations.
+    command: >
+      sh -c "pip install -e . &&
+             alembic upgrade head"
+
+    volumes:
+      - .:/app
+
+    env_file:
+      - .env
+
+    environment:
+      # Inside Docker Compose, services communicate using service names.
+      VAULT_HOST: vault
+      DATABASE_SYNC_URL: postgresql+psycopg://maintainer:maintainer@db:5432/maintainers_copilot
+    depends_on:
+      - db
+
   api:
     # Temporary Python image for the foundation stage.
     # Later, we can replace this with a real Dockerfile.
@@ -33,9 +59,14 @@ services:
     env_file:
       - .env
 
+    environment:
+      # From inside the API container, Vault is reached by service name.
+      VAULT_HOST: vault
+
     # The API depends on these services existing.
-    # Later, startup checks will verify they are actually reachable.
+    # Later, startup checks verify required infrastructure more strictly.
     depends_on:
+      - migrate
       - db
       - redis
       - minio
@@ -44,11 +75,14 @@ services:
   model-server:
     # Separate service for ML/NLP inference endpoints.
     image: python:3.11-slim
+
     working_dir: /app
 
-    # Install project dependencies from pyproject.toml, then run the model server.
+    # Install core dependencies plus model-server ML dependencies, then run the model server.
+    # The [model] extra installs torch, transformers, and safetensors.
     command: >
-      sh -c "pip install -e . &&
+      sh -c "pip install torch --index-url https://download.pytorch.org/whl/cpu &&
+             pip install -e '.[model]' &&
              uvicorn model_server.main:app --host 0.0.0.0 --port 8001 --reload"
 
     ports:
@@ -63,12 +97,13 @@ services:
   chatbot:
     # Streamlit internal/admin frontend.
     image: python:3.11-slim
+
     working_dir: /app
 
     # Install project dependencies from pyproject.toml, then run Streamlit.
     command: >
-      sh -c "pip install -e . &&
-             streamlit run streamlit_app/app.py --server.port 8501 --server.address 0.0.0.0"
+      sh -c "pip install -e '.[chatbot]' &&
+         streamlit run streamlit_app/app.py --server.port 8501 --server.address 0.0.0.0"
 
     ports:
       - "${STREAMLIT_PORT:-8501}:8501"
@@ -91,7 +126,7 @@ services:
       POSTGRES_USER: maintainer
       POSTGRES_PASSWORD: maintainer
       POSTGRES_DB: maintainers_copilot
-
+      
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
 
@@ -125,7 +160,7 @@ services:
 
   vault:
     # Vault stores secrets in local dev mode.
-    # Later, the API will refuse to boot if required Vault secrets are missing.
+    # Later, the API refuses to boot if required Vault secrets are missing.
     image: hashicorp/vault:1.15
 
     cap_add:

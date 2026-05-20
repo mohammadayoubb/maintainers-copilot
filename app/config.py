@@ -50,7 +50,7 @@ class Settings(BaseSettings):
     minio_port: int = Field(default=9000, alias="MINIO_PORT")
     minio_console_port: int = Field(default=9001, alias="MINIO_CONSOLE_PORT")
     vault_port: int = Field(default=8200, alias="VAULT_PORT")
-
+    vault_host: str = Field(default="localhost", alias="VAULT_HOST")
     # Vault configuration.
     # For local dev, this comes from .env.
     # Later, the app will use this token only to read real secrets from Vault.
