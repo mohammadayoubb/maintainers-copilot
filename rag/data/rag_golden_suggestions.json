@@ -3,68 +3,69 @@
     "id": "rag_001",
     "question": "How should I fix a pandas read_csv ValueError when loading a malformed CSV file?",
     "current_ground_truth_chunks": [
-      "TODO_REPLACE_WITH_REAL_CHUNK_ID_001"
+      "issue-11493-problem-01",
+      "issue-7829-problem-01"
     ],
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7514214262800788,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-290-problem-01",
+        "score": 0.45397210647026076,
+        "title": "DataFrame.to_csv throws exception",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/290",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "DataFrame.to_csv throws exception\n\nHi, i ran into a problem with the current master on github. Here's import cStringIO as StringIO import pandas f1 = StringIO.StringIO('a,1.0\\nb,2.0') df = pandas.DataFrame.from_csv(f1,header=None) newdf = pandas.DataFrame({'t': df[df.columns[0]]}) newdf.to_csv('/tmp/test.csv') The last line gives me an exception like this: Traceback (most recent call last): File \"/tmp/test.py\", line 6, in <module> newdf.to_csv('/tmp/test.csv') File \"/usr/lib/python2.7/dist-packa"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-11337-problem-01",
-        "score": 0.7412610200370761,
-        "title": "sort_index(inplace = True) produces SettingWithCopyWarning",
+        "chunk_id": "issue-505-problem-01",
+        "score": 0.44625332851361516,
+        "title": "skiprows in read_csv not working?",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11337",
+        "url": "https://github.com/pandas-dev/pandas/issues/505",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "sort_index(inplace = True) produces SettingWithCopyWarning\n\nWhen I am trying to do `rows.sort_index(inplace = True)` I get SettingWithCopyWarning: `A value is trying to be set on a copy of a slice from a DataFrame` `rows = rows.sort_index()` can be used as a workaround to avoid the warning. Pandas version 0.17.0 installed by pip."
+        "text_preview": "skiprows in read_csv not working?\n\nHi Wes, I'm trying to read in a csv file with few header lines at the beginning of the file starting w/ a '#'. I tried to use skiprows specifying a list of the first n rows to skip as [0,1,2,3,..,n] but I keep getting Index has duplicates ['#'] error. Is this a bug or I'm doing something wrong? Also, will this be the best place to post such issues? I'm using pandas v 0.6.0 with python 2.7.2 Thanks for the great work you are doing w/ pandas. I'm finding it very "
       },
       {
         "rank": 3,
-        "chunk_id": "issue-8660-problem-01",
-        "score": 0.7365674515178632,
-        "title": "apply changes the datatypes: strange behaviour/bug?",
+        "chunk_id": "issue-225-problem-01",
+        "score": 0.43272722296585037,
+        "title": "read_csv interprets index column as dates",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8660",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "apply changes the datatypes: strange behaviour/bug?\n\nHello. I tried to apply a function to a dataframe and it changes the column types. See this example: http://nbviewer.ipython.org/urls/dl.dropboxusercontent.com/u/1118905/Calls-bug.ipynb Am I doing something wrong? Is it a bug? pandas 0.15.0"
+        "text_preview": "read_csv interprets index column as dates\n\nI loaded a dataset with an index column going from 1 to 304. Then I try to get the repr of the dataframe, but it raises `ValueError: year=100 is before 1900; the datetime strftime() methods require year >= 1900`. Looking at `df.index` shows that the numeric indices have been transformed into datetimes (the first 31 to days of this month, 32-60 as years 20xx, 61-99 as years 19xx, and higher numbers as a raw year)."
       },
       {
         "rank": 4,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7352305765894714,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-182-problem-01",
+        "score": 0.42849596078830543,
+        "title": "DataFrame to_csv() ignores nanRep argument for float32 input",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/182",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "DataFrame to_csv() ignores nanRep argument for float32 input\n\nimport numpy as np import pandas d = np.random.randn(8, 4) df = pandas.DataFrame(d) df[1][:] = np.nan df.to_csv('pandas-success.csv', nanRep='999') d = np.asarray(np.random.randn(8, 4), dtype=np.float32) df = pandas.DataFrame(d) df[1][:] = np.nan df.to_csv('pandas-fail.csv', nanRep='999') After running this with pandas 0.4.1 the file pandas-success.csv contains the nanRep string '999' as defined, but the file pandas-fail.csv contains "
       },
       {
         "rank": 5,
-        "chunk_id": "issue-10793-problem-01",
-        "score": 0.7313658504799619,
-        "title": "BUG: read_csv on windows loads \"zero width no-break-space\" unicode character",
+        "chunk_id": "issue-322-problem-01",
+        "score": 0.4196976860567457,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10793",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "BUG: read_csv on windows loads \"zero width no-break-space\" unicode character\n\nI'm working on a windows computer, with python pandas 0.16.2 installed. This is what happens when I tried loading in my csv file. ![bug](https://cloud.githubusercontent.com/assets/1865885/9190049/a3ec7cb8-3fa5-11e5-9922-70ccb55c30a9.png) According to <a href=\"http://www.utf8-chartable.de/unicode-utf8-table.pl?start=65024&utf8=string-literal\">this page</a>, the unicode character that pandas is loading in (`\\xef\\xbb\\xbf`"
+        "text_preview": "Round trip from CSV to CSV should leave data types unaltered\n\nI love where pandas is going. A use-case for which R's csv capabilities still win, though, is in editing a large csv file that's used as a poor-mans database. R will keep a column of integers as integers, pandas changes some of them to floats, some to strings! I'm not sure why there's inconsistency there, but I figure I'll kick the general issue your way and I'm happy to clarify as needed."
       }
     ]
   },
@@ -77,63 +78,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-112-problem-01",
-        "score": 0.7590522413010703,
-        "title": ".stack() does not yet work when MultiIndex already present",
+        "chunk_id": "issue-322-problem-01",
+        "score": 0.4629217546576766,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/112",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
           "bug"
         ],
-        "text_preview": ".stack() does not yet work when MultiIndex already present\n\nThis will not be dealt with in 0.4 unless I get a lot of energy"
+        "text_preview": "Round trip from CSV to CSV should leave data types unaltered\n\nI love where pandas is going. A use-case for which R's csv capabilities still win, though, is in editing a large csv file that's used as a poor-mans database. R will keep a column of integers as integers, pandas changes some of them to floats, some to strings! I'm not sure why there's inconsistency there, but I figure I'll kick the general issue your way and I'm happy to clarify as needed."
       },
       {
         "rank": 2,
-        "chunk_id": "issue-5221-problem-01",
-        "score": 0.7544435284969353,
-        "title": "DOC: use Sphinx extension directly from numpy/ipython instead of maintaining our own version",
+        "chunk_id": "issue-505-problem-01",
+        "score": 0.44129544278305977,
+        "title": "skiprows in read_csv not working?",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/5221",
+        "url": "https://github.com/pandas-dev/pandas/issues/505",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "DOC: use Sphinx extension directly from numpy/ipython instead of maintaining our own version"
+        "text_preview": "skiprows in read_csv not working?\n\nHi Wes, I'm trying to read in a csv file with few header lines at the beginning of the file starting w/ a '#'. I tried to use skiprows specifying a list of the first n rows to skip as [0,1,2,3,..,n] but I keep getting Index has duplicates ['#'] error. Is this a bug or I'm doing something wrong? Also, will this be the best place to post such issues? I'm using pandas v 0.6.0 with python 2.7.2 Thanks for the great work you are doing w/ pandas. I'm finding it very "
       },
       {
         "rank": 3,
-        "chunk_id": "issue-11118-problem-01",
-        "score": 0.7471259337799288,
-        "title": "Possible bug!! Replacing str in dataframe delete entire number",
+        "chunk_id": "issue-225-problem-01",
+        "score": 0.3959483290400111,
+        "title": "read_csv interprets index column as dates",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11118",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Possible bug!! Replacing str in dataframe delete entire number\n\n``` df.head() OSymbol 0 .GGP:150918:C:18.0 1 .GGP:150918:C:19.0 2 .GGP:150918:C:20.0 3 .GGP:150918:C:21.0 4 .GGP:150918:C:22.0 df['OSymbol'].str.replace(\".0\", \"\") 0 .GGP:1918:C:18 1 .GGP:1918:C:19 2 .GGP:1918:C: 3 .GGP:1918:C:21 4 .GGP:1918:C:22 ``` Look at 20 strike... should be 20.0 > 20 , instead all of 20.0 is removed... Pandas version 0.16.2"
+        "text_preview": "read_csv interprets index column as dates\n\nI loaded a dataset with an index column going from 1 to 304. Then I try to get the repr of the dataframe, but it raises `ValueError: year=100 is before 1900; the datetime strftime() methods require year >= 1900`. Looking at `df.index` shows that the numeric indices have been transformed into datetimes (the first 31 to days of this month, 32-60 as years 20xx, 61-99 as years 19xx, and higher numbers as a raw year)."
       },
       {
         "rank": 4,
-        "chunk_id": "issue-3940-problem-01",
-        "score": 0.74579062501788,
-        "title": "note \"Pandas install from source error\" in documentation when using mingw",
+        "chunk_id": "issue-349-problem-01",
+        "score": 0.3523676690877224,
+        "title": "index_col argument in read_csv may not respect order given",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3940",
+        "url": "https://github.com/pandas-dev/pandas/issues/349",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "note \"Pandas install from source error\" in documentation when using mingw"
+        "text_preview": "index_col argument in read_csv may not respect order given\n\nUser reported on mailing list"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-3825-problem-01",
-        "score": 0.7441632195064708,
-        "title": "In search of a pandas logo...",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.3511632200721451,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3825",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "In search of a pandas logo...\n\ncomplete [bikeshedding](https://en.wikipedia.org/wiki/Parkinson's_law_of_triviality), but...might be nice, any ideas? i was thinking one of the plots shown on the main website might work."
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       }
     ]
   },
@@ -141,68 +142,69 @@
     "id": "rag_003",
     "question": "How do I parse date columns when reading a CSV file in pandas?",
     "current_ground_truth_chunks": [
-      "TODO_REPLACE_WITH_REAL_CHUNK_ID_003"
+      "issue-1816-problem-01",
+      "issue-3757-problem-01"
     ],
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-124-problem-01",
-        "score": 0.7501183526699748,
-        "title": "Get view when selecting from hierarchical columns in DataFrame",
+        "chunk_id": "issue-225-problem-01",
+        "score": 0.46069656513493,
+        "title": "read_csv interprets index column as dates",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/124",
-        "labels": [
-          "feature"
-        ],
-        "text_preview": "Get view when selecting from hierarchical columns in DataFrame\n\nI think it currently reindexes"
-      },
-      {
-        "rank": 2,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.733394491080836,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
-      },
-      {
-        "rank": 3,
-        "chunk_id": "issue-11493-problem-01",
-        "score": 0.7311195160298981,
-        "title": "read_csv \"CParserError: Error tokenizing data\" with variable number of fields",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11493",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "read_csv \"CParserError: Error tokenizing data\" with variable number of fields\n\nI am having trouble with `read_csv` (Pandas 0.17.0) when trying to read a 380+ MB csv file. The file starts with 54 fields but some lines have 53 fields instead of 54. Running the below code gives me the following error: ``` parser = lambda x: datetime.strptime(x, '%y %m %d %H %M %S %f') df = pd.read_csv(filename, names=['YR', 'MO', 'DAY', 'HR', 'MIN', 'SEC', 'HUND', 'ERROR', 'RECTYPE', 'LANE', 'SPEED', 'CLASS', 'LENG"
-      },
-      {
-        "rank": 4,
-        "chunk_id": "issue-7989-problem-01",
-        "score": 0.7307813458118416,
-        "title": "Reading \\x01 separated files",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/7989",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "Reading \\x01 separated files\n\nAssume that you have a csv file separated by the sequence `\\x01` (namely `chr(1)`): `0S15SOfKdx\\x013580\\x015738.0\\x011407348006000\\n0S15SOfKdx\\x0140\\x015738.0\\x011407351601000\\n` How can I load this in Pandas? I tried everything: - `pd.read_csv(my_file, sep=chr(1))` - `pd.read_csv(my_file, sep='\\x01')` with no luck. Is this a bug, or I am typing the separator incorrectly? I am on **Pandas 0.14.1** with **Python 3**."
-      },
-      {
-        "rank": 5,
-        "chunk_id": "issue-316-problem-01",
-        "score": 0.7280577820787237,
-        "title": "Raise warning or exception when calling Series.sort when do not own data",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/316",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
         "labels": [
           "bug"
         ],
-        "text_preview": "Raise warning or exception when calling Series.sort when do not own data\n\nFor example, when part of a DataFrame, can result in the source array being modified in place"
+        "text_preview": "read_csv interprets index column as dates\n\nI loaded a dataset with an index column going from 1 to 304. Then I try to get the repr of the dataframe, but it raises `ValueError: year=100 is before 1900; the datetime strftime() methods require year >= 1900`. Looking at `df.index` shows that the numeric indices have been transformed into datetimes (the first 31 to days of this month, 32-60 as years 20xx, 61-99 as years 19xx, and higher numbers as a raw year)."
+      },
+      {
+        "rank": 2,
+        "chunk_id": "issue-225-maintainer-01-01",
+        "score": 0.3985581680268049,
+        "title": "read_csv interprets index column as dates",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Hm, this is caused by a bit of legacy cruft. Perhaps it's time to add a `parse_dates=True` option to read_csv/read_table and have it default to False. Currently it attempts to parse the index column expecting time series data but it's apparently a bit too aggressive."
+      },
+      {
+        "rank": 3,
+        "chunk_id": "issue-419-problem-01",
+        "score": 0.39100974396843663,
+        "title": "DataReader - request to truncate retrieved data to specified dates",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/419",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "DataReader - request to truncate retrieved data to specified dates\n\nPandas version 0.6.0 from pandas.io.data import DataReader import datetime import matplotlib.pyplot as plt sp500 = DataReader(\"SPY\", \"yahoo\", start=datetime.datetime(2005, 1,1)) sp500.info() sp500[\"Adj Close\"].plot() plt.show() <class 'pandas.core.frame.DataFrame'> Index: 4744 entries, 1993-01-29 00:00:00 to 2011-11-25 00:00:00 Data columns: Open 4744 non-null values High 4744 non-null values Low 4744 non-null values Close 4744 "
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-505-problem-01",
+        "score": 0.3721014739403556,
+        "title": "skiprows in read_csv not working?",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/505",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "skiprows in read_csv not working?\n\nHi Wes, I'm trying to read in a csv file with few header lines at the beginning of the file starting w/ a '#'. I tried to use skiprows specifying a list of the first n rows to skip as [0,1,2,3,..,n] but I keep getting Index has duplicates ['#'] error. Is this a bug or I'm doing something wrong? Also, will this be the best place to post such issues? I'm using pandas v 0.6.0 with python 2.7.2 Thanks for the great work you are doing w/ pandas. I'm finding it very "
+      },
+      {
+        "rank": 5,
+        "chunk_id": "issue-45-problem-01",
+        "score": 0.3559941885748908,
+        "title": "Importing data using HDFStore with pre-epoch dates; \"ValueError: timestamp out of range for platform localtime()/gmtime() function\"",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/45",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Importing data using HDFStore with pre-epoch dates; \"ValueError: timestamp out of range for platform localtime()/gmtime() function\"\n\nI have data with a DataFrame that goes back to 1949. I imported it from a csv into a hdf5 using HDFStore. That went fine, but when reading from the HDFStore to get a DF back, I get the below stack trace. When looking at the data in the store I see that the index has negative values for preepoch times... ValueError: timestamp out of range for platform localtime()/gm"
       }
     ]
   },
@@ -215,63 +217,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7184913350302778,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-366-problem-03",
+        "score": 0.42403584147409723,
+        "title": "Traceback when calling df.as_matrix()",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/366",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "_check=do_integrity_check) File \"/opt/local/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pandas/core/internals.py\", line 34, in __init__ self._check_integrity() File \"/opt/local/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pandas/core/internals.py\", line 40, in _check_integrity return (self.ref_locs[1:] > self.ref_locs[:-1]).all() File \"/opt/local/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pandas/co"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-242-problem-01",
-        "score": 0.708331280638919,
-        "title": "Add nrows argument and chunking iterator to file parsers",
+        "chunk_id": "issue-293-problem-01",
+        "score": 0.40143160606313855,
+        "title": "DataFrame constructor fails on list of tuples",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/242",
+        "url": "https://github.com/pandas-dev/pandas/issues/293",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Add nrows argument and chunking iterator to file parsers\n\nThis would be a very nice (and easy to implement) feature"
+        "text_preview": "DataFrame constructor fails on list of tuples\n\nIn [93]: pandas.**version** Out[0]: '0.5.0' In [94]: df = pandas.DataFrame({'A': [(1, 2)]}) --- AssertionError Traceback (most recent call last) < .. snip ... > The latter fails, however the following works fine: In [95]: s = pandas.Series([(1, 2)]) ---> this was fixed in issue #270 In [96]: df = pandas.DataFrame({'A': s}) In [97]: s Out[0]: 0 (1, 2) Name: None, Length: 1 In [98]: df Out[0]: A 0 (1, 2)"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-11576-problem-01",
-        "score": 0.707016822764725,
-        "title": "pandas query is broken",
+        "chunk_id": "issue-76-maintainer-01-01",
+        "score": 0.39901520074830416,
+        "title": "Sparse cumsum functions do not work",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11576",
+        "url": "https://github.com/pandas-dev/pandas/issues/76",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "pandas query is broken"
+        "text_preview": "Fixed in: https://github.com/wesm/pandas/commit/05123af1b2f8db1bc4f05c22515ef378cbeefbd3"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-8250-problem-01",
-        "score": 0.7069788424638657,
-        "title": "Running optimization using Scipy and Pandas packages",
+        "chunk_id": "issue-290-problem-01",
+        "score": 0.39381725010478985,
+        "title": "DataFrame.to_csv throws exception",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8250",
+        "url": "https://github.com/pandas-dev/pandas/issues/290",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Running optimization using Scipy and Pandas packages"
+        "text_preview": "DataFrame.to_csv throws exception\n\nHi, i ran into a problem with the current master on github. Here's import cStringIO as StringIO import pandas f1 = StringIO.StringIO('a,1.0\\nb,2.0') df = pandas.DataFrame.from_csv(f1,header=None) newdf = pandas.DataFrame({'t': df[df.columns[0]]}) newdf.to_csv('/tmp/test.csv') The last line gives me an exception like this: Traceback (most recent call last): File \"/tmp/test.py\", line 6, in <module> newdf.to_csv('/tmp/test.csv') File \"/usr/lib/python2.7/dist-packa"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-765-problem-01",
-        "score": 0.7069490183606363,
-        "title": "Enable Series/DataFrame.to_csv to accept a file-handle like argument",
+        "chunk_id": "issue-66-maintainer-01-01",
+        "score": 0.3912344466031942,
+        "title": "Fancy indexing on single column of DataFrame",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/765",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Enable Series/DataFrame.to_csv to accept a file-handle like argument\n\nPer SO thread: http://stackoverflow.com/questions/9189425/pandas-dataframe-serialization"
+        "text_preview": "This does work, at least with the git HEAD. Unit test written https://github.com/wesm/pandas/commit/1d45182cc726cd489ac6e37821889804fcc1c2c3"
       }
     ]
   },
@@ -284,63 +286,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7410512424555222,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-237-problem-01",
+        "score": 0.4239119976764947,
+        "title": "Groupby apply mixed-type casting problem",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/237",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "Groupby apply mixed-type casting problem\n\nthe following groupby transform results in things getting casted to object... ``` python df = DataFrame({'d' : [1.,1.,1.,2.,2.,2.], 'c' : np.tile(['a','b','c'], 2), 'v' : np.arange(1., 7.)}) # in IPython In [34]: df Out[34]: c d v 0 a 1 1 1 b 1 2 2 c 1 3 3 a 2 4 4 b 2 5 5 c 2 6 ``` Now write a small transform function: ``` python def f(group): v = group['v'] group['v2'] = (v - v.min()) / (v.max() - v.min()) return group ``` Note that this also handles NA"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-93-problem-01",
-        "score": 0.7288875216413684,
-        "title": "Improve Cython multi-groupby code to do aggregation without having to sort the data",
+        "chunk_id": "issue-181-problem-01",
+        "score": 0.4142491147427378,
+        "title": "as_index in GroupBy still not fully implemented",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/93",
+        "url": "https://github.com/pandas-dev/pandas/issues/181",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Improve Cython multi-groupby code to do aggregation without having to sort the data\n\nCurrently doing a lexsort to put things in order-- likely less efficient than it could be"
+        "text_preview": "as_index in GroupBy still not fully implemented\n\n``` python df = DataFrame({'A' : ['foo', 'bar', 'foo', 'bar', 'foo', 'bar', 'foo', 'foo'], 'B' : ['one', 'one', 'two', 'three', 'two', 'two', 'one', 'three'], 'C' : randn(8), 'D' : randn(8)}) df grouped = df.groupby('A') grouped = df.groupby('A') grouped.agg(np.sum) grouped = df.groupby('A', as_index=False) grouped.agg(np.sum) grouped.sum() ``` Adding @laserson so notifications go through"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-166-problem-01",
-        "score": 0.7187604420378745,
-        "title": "Implement multiple-function aggregation with DataFrame in groupby",
+        "chunk_id": "issue-358-problem-01",
+        "score": 0.4124153304980109,
+        "title": "Single column groupby does not set name",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/166",
+        "url": "https://github.com/pandas-dev/pandas/issues/358",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Implement multiple-function aggregation with DataFrame in groupby\n\nResult should have a hierarchical index in the columns. Behavior with as_index=False is somewhat ambiguous, though"
+        "text_preview": "Single column groupby does not set name\n\n``` In [2]: paste df = DataFrame({'A' : ['foo', 'bar', 'foo', 'bar', 'foo', 'bar', 'foo', 'foo'], 'B' : ['one', 'one', 'two', 'three', 'two', 'two', 'one', 'three'], 'C' : np.random.randn(8), 'D' : np.random.randn(8)}) ## -- End pasted text -- In [3]: df Out[3]: A B C D 0 foo one -2.096 0.4961 1 bar one -0.8738 -1.074 2 foo two -0.01376 -0.956 3 bar three 0.996 0.368 4 foo two -1.396 -0.3736 5 bar two 0.7779 0.4091 6 foo one -0.1221 1.26 7 foo three -0.97"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7185461233709656,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-375-maintainer-02-01",
+        "score": 0.4024133289210613,
+        "title": "Pivoting on multiple columns causes data loss",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/375",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "thanks a lot for catching this. fixed in the above commit. i'm going to overhaul some of the multi-key groupby code for 0.6.0 later this year"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-3825-problem-01",
-        "score": 0.7179271144944342,
-        "title": "In search of a pandas logo...",
+        "chunk_id": "issue-131-problem-01",
+        "score": 0.4019882399131087,
+        "title": "GroupBy.apply can't yield Series with DataFrame input",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3825",
+        "url": "https://github.com/pandas-dev/pandas/issues/131",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "In search of a pandas logo...\n\ncomplete [bikeshedding](https://en.wikipedia.org/wiki/Parkinson's_law_of_triviality), but...might be nice, any ideas? i was thinking one of the plots shown on the main website might work."
+        "text_preview": "GroupBy.apply can't yield Series with DataFrame input\n\n``` In [23]: import pandas.util.testing as tm In [24]: df = tm.makeTimeDataFrame() In [25]: df.groupby(lambda x: x.month).count() Out[25]: A B C D 1 21 21 21 21 2 9 9 9 9 In [26]: df.groupby(lambda x: x.month).apply(len) Exception you want to get a Series like: 1 21 2 9 ```"
       }
     ]
   },
@@ -348,68 +350,69 @@
     "id": "rag_006",
     "question": "What is the difference between merge and concat in pandas?",
     "current_ground_truth_chunks": [
-      "TODO_REPLACE_WITH_REAL_CHUNK_ID_006"
+      "issue-6336-problem-01",
+      "issue-708-problem-02"
     ],
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-6336-problem-01",
-        "score": 0.7941151970583804,
-        "title": "Add Clarification to Docs of Difference Between merge and join",
+        "chunk_id": "issue-331-problem-01",
+        "score": 0.40471536942410014,
+        "title": "DataFrame.join fails with unconsolidated inputs",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/6336",
+        "url": "https://github.com/pandas-dev/pandas/issues/331",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Add Clarification to Docs of Difference Between merge and join\n\nRight now it is not clear what the difference between these two methods is,"
+        "text_preview": "DataFrame.join fails with unconsolidated inputs\n\nAn oversight in the join refactoring recently ``` create two objects: a=DataFrame(randn(30,2),columns=['a','b']) c=Series(randn(30)) now add c as column of a: a['c']=c create a third object: d=DataFrame(randn(30,1),columns=['d']) try to join with a: a.join(d) ```"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-46-problem-01",
-        "score": 0.7632034240106755,
-        "title": "Configure pandas like pyzmq so checking in .c files is not necessary",
+        "chunk_id": "issue-238-problem-01",
+        "score": 0.341741293228617,
+        "title": "Joining with empty DataFrame on outer breaks",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/46",
+        "url": "https://github.com/pandas-dev/pandas/issues/238",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Configure pandas like pyzmq so checking in .c files is not necessary\n\nNo reason to be checking in the C files and diffs"
+        "text_preview": "Joining with empty DataFrame on outer breaks\n\nIn some problems it is convenient to create an empty dataframe, and then append to it in a loop. The following code now breaks: import pandas as ps x = ps.DataFrame() x.join(ps.DataFrame([3], index=[0], columns=['A']), how='outer') x.join(ps.DataFrame([3], index=[0], columns=['A'])) Pandas 0.4.1 > > > import pandas as ps > > > x = ps.DataFrame() > > > x.join(ps.DataFrame([3], index=[0], columns=['A']), how='outer') > > > A > > > 0 3 > > > > > > x.joi"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-6224-problem-01",
-        "score": 0.7414910143831008,
-        "title": "From wiki, undocumented public functions",
+        "chunk_id": "issue-486-problem-02",
+        "score": 0.3389128338830434,
+        "title": "exception joining dataframes with different datatypes",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/6224",
+        "url": "https://github.com/pandas-dev/pandas/issues/486",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "From wiki, undocumented public functions\n\nI'm tidying the wiki, this was a page out of place, moving to this issue. Don't know what's the issue `pd.to_pickle` is certainly documented. @JanSchulz? ``` Undocumented public functions The following was found by http://nbviewer.ipython.org/urls/gist.github.com/JanSchulz/6874142/raw/fadef84066d89b3ceb7532e762ed06d87904f3c4/pandas_api.ipynb (and changing all context to pandas in api.rst) ```"
+        "text_preview": "In [71]: a=DataFrame(randn(10,2),columns=['a','b']) In [72]: b=DataFrame(randn(10,1),columns=['c']).astype(np.float32) ## In [73]: a.join(b) TypeError Traceback (most recent call last) /Users/c.prinoth/<ipython-input-73-3163f462d6f9> in <module>() ----> 1 a.join(b) /usr/local/Cellar/python/2.7.2/lib/python2.7/site-packages/pandas/core/frame.pyc in join(self, other, on, how, lsuffix, rsuffix) 2614 return self._join_on(other, on, how, lsuffix, rsuffix) 2615 else: -> 2616 return self._join_index(ot"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-1758-problem-01",
-        "score": 0.7386726082052022,
-        "title": "Wrong defaults in the documentation for \"merge\"",
+        "chunk_id": "issue-246-problem-01",
+        "score": 0.3260998993203848,
+        "title": "DataFrame.join on key with single key failure",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/1758",
+        "url": "https://github.com/pandas-dev/pandas/issues/246",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Wrong defaults in the documentation for \"merge\"\n\nHi, as of pandas '0.8.2.dev-ee9321f', the merge operation is using False as default value for the optional arguments \"left_index\" and \"right_index\". However, its docstring states that the default value for both arguments is True instead. Thanks and regards. Manu."
+        "text_preview": "DataFrame.join on key with single key failure\n\ne.g. ``` df.join(df2, on=['key']) ```"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-1967-problem-01",
-        "score": 0.7375216919543306,
-        "title": "DOC: add import prefix to all pandas imports",
+        "chunk_id": "issue-366-problem-02",
+        "score": 0.32371300123781976,
+        "title": "Traceback when calling df.as_matrix()",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/1967",
+        "url": "https://github.com/pandas-dev/pandas/issues/366",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "DOC: add import prefix to all pandas imports\n\nin the docs, numpy is often imported with ``` from numpy import np ``` http://pandas.pydata.org/pandas-docs/dev/reshaping.html?highlight=curious for an easier reuse, what about adopting ``` import pandas as pd ``` for the docs?"
+        "text_preview": "I have a DataFrame object that was created by importing some data in list form, pivoting it, then adding totals columns using `df.append(pandas.DataFrame(some_matrix, columns=df.columns, index=[some_tuple])` and `df[some_other_tuple] = some_array` respectively. The resulting DataFrame object looks like this: ``` >>> df baz1 baz2 Totals spam1 spam2 spam3 spam1 spam2 spam3 foo bar foo1 bar1 NaN 20 NaN 50 NaN NaN NaN bar2 NaN NaN 30 NaN NaN NaN NaN foo2 bar2 NaN 40 NaN NaN NaN NaN NaN foo3 bar1 NaN"
       }
     ]
   },
@@ -422,56 +425,8 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-220-problem-01",
-        "score": 0.7297271476774629,
-        "title": "Implement outer/inner/right join logic when joining on a key",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/220",
-        "labels": [
-          "feature"
-        ],
-        "text_preview": "Implement outer/inner/right join logic when joining on a key\n\nCurrently only left join is implemented. This will make the join-on more consistent with its SQL counterparts"
-      },
-      {
-        "rank": 2,
-        "chunk_id": "issue-11982-problem-01",
-        "score": 0.719513364409172,
-        "title": "How to concatenate two Panels without duplicating Items axis (i.e. like columns in DataFrames)?",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11982",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "How to concatenate two Panels without duplicating Items axis (i.e. like columns in DataFrames)?"
-      },
-      {
-        "rank": 3,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7180440328604278,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
-      },
-      {
-        "rank": 4,
-        "chunk_id": "issue-708-problem-01",
-        "score": 0.7160278007888838,
-        "title": "concat DataFrames bug with keys on axis=1",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/708",
-        "labels": [
-          "bug"
-        ],
-        "text_preview": "concat DataFrames bug with keys on axis=1"
-      },
-      {
-        "rank": 5,
         "chunk_id": "issue-246-problem-01",
-        "score": 0.7153144543879422,
+        "score": 0.6159884435859873,
         "title": "DataFrame.join on key with single key failure",
         "source_type": "resolved_issue",
         "url": "https://github.com/pandas-dev/pandas/issues/246",
@@ -479,6 +434,54 @@
           "bug"
         ],
         "text_preview": "DataFrame.join on key with single key failure\n\ne.g. ``` df.join(df2, on=['key']) ```"
+      },
+      {
+        "rank": 2,
+        "chunk_id": "issue-486-problem-01",
+        "score": 0.45141172466471585,
+        "title": "exception joining dataframes with different datatypes",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/486",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "exception joining dataframes with different datatypes"
+      },
+      {
+        "rank": 3,
+        "chunk_id": "issue-367-problem-01",
+        "score": 0.44553462930973964,
+        "title": "Exception Joining DataFrames and Series",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/367",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Exception Joining DataFrames and Series"
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-486-problem-02",
+        "score": 0.43738408231258735,
+        "title": "exception joining dataframes with different datatypes",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/486",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "In [71]: a=DataFrame(randn(10,2),columns=['a','b']) In [72]: b=DataFrame(randn(10,1),columns=['c']).astype(np.float32) ## In [73]: a.join(b) TypeError Traceback (most recent call last) /Users/c.prinoth/<ipython-input-73-3163f462d6f9> in <module>() ----> 1 a.join(b) /usr/local/Cellar/python/2.7.2/lib/python2.7/site-packages/pandas/core/frame.pyc in join(self, other, on, how, lsuffix, rsuffix) 2614 return self._join_on(other, on, how, lsuffix, rsuffix) 2615 else: -> 2616 return self._join_index(ot"
+      },
+      {
+        "rank": 5,
+        "chunk_id": "issue-331-problem-01",
+        "score": 0.4174017240385675,
+        "title": "DataFrame.join fails with unconsolidated inputs",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/331",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "DataFrame.join fails with unconsolidated inputs\n\nAn oversight in the join refactoring recently ``` create two objects: a=DataFrame(randn(30,2),columns=['a','b']) c=Series(randn(30)) now add c as column of a: a['c']=c create a third object: d=DataFrame(randn(30,1),columns=['d']) try to join with a: a.join(d) ```"
       }
     ]
   },
@@ -491,63 +494,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-708-problem-01",
-        "score": 0.7225786897768163,
-        "title": "concat DataFrames bug with keys on axis=1",
+        "chunk_id": "issue-331-problem-01",
+        "score": 0.3865710685439355,
+        "title": "DataFrame.join fails with unconsolidated inputs",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/708",
+        "url": "https://github.com/pandas-dev/pandas/issues/331",
         "labels": [
           "bug"
         ],
-        "text_preview": "concat DataFrames bug with keys on axis=1"
+        "text_preview": "DataFrame.join fails with unconsolidated inputs\n\nAn oversight in the join refactoring recently ``` create two objects: a=DataFrame(randn(30,2),columns=['a','b']) c=Series(randn(30)) now add c as column of a: a['c']=c create a third object: d=DataFrame(randn(30,1),columns=['d']) try to join with a: a.join(d) ```"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-6336-problem-01",
-        "score": 0.7011629287792714,
-        "title": "Add Clarification to Docs of Difference Between merge and join",
+        "chunk_id": "issue-366-problem-02",
+        "score": 0.3695918561313504,
+        "title": "Traceback when calling df.as_matrix()",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/6336",
-        "labels": [
-          "docs"
-        ],
-        "text_preview": "Add Clarification to Docs of Difference Between merge and join\n\nRight now it is not clear what the difference between these two methods is,"
-      },
-      {
-        "rank": 3,
-        "chunk_id": "issue-973-problem-01",
-        "score": 0.695689337844895,
-        "title": "HDFStore does not conserve index correctly",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/973",
+        "url": "https://github.com/pandas-dev/pandas/issues/366",
         "labels": [
           "bug"
         ],
-        "text_preview": "HDFStore does not conserve index correctly"
+        "text_preview": "I have a DataFrame object that was created by importing some data in list form, pivoting it, then adding totals columns using `df.append(pandas.DataFrame(some_matrix, columns=df.columns, index=[some_tuple])` and `df[some_other_tuple] = some_array` respectively. The resulting DataFrame object looks like this: ``` >>> df baz1 baz2 Totals spam1 spam2 spam3 spam1 spam2 spam3 foo bar foo1 bar1 NaN 20 NaN 50 NaN NaN NaN bar2 NaN NaN 30 NaN NaN NaN NaN foo2 bar2 NaN 40 NaN NaN NaN NaN NaN foo3 bar1 NaN"
+      },
+      {
+        "rank": 3,
+        "chunk_id": "issue-76-maintainer-01-01",
+        "score": 0.35472358753035055,
+        "title": "Sparse cumsum functions do not work",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/76",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Fixed in: https://github.com/wesm/pandas/commit/05123af1b2f8db1bc4f05c22515ef378cbeefbd3"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-319-problem-01",
-        "score": 0.6943627274355092,
-        "title": "Add new function to remove duplicate rows from a DataFrame",
+        "chunk_id": "issue-377-maintainer-01-01",
+        "score": 0.3543769878790903,
+        "title": "mixed type dataframe loses type info",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/319",
+        "url": "https://github.com/pandas-dev/pandas/issues/377",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Add new function to remove duplicate rows from a DataFrame\n\nShould be reasonably performant, probably just use sets + `np.apply_along_axis`"
+        "text_preview": "this is actually a bug with DataFrame.apply that I introduced recently. I will fix."
       },
       {
         "rank": 5,
-        "chunk_id": "issue-108-problem-01",
-        "score": 0.6932969364621954,
-        "title": "Does LongPanel need to exist?",
+        "chunk_id": "issue-486-problem-02",
+        "score": 0.3532900890087456,
+        "title": "exception joining dataframes with different datatypes",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/108",
+        "url": "https://github.com/pandas-dev/pandas/issues/486",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Does LongPanel need to exist?\n\nDeal with this question in pandas 0.5"
+        "text_preview": "In [71]: a=DataFrame(randn(10,2),columns=['a','b']) In [72]: b=DataFrame(randn(10,1),columns=['c']).astype(np.float32) ## In [73]: a.join(b) TypeError Traceback (most recent call last) /Users/c.prinoth/<ipython-input-73-3163f462d6f9> in <module>() ----> 1 a.join(b) /usr/local/Cellar/python/2.7.2/lib/python2.7/site-packages/pandas/core/frame.pyc in join(self, other, on, how, lsuffix, rsuffix) 2614 return self._join_on(other, on, how, lsuffix, rsuffix) 2615 else: -> 2616 return self._join_index(ot"
       }
     ]
   },
@@ -560,63 +563,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7889599726085743,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.3963539971213495,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       },
       {
         "rank": 2,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7463893764777231,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-304-problem-01",
+        "score": 0.3809510127022086,
+        "title": "Cannot fill inserted column of NaNs",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/304",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "Cannot fill inserted column of NaNs\n\nAfter inserting a column of NaNs into a preexisting DataFrame its contents cannot be filled using advanced indexing. See test case below. This only appears to happen if the existing DataFrame is filled with floats, i.e. it works fine for ints. Tested with pandas 0.5 and latest github snapshot. ``` python from pandas import DataFrame import numpy as np print '\\n***RESULT\\n' df = DataFrame({'x': [1.1, 2.1, 3.1, 4.1], 'y': [5.1, 6.1, 7.1, 8.1]}, index=[0,1,2,3])"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-124-problem-01",
-        "score": 0.7390955675082589,
-        "title": "Get view when selecting from hierarchical columns in DataFrame",
+        "chunk_id": "issue-366-problem-02",
+        "score": 0.3791055706728797,
+        "title": "Traceback when calling df.as_matrix()",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/124",
+        "url": "https://github.com/pandas-dev/pandas/issues/366",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Get view when selecting from hierarchical columns in DataFrame\n\nI think it currently reindexes"
+        "text_preview": "I have a DataFrame object that was created by importing some data in list form, pivoting it, then adding totals columns using `df.append(pandas.DataFrame(some_matrix, columns=df.columns, index=[some_tuple])` and `df[some_other_tuple] = some_array` respectively. The resulting DataFrame object looks like this: ``` >>> df baz1 baz2 Totals spam1 spam2 spam3 spam1 spam2 spam3 foo bar foo1 bar1 NaN 20 NaN 50 NaN NaN NaN bar2 NaN NaN 30 NaN NaN NaN NaN foo2 bar2 NaN 40 NaN NaN NaN NaN NaN foo3 bar1 NaN"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-11843-problem-01",
-        "score": 0.7321418089173108,
-        "title": "Error storing cateogory values in HDFStore: NotImplementedError: cannot store a category dtype",
+        "chunk_id": "issue-469-problem-01",
+        "score": 0.3724632310854016,
+        "title": "Need to exclude NA values with dtype=object in stat methods",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11843",
+        "url": "https://github.com/pandas-dev/pandas/issues/469",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Error storing cateogory values in HDFStore: NotImplementedError: cannot store a category dtype"
+        "text_preview": "Need to exclude NA values with dtype=object in stat methods\n\nreported by @npinger, regression from 0.5.0 I think. import pandas lis = [1, 3, 5, None, 7] index = [1, 2, 3, 4, 5] ser = pandas.core.series.Series(data=lis, index=index) ser.mean() Gives this error: Traceback (most recent call last): File \"<console>\", line 1, in <module> File \".../pandas/core/series.py\", line 650, in mean return nanops.nanmean(self.values, skipna=skipna) File \".../pandas/core/nanops.py\", line 30, in nanmean the_mean ="
       },
       {
         "rank": 5,
-        "chunk_id": "issue-159-problem-01",
-        "score": 0.7296183607650648,
-        "title": "Add level keyword to .drop method",
+        "chunk_id": "issue-322-maintainer-03-01",
+        "score": 0.36142048192782467,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/159",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Add level keyword to .drop method\n\nTo drop values from a level in a MultiIndex"
+        "text_preview": "Closing this issue until a solution for the integer NA problem arises: http://pandas.pydata.org/pandas-docs/stable/gotchas.html#support-for-integer-na"
       }
     ]
   },
@@ -624,68 +627,69 @@
     "id": "rag_010",
     "question": "What is the difference between loc and iloc in pandas?",
     "current_ground_truth_chunks": [
-      "TODO_REPLACE_WITH_REAL_CHUNK_ID_010"
+      "issue-5068-problem-01",
+      "issue-6920-problem-01"
     ],
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-6336-problem-01",
-        "score": 0.769483669275117,
-        "title": "Add Clarification to Docs of Difference Between merge and join",
+        "chunk_id": "issue-66-maintainer-01-01",
+        "score": 0.3226050391944273,
+        "title": "Fancy indexing on single column of DataFrame",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/6336",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Add Clarification to Docs of Difference Between merge and join\n\nRight now it is not clear what the difference between these two methods is,"
+        "text_preview": "This does work, at least with the git HEAD. Unit test written https://github.com/wesm/pandas/commit/1d45182cc726cd489ac6e37821889804fcc1c2c3"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-46-problem-01",
-        "score": 0.7619493429047504,
-        "title": "Configure pandas like pyzmq so checking in .c files is not necessary",
+        "chunk_id": "issue-491-problem-01",
+        "score": 0.31378064371754966,
+        "title": "Cannot instantiate DataFrame with",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/46",
+        "url": "https://github.com/pandas-dev/pandas/issues/491",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Configure pandas like pyzmq so checking in .c files is not necessary\n\nNo reason to be checking in the C files and diffs"
+        "text_preview": "Cannot instantiate DataFrame with\n\nfrom pandas import DataFrame DataFrame([],[]) # DataFrame([]) does the same thing pandas\\core\\frame.pyc in **init**(self, data, index, columns, dtype, copy) 208 copy=copy) 209 elif isinstance(data, list): --> 210 if isinstance(data[0], (list, tuple)): 211 data, columns = _list_to_sdict(data, columns) 212 mgr = self._init_dict(data, index, columns, dtype=dtype) IndexError: list index out of range"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-6224-problem-01",
-        "score": 0.7404353067897197,
-        "title": "From wiki, undocumented public functions",
+        "chunk_id": "issue-366-problem-03",
+        "score": 0.2998371507221448,
+        "title": "Traceback when calling df.as_matrix()",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/6224",
+        "url": "https://github.com/pandas-dev/pandas/issues/366",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "From wiki, undocumented public functions\n\nI'm tidying the wiki, this was a page out of place, moving to this issue. Don't know what's the issue `pd.to_pickle` is certainly documented. @JanSchulz? ``` Undocumented public functions The following was found by http://nbviewer.ipython.org/urls/gist.github.com/JanSchulz/6874142/raw/fadef84066d89b3ceb7532e762ed06d87904f3c4/pandas_api.ipynb (and changing all context to pandas in api.rst) ```"
+        "text_preview": "_check=do_integrity_check) File \"/opt/local/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pandas/core/internals.py\", line 34, in __init__ self._check_integrity() File \"/opt/local/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pandas/core/internals.py\", line 40, in _check_integrity return (self.ref_locs[1:] > self.ref_locs[:-1]).all() File \"/opt/local/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pandas/co"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-8250-problem-01",
-        "score": 0.7370470331459779,
-        "title": "Running optimization using Scipy and Pandas packages",
+        "chunk_id": "issue-475-problem-01",
+        "score": 0.2875739389483082,
+        "title": "DataFrame constructor bug from single Series with different Index",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8250",
+        "url": "https://github.com/pandas-dev/pandas/issues/475",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Running optimization using Scipy and Pandas packages"
+        "text_preview": "DataFrame constructor bug from single Series with different Index\n\nreported by a user ``` In [7]: DataFrame(Series(np.arange(10)), index=range(5)) --------------------------------------------------------------------------- AssertionError Traceback (most recent call last) /home/wesm/code/pandas/<ipython-input-7-0a85de6b44f0> in <module>() ----> 1 DataFrame(Series(np.arange(10)), index=range(5)) /home/wesm/code/pandas/pandas/core/frame.pyc in __init__(self, data, index, columns, dtype, copy) 206 e"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-1967-problem-01",
-        "score": 0.7363681249502088,
-        "title": "DOC: add import prefix to all pandas imports",
+        "chunk_id": "issue-76-maintainer-01-01",
+        "score": 0.280045491687513,
+        "title": "Sparse cumsum functions do not work",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/1967",
+        "url": "https://github.com/pandas-dev/pandas/issues/76",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "DOC: add import prefix to all pandas imports\n\nin the docs, numpy is often imported with ``` from numpy import np ``` http://pandas.pydata.org/pandas-docs/dev/reshaping.html?highlight=curious for an easier reuse, what about adopting ``` import pandas as pd ``` for the docs?"
+        "text_preview": "Fixed in: https://github.com/wesm/pandas/commit/05123af1b2f8db1bc4f05c22515ef378cbeefbd3"
       }
     ]
   },
@@ -698,63 +702,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-11337-problem-01",
-        "score": 0.7484573410508618,
-        "title": "sort_index(inplace = True) produces SettingWithCopyWarning",
+        "chunk_id": "issue-66-maintainer-01-01",
+        "score": 0.3725501460158294,
+        "title": "Fancy indexing on single column of DataFrame",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11337",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "sort_index(inplace = True) produces SettingWithCopyWarning\n\nWhen I am trying to do `rows.sort_index(inplace = True)` I get SettingWithCopyWarning: `A value is trying to be set on a copy of a slice from a DataFrame` `rows = rows.sort_index()` can be used as a workaround to avoid the warning. Pandas version 0.17.0 installed by pip."
+        "text_preview": "This does work, at least with the git HEAD. Unit test written https://github.com/wesm/pandas/commit/1d45182cc726cd489ac6e37821889804fcc1c2c3"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7444029191231962,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.36927380035914903,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       },
       {
         "rank": 3,
-        "chunk_id": "issue-196-problem-01",
-        "score": 0.7434576677748153,
-        "title": "summary() method to all pandas objects.",
+        "chunk_id": "issue-491-problem-01",
+        "score": 0.361431813614148,
+        "title": "Cannot instantiate DataFrame with",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/196",
+        "url": "https://github.com/pandas-dev/pandas/issues/491",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "summary() method to all pandas objects.\n\nI always envy summary() function in R. It is really useful in displaying basic statistics of each object. How about supporting the method for all pandas objects?"
+        "text_preview": "Cannot instantiate DataFrame with\n\nfrom pandas import DataFrame DataFrame([],[]) # DataFrame([]) does the same thing pandas\\core\\frame.pyc in **init**(self, data, index, columns, dtype, copy) 208 copy=copy) 209 elif isinstance(data, list): --> 210 if isinstance(data[0], (list, tuple)): 211 data, columns = _list_to_sdict(data, columns) 212 mgr = self._init_dict(data, index, columns, dtype=dtype) IndexError: list index out of range"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-4327-problem-01",
-        "score": 0.7401697506597917,
-        "title": "Docs: change nosetest instruction",
+        "chunk_id": "issue-492-problem-02",
+        "score": 0.357260530762211,
+        "title": "Saving DataFrame with tuple index to HDFStore fails",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/4327",
+        "url": "https://github.com/pandas-dev/pandas/issues/492",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Docs: change nosetest instruction\n\nRunning Ubuntu 12.10. The recommended way of running tests (http://pandas.pydata.org/pandas-docs/stable/install.html#running-the-test-suite) ``` nosetests pandas ``` did not work. I had to use: ``` nosetests --exe pandas ``` It would also be useful to know how to avoid the: ``` OperationalError: (1046, 'No database selected') ``` errors."
+        "text_preview": "The following code fails on pandas 0.6.1 ``` import numpy as np import pandas col = np.arange(10) idx = [(0.,1.), (2., 3.), (4., 5.)] data = np.random.randn(30).reshape((3, 10)) DF = pandas.DataFrame(data, index=idx, columns=col) H = pandas.HDFStore(\"test.h5\", \"w\") H['data'] = DF H.close() ``` The traceback is as follows: ``` --------------------------------------------------------------------------- ValueError Traceback (most recent call last) /home2/hilboll/<ipython-input-15-a313de079f58> in <"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7381977249331142,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-316-problem-01",
+        "score": 0.35635044207652594,
+        "title": "Raise warning or exception when calling Series.sort when do not own data",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/316",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "Raise warning or exception when calling Series.sort when do not own data\n\nFor example, when part of a DataFrame, can result in the source array being modified in place"
       }
     ]
   },
@@ -767,63 +771,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7672860447556042,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-467-problem-01",
+        "score": 0.4392197397459465,
+        "title": "Memory leak in 0.6.0",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/467",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "Memory leak in 0.6.0\n\nThe following code results in huge memory usage. Reported by a user ``` df = DataFrame(index=np.arange(175)) for i in range(8000): df[i] = 5 ```"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-327-problem-01",
-        "score": 0.7437579341060055,
-        "title": "Investigate why numpy.unique is so slow on Series input",
+        "chunk_id": "issue-377-maintainer-01-01",
+        "score": 0.3986067088537843,
+        "title": "mixed type dataframe loses type info",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/327",
+        "url": "https://github.com/pandas-dev/pandas/issues/377",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Investigate why numpy.unique is so slow on Series input\n\nOnly true anecdotally (I've witnessed `np.unique(s.values)` being a lot faster but didn't have time to profile)"
+        "text_preview": "this is actually a bug with DataFrame.apply that I introduced recently. I will fix."
       },
       {
         "rank": 3,
-        "chunk_id": "issue-11255-problem-01",
-        "score": 0.7364420688150732,
-        "title": "Groupby ValueError: The truth value of a DataFrame is ambiguous.",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.3894713024039142,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11255",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Groupby ValueError: The truth value of a DataFrame is ambiguous."
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       },
       {
         "rank": 4,
-        "chunk_id": "issue-166-problem-01",
-        "score": 0.7311401926836605,
-        "title": "Implement multiple-function aggregation with DataFrame in groupby",
+        "chunk_id": "issue-491-problem-01",
+        "score": 0.38524344220399054,
+        "title": "Cannot instantiate DataFrame with",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/166",
+        "url": "https://github.com/pandas-dev/pandas/issues/491",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Implement multiple-function aggregation with DataFrame in groupby\n\nResult should have a hierarchical index in the columns. Behavior with as_index=False is somewhat ambiguous, though"
+        "text_preview": "Cannot instantiate DataFrame with\n\nfrom pandas import DataFrame DataFrame([],[]) # DataFrame([]) does the same thing pandas\\core\\frame.pyc in **init**(self, data, index, columns, dtype, copy) 208 copy=copy) 209 elif isinstance(data, list): --> 210 if isinstance(data[0], (list, tuple)): 211 data, columns = _list_to_sdict(data, columns) 212 mgr = self._init_dict(data, index, columns, dtype=dtype) IndexError: list index out of range"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-699-problem-01",
-        "score": 0.7307757412185154,
-        "title": "Resetting Index on DataFrame after DataFrame.set_index(..., drop=False)",
+        "chunk_id": "issue-475-problem-01",
+        "score": 0.38113906917304885,
+        "title": "DataFrame constructor bug from single Series with different Index",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/699",
+        "url": "https://github.com/pandas-dev/pandas/issues/475",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Resetting Index on DataFrame after DataFrame.set_index(..., drop=False)\n\npandas attempts to add the columns in the MultiIndex back into the DataFrame. Maybe there should be a parameter to reset_index (insert=False?)."
+        "text_preview": "DataFrame constructor bug from single Series with different Index\n\nreported by a user ``` In [7]: DataFrame(Series(np.arange(10)), index=range(5)) --------------------------------------------------------------------------- AssertionError Traceback (most recent call last) /home/wesm/code/pandas/<ipython-input-7-0a85de6b44f0> in <module>() ----> 1 DataFrame(Series(np.arange(10)), index=range(5)) /home/wesm/code/pandas/pandas/core/frame.pyc in __init__(self, data, index, columns, dtype, copy) 206 e"
       }
     ]
   },
@@ -836,64 +840,64 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7925429285555239,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-179-maintainer-03-01",
+        "score": 0.43141160541104184,
+        "title": "Pre-epoch dates giving OverflowError in mktime with HDFStore",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
-        "labels": [
-          "docs"
-        ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
-      },
-      {
-        "rank": 2,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7457716723564191,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
-      },
-      {
-        "rank": 3,
-        "chunk_id": "issue-11420-problem-01",
-        "score": 0.7358852522162243,
-        "title": "Dropping a column not working in 0.17",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11420",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "Dropping a column not working in 0.17"
-      },
-      {
-        "rank": 4,
-        "chunk_id": "issue-632-problem-01",
-        "score": 0.7358298508536258,
-        "title": "Create developer page for pandas",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/632",
-        "labels": [
-          "docs"
-        ],
-        "text_preview": "Create developer page for pandas\n\nHow to get involved: - git basics - possible areas for improvement in the library - short notes on best practices Basically a version of http://statsmodels.sourceforge.net/dev/index.html"
-      },
-      {
-        "rank": 5,
-        "chunk_id": "issue-941-problem-01",
-        "score": 0.7355684173728717,
-        "title": "Pass more than column names to rows/cols args in pivot_table",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/941",
+        "url": "https://github.com/pandas-dev/pandas/issues/179",
         "labels": [
           "bug",
           "feature"
         ],
-        "text_preview": "Pass more than column names to rows/cols args in pivot_table\n\nShould be same argument types as groupby"
+        "text_preview": "According to the Python docs this is a platform specific problem and I guess does not have a short-term resolution http://docs.python.org/library/time.html#time.mktime The best immediate solution I have for you is: get 64-bit Python which does not have this problem. Longer term I am going to integrate the NumPy datetime64 dtype into pandas which will solve this. But that's only something I can see happening within the next few months. I'm going to leave the issue open so I don't forget about it."
+      },
+      {
+        "rank": 2,
+        "chunk_id": "issue-225-problem-01",
+        "score": 0.3777724773481814,
+        "title": "read_csv interprets index column as dates",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "read_csv interprets index column as dates\n\nI loaded a dataset with an index column going from 1 to 304. Then I try to get the repr of the dataframe, but it raises `ValueError: year=100 is before 1900; the datetime strftime() methods require year >= 1900`. Looking at `df.index` shows that the numeric indices have been transformed into datetimes (the first 31 to days of this month, 32-60 as years 20xx, 61-99 as years 19xx, and higher numbers as a raw year)."
+      },
+      {
+        "rank": 3,
+        "chunk_id": "issue-45-maintainer-01-01",
+        "score": 0.36422029003093553,
+        "title": "Importing data using HDFStore with pre-epoch dates; \"ValueError: timestamp out of range for platform localtime()/gmtime() function\"",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/45",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "I will look into this when I get a chance-- the most robust way to handle it would be to use the NumPy datetime64 dtype, but that is still undergoing change. There might be another workaround"
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-131-problem-01",
+        "score": 0.35447191827131624,
+        "title": "GroupBy.apply can't yield Series with DataFrame input",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/131",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "GroupBy.apply can't yield Series with DataFrame input\n\n``` In [23]: import pandas.util.testing as tm In [24]: df = tm.makeTimeDataFrame() In [25]: df.groupby(lambda x: x.month).count() Out[25]: A B C D 1 21 21 21 21 2 9 9 9 9 In [26]: df.groupby(lambda x: x.month).apply(len) Exception you want to get a Series like: 1 21 2 9 ```"
+      },
+      {
+        "rank": 5,
+        "chunk_id": "issue-454-problem-01",
+        "score": 0.3525874569962893,
+        "title": "Saving Panel with float index to HDFStore fails",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/454",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Saving Panel with float index to HDFStore fails\n\nHi, the following code produces a `ValueError: unrecognized index type <type 'float'>`: ``` import datetime import pandas timeidx = pandas.DateRange(start=datetime.datetime(2009,1,1), end=datetime.datetime(2009,12,31), offset=pandas.datetools.MonthEnd()) lons_coarse = np.linspace(-177.5, 177.5, 72) lats_coarse = np.linspace(-87.5, 87.5, 36) P = pandas.Panel(items=timeidx, major_axis=lons_coarse, minor_axis=lats_coarse) D = pandas.DataFrame(data=np"
       }
     ]
   },
@@ -906,63 +910,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7061200274632843,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-505-problem-01",
+        "score": 0.38588485462373145,
+        "title": "skiprows in read_csv not working?",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/505",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "skiprows in read_csv not working?\n\nHi Wes, I'm trying to read in a csv file with few header lines at the beginning of the file starting w/ a '#'. I tried to use skiprows specifying a list of the first n rows to skip as [0,1,2,3,..,n] but I keep getting Index has duplicates ['#'] error. Is this a bug or I'm doing something wrong? Also, will this be the best place to post such issues? I'm using pandas v 0.6.0 with python 2.7.2 Thanks for the great work you are doing w/ pandas. I'm finding it very "
       },
       {
         "rank": 2,
-        "chunk_id": "issue-3757-problem-01",
-        "score": 0.7033498716465806,
-        "title": "read_csv epoch parsing with pd.to_datetime()",
+        "chunk_id": "issue-66-maintainer-01-01",
+        "score": 0.3440919649163726,
+        "title": "Fancy indexing on single column of DataFrame",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3757",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "read_csv epoch parsing with pd.to_datetime()"
+        "text_preview": "This does work, at least with the git HEAD. Unit test written https://github.com/wesm/pandas/commit/1d45182cc726cd489ac6e37821889804fcc1c2c3"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-8692-problem-01",
-        "score": 0.7005788758793745,
-        "title": "Is there a way to get all the names that are currently associated with an opened HDF5 file?",
+        "chunk_id": "issue-61-maintainer-01-01",
+        "score": 0.33188974249435643,
+        "title": "DataFrame.__ne__ not implemented",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8692",
+        "url": "https://github.com/pandas-dev/pandas/issues/61",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Is there a way to get all the names that are currently associated with an opened HDF5 file?"
+        "text_preview": "done: https://github.com/wesm/pandas/commit/c8e5403cde56f685ba0dca644ed287d254be3fc3"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-108-problem-01",
-        "score": 0.6986338133439798,
-        "title": "Does LongPanel need to exist?",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.29996763835535933,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/108",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Does LongPanel need to exist?\n\nDeal with this question in pandas 0.5"
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       },
       {
         "rank": 5,
-        "chunk_id": "issue-744-problem-01",
-        "score": 0.6960239326457665,
-        "title": "Using non-scalar converters with read_table",
+        "chunk_id": "issue-511-problem-01",
+        "score": 0.29862013303580515,
+        "title": "Certain DataFrame cannot be pickled to string",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/744",
+        "url": "https://github.com/pandas-dev/pandas/issues/511",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Using non-scalar converters with read_table"
+        "text_preview": "Certain DataFrame cannot be pickled to string\n\nimport cPickle import numpy as np from pandas import Series s = Series({'a' : None}) s['a'] = np.inf cPickle.loads(cPickle.dumps(s)) ValueError: could not convert string to float"
       }
     ]
   },
@@ -975,63 +979,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-8515-problem-01",
-        "score": 0.748926202205973,
-        "title": "Module xlrd is not installed with 0.14; creates an Import Error when using read_excel",
+        "chunk_id": "issue-290-problem-01",
+        "score": 0.26810040916465616,
+        "title": "DataFrame.to_csv throws exception",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8515",
+        "url": "https://github.com/pandas-dev/pandas/issues/290",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Module xlrd is not installed with 0.14; creates an Import Error when using read_excel"
+        "text_preview": "DataFrame.to_csv throws exception\n\nHi, i ran into a problem with the current master on github. Here's import cStringIO as StringIO import pandas f1 = StringIO.StringIO('a,1.0\\nb,2.0') df = pandas.DataFrame.from_csv(f1,header=None) newdf = pandas.DataFrame({'t': df[df.columns[0]]}) newdf.to_csv('/tmp/test.csv') The last line gives me an exception like this: Traceback (most recent call last): File \"/tmp/test.py\", line 6, in <module> newdf.to_csv('/tmp/test.csv') File \"/usr/lib/python2.7/dist-packa"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-486-problem-01",
-        "score": 0.725485195352459,
-        "title": "exception joining dataframes with different datatypes",
+        "chunk_id": "issue-225-maintainer-01-01",
+        "score": 0.2459584146900599,
+        "title": "read_csv interprets index column as dates",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/486",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
         "labels": [
           "bug"
         ],
-        "text_preview": "exception joining dataframes with different datatypes"
+        "text_preview": "Hm, this is caused by a bit of legacy cruft. Perhaps it's time to add a `parse_dates=True` option to read_csv/read_table and have it default to False. Currently it attempts to parse the index column expecting time series data but it's apparently a bit too aggressive."
       },
       {
         "rank": 3,
-        "chunk_id": "issue-9483-problem-01",
-        "score": 0.7210611021668996,
-        "title": "crash with TypeError when repeatedly appending to HDFStore",
+        "chunk_id": "issue-98-problem-01",
+        "score": 0.21943535395218436,
+        "title": "Calling xs on DataFrame with index but no columns raises Exception",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/9483",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "crash with TypeError when repeatedly appending to HDFStore"
-      },
-      {
-        "rank": 4,
-        "chunk_id": "issue-741-problem-01",
-        "score": 0.7179040192514825,
-        "title": "plot/hist/boxplot with non numeric/date Index and MultiIndex",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/741",
+        "url": "https://github.com/pandas-dev/pandas/issues/98",
         "labels": [
           "bug"
         ],
-        "text_preview": "plot/hist/boxplot with non numeric/date Index and MultiIndex\n\nPlotting functions work fine if the index holds numeric or date data. But error is generated when Index holds e.g strings, or when MultiIndex is used."
+        "text_preview": "Calling xs on DataFrame with index but no columns raises Exception\n\nexample: ``` In [1]: df = DataFrame(index=['a', 'b', 'c']) In [2]: df.ix['a'] ERROR: An unexpected error occurred while tokenizing input The following traceback may be corrupted or invalid The error message is: ('EOF in multi-line statement', (2, 0)) --------------------------------------------------------------------------- IndexError Traceback (most recent call last) /home/wesm/code/pandas/<ipython-input-2-6181dcf1ffea> in <mo"
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-492-problem-02",
+        "score": 0.2085603946870777,
+        "title": "Saving DataFrame with tuple index to HDFStore fails",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/492",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "The following code fails on pandas 0.6.1 ``` import numpy as np import pandas col = np.arange(10) idx = [(0.,1.), (2., 3.), (4., 5.)] data = np.random.randn(30).reshape((3, 10)) DF = pandas.DataFrame(data, index=idx, columns=col) H = pandas.HDFStore(\"test.h5\", \"w\") H['data'] = DF H.close() ``` The traceback is as follows: ``` --------------------------------------------------------------------------- ValueError Traceback (most recent call last) /home2/hilboll/<ipython-input-15-a313de079f58> in <"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-8692-problem-01",
-        "score": 0.71779289623166,
-        "title": "Is there a way to get all the names that are currently associated with an opened HDF5 file?",
+        "chunk_id": "issue-225-problem-01",
+        "score": 0.2084234439959097,
+        "title": "read_csv interprets index column as dates",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8692",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Is there a way to get all the names that are currently associated with an opened HDF5 file?"
+        "text_preview": "read_csv interprets index column as dates\n\nI loaded a dataset with an index column going from 1 to 304. Then I try to get the repr of the dataframe, but it raises `ValueError: year=100 is before 1900; the datetime strftime() methods require year >= 1900`. Looking at `df.index` shows that the numeric indices have been transformed into datetimes (the first 31 to days of this month, 32-60 as years 20xx, 61-99 as years 19xx, and higher numbers as a raw year)."
       }
     ]
   },
@@ -1044,63 +1048,64 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-11949-problem-01",
-        "score": 0.7399294913864946,
-        "title": "Excel encoding issue",
+        "chunk_id": "issue-181-problem-01",
+        "score": 0.4187860474407938,
+        "title": "as_index in GroupBy still not fully implemented",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11949",
+        "url": "https://github.com/pandas-dev/pandas/issues/181",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Excel encoding issue\n\nI want to read in Excel-Data (.xlsx) and have a problem with a wrong encoding of special characters. In the Excel-File, portuguese special characters, for example on \"A\", look like this: ![alt text](https://dl.dropboxusercontent.com/u/22352379/1excel_encoding.png) **Á** However, after reading in the data with Pandas Excel IO, they look like this: ![alt text](https://dl.dropboxusercontent.com/u/22352379/pandas_encoding.JPG) **Ã** I have no idea why this happens and how to so"
+        "text_preview": "as_index in GroupBy still not fully implemented\n\n``` python df = DataFrame({'A' : ['foo', 'bar', 'foo', 'bar', 'foo', 'bar', 'foo', 'foo'], 'B' : ['one', 'one', 'two', 'three', 'two', 'two', 'one', 'three'], 'C' : randn(8), 'D' : randn(8)}) df grouped = df.groupby('A') grouped = df.groupby('A') grouped.agg(np.sum) grouped = df.groupby('A', as_index=False) grouped.agg(np.sum) grouped.sum() ``` Adding @laserson so notifications go through"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7339461433116785,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-133-problem-01",
+        "score": 0.41356003057399465,
+        "title": "Multi-key groupby fails with multiple functions",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/133",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "Multi-key groupby fails with multiple functions\n\nChris Jordan-Squire said: If I had some DataFrame with a bunch of columns, including, say 'char1', 'char2', and 'float' then df.groupby('char1')['float'].agg([np.mean, np.std]) works but df.groupby(['char1', 'char2'])['float'].agg([np.mean, np.std]) throws TypeError: 'list' object is not callable."
       },
       {
         "rank": 3,
-        "chunk_id": "issue-428-problem-01",
-        "score": 0.7325391598636578,
-        "title": "add rank and rank correlation methods",
+        "chunk_id": "issue-237-problem-01",
+        "score": 0.3969245656698857,
+        "title": "Groupby apply mixed-type casting problem",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/428",
+        "url": "https://github.com/pandas-dev/pandas/issues/237",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "add rank and rank correlation methods\n\nI do not know what scope you have in mind for DataFrame methods, but rank and spearman correlation would sure be handy ;)"
+        "text_preview": "Groupby apply mixed-type casting problem\n\nthe following groupby transform results in things getting casted to object... ``` python df = DataFrame({'d' : [1.,1.,1.,2.,2.,2.], 'c' : np.tile(['a','b','c'], 2), 'v' : np.arange(1., 7.)}) # in IPython In [34]: df Out[34]: c d v 0 a 1 1 1 b 1 2 2 c 1 3 3 a 2 4 4 b 2 5 5 c 2 6 ``` Now write a small transform function: ``` python def f(group): v = group['v'] group['v2'] = (v - v.min()) / (v.max() - v.min()) return group ``` Note that this also handles NA"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-9152-problem-01",
-        "score": 0.731987069617412,
-        "title": "Variable visibility issue with Pandas and IPython",
+        "chunk_id": "issue-382-problem-01",
+        "score": 0.38106940090687624,
+        "title": "DataFrame should be more aggressive about trying to aggregate numeric data stored in dtype object",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/9152",
+        "url": "https://github.com/pandas-dev/pandas/issues/382",
         "labels": [
-          "question"
+          "bug",
+          "feature"
         ],
-        "text_preview": "Variable visibility issue with Pandas and IPython"
+        "text_preview": "DataFrame should be more aggressive about trying to aggregate numeric data stored in dtype object\n\n``` data = dict() data['a'] = [-0.00049987540199591344, -0.0016467257772919831, 0.00067695870775883013] data['b'] = [-0, -0, 0.0] data['c'] = [0.00031111847529610595, 0.0014902627951905339, -0.00094099200035979691] AA = DataFrame( data , index = ['20110801', '20110802', '20110803'] , dtype = ‘object’ ) ```"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-196-problem-01",
-        "score": 0.729553587553974,
-        "title": "summary() method to all pandas objects.",
+        "chunk_id": "issue-131-problem-01",
+        "score": 0.37852292860787196,
+        "title": "GroupBy.apply can't yield Series with DataFrame input",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/196",
+        "url": "https://github.com/pandas-dev/pandas/issues/131",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "summary() method to all pandas objects.\n\nI always envy summary() function in R. It is really useful in displaying basic statistics of each object. How about supporting the method for all pandas objects?"
+        "text_preview": "GroupBy.apply can't yield Series with DataFrame input\n\n``` In [23]: import pandas.util.testing as tm In [24]: df = tm.makeTimeDataFrame() In [25]: df.groupby(lambda x: x.month).count() Out[25]: A B C D 1 21 21 21 21 2 9 9 9 9 In [26]: df.groupby(lambda x: x.month).apply(len) Exception you want to get a Series like: 1 21 2 9 ```"
       }
     ]
   },
@@ -1113,63 +1118,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-6336-problem-01",
-        "score": 0.769407013451707,
-        "title": "Add Clarification to Docs of Difference Between merge and join",
+        "chunk_id": "issue-237-problem-01",
+        "score": 0.4068914242171539,
+        "title": "Groupby apply mixed-type casting problem",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/6336",
+        "url": "https://github.com/pandas-dev/pandas/issues/237",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Add Clarification to Docs of Difference Between merge and join\n\nRight now it is not clear what the difference between these two methods is,"
+        "text_preview": "Groupby apply mixed-type casting problem\n\nthe following groupby transform results in things getting casted to object... ``` python df = DataFrame({'d' : [1.,1.,1.,2.,2.,2.], 'c' : np.tile(['a','b','c'], 2), 'v' : np.arange(1., 7.)}) # in IPython In [34]: df Out[34]: c d v 0 a 1 1 1 b 1 2 2 c 1 3 3 a 2 4 4 b 2 5 5 c 2 6 ``` Now write a small transform function: ``` python def f(group): v = group['v'] group['v2'] = (v - v.min()) / (v.max() - v.min()) return group ``` Note that this also handles NA"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-8660-problem-01",
-        "score": 0.7388938315517974,
-        "title": "apply changes the datatypes: strange behaviour/bug?",
+        "chunk_id": "issue-405-problem-01",
+        "score": 0.3601446998148201,
+        "title": "GroupBy does not handle non-string column labels passed",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8660",
+        "url": "https://github.com/pandas-dev/pandas/issues/405",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "apply changes the datatypes: strange behaviour/bug?\n\nHello. I tried to apply a function to a dataframe and it changes the column types. See this example: http://nbviewer.ipython.org/urls/dl.dropboxusercontent.com/u/1118905/Calls-bug.ipynb Am I doing something wrong? Is it a bug? pandas 0.15.0"
+        "text_preview": "GroupBy does not handle non-string column labels passed\n\ncc @dhrod5"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-166-problem-01",
-        "score": 0.7362881038420013,
-        "title": "Implement multiple-function aggregation with DataFrame in groupby",
+        "chunk_id": "issue-133-problem-01",
+        "score": 0.3526735513997211,
+        "title": "Multi-key groupby fails with multiple functions",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/166",
+        "url": "https://github.com/pandas-dev/pandas/issues/133",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Implement multiple-function aggregation with DataFrame in groupby\n\nResult should have a hierarchical index in the columns. Behavior with as_index=False is somewhat ambiguous, though"
+        "text_preview": "Multi-key groupby fails with multiple functions\n\nChris Jordan-Squire said: If I had some DataFrame with a bunch of columns, including, say 'char1', 'char2', and 'float' then df.groupby('char1')['float'].agg([np.mean, np.std]) works but df.groupby(['char1', 'char2'])['float'].agg([np.mean, np.std]) throws TypeError: 'list' object is not callable."
       },
       {
         "rank": 4,
-        "chunk_id": "issue-11255-problem-01",
-        "score": 0.7336202825564927,
-        "title": "Groupby ValueError: The truth value of a DataFrame is ambiguous.",
+        "chunk_id": "issue-131-problem-01",
+        "score": 0.3361299776101175,
+        "title": "GroupBy.apply can't yield Series with DataFrame input",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11255",
+        "url": "https://github.com/pandas-dev/pandas/issues/131",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Groupby ValueError: The truth value of a DataFrame is ambiguous."
+        "text_preview": "GroupBy.apply can't yield Series with DataFrame input\n\n``` In [23]: import pandas.util.testing as tm In [24]: df = tm.makeTimeDataFrame() In [25]: df.groupby(lambda x: x.month).count() Out[25]: A B C D 1 21 21 21 21 2 9 9 9 9 In [26]: df.groupby(lambda x: x.month).apply(len) Exception you want to get a Series like: 1 21 2 9 ```"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-10325-problem-01",
-        "score": 0.728529638823609,
-        "title": "Groupby - Apply method doesn't handle arguments correctly",
+        "chunk_id": "issue-375-maintainer-02-01",
+        "score": 0.2855895306151179,
+        "title": "Pivoting on multiple columns causes data loss",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10325",
+        "url": "https://github.com/pandas-dev/pandas/issues/375",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Groupby - Apply method doesn't handle arguments correctly\n\nThe `apply` method on a groupby object appears to send all arguments to the applied function. As in, if you try to do `df.groupby(level='dt').apply(func, axis=1)`, the `axis=1` argument is passed to `func` rather than being parsed by `apply` as intended. The behavior is correct, however, in the `DataFrame.apply` method."
+        "text_preview": "thanks a lot for catching this. fixed in the above commit. i'm going to overhaul some of the multi-key groupby code for 0.6.0 later this year"
       }
     ]
   },
@@ -1182,63 +1187,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7459850281163817,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-66-problem-01",
+        "score": 0.3552702340322925,
+        "title": "Fancy indexing on single column of DataFrame",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "Fancy indexing on single column of DataFrame\n\nThings like this does not work ``` df.ix[boolean_vec, 'B'] = val ```"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-3825-problem-01",
-        "score": 0.7402229217663107,
-        "title": "In search of a pandas logo...",
+        "chunk_id": "issue-246-problem-01",
+        "score": 0.3306163839467623,
+        "title": "DataFrame.join on key with single key failure",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3825",
+        "url": "https://github.com/pandas-dev/pandas/issues/246",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "In search of a pandas logo...\n\ncomplete [bikeshedding](https://en.wikipedia.org/wiki/Parkinson's_law_of_triviality), but...might be nice, any ideas? i was thinking one of the plots shown on the main website might work."
+        "text_preview": "DataFrame.join on key with single key failure\n\ne.g. ``` df.join(df2, on=['key']) ```"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-632-problem-01",
-        "score": 0.7400943152480775,
-        "title": "Create developer page for pandas",
+        "chunk_id": "issue-451-problem-02",
+        "score": 0.3162645072322372,
+        "title": "DataFrame.unstack() issue when unstacking multiple levels.",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/632",
+        "url": "https://github.com/pandas-dev/pandas/issues/451",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Create developer page for pandas\n\nHow to get involved: - git basics - possible areas for improvement in the library - short notes on best practices Basically a version of http://statsmodels.sourceforge.net/dev/index.html"
+        "text_preview": "Let`s create a dataframe first. ``` python In [170]: import pandas In [171]: import numpy as np In [172]: import itertools In [173]: index = pandas.MultiIndex.from_tuples([t for t in itertools.product(['foo', 'bar'], [0, 1] , ['a', 'b'])]) In [174]: df = pandas.DataFrame(np.random.randn(8,2), columns=['A', 'B'], index=index) In [175]: df Out[175]: A B foo 0 a -1.627 1.301 b -494.049m 120.371m foo 1 a 955.212m 580.450m b -55.806m 169.247m bar 0 a 266.666m 246.100m b 806.406m 894.707m bar 1 a -1.3"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-2102-problem-01",
-        "score": 0.7300607326197761,
-        "title": "DOC: add info on masking data as missing/invalid based on filters",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.3036792381682172,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/2102",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "DOC: add info on masking data as missing/invalid based on filters\n\nTags: Communit, Docs Show how to implement: - if condition in column 1 is true: mark data in column 2 as missing / invalid - what numpy procedure shall be used to execute the mask?"
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       },
       {
         "rank": 5,
-        "chunk_id": "issue-124-problem-01",
-        "score": 0.7299739845553181,
-        "title": "Get view when selecting from hierarchical columns in DataFrame",
+        "chunk_id": "issue-375-problem-01",
+        "score": 0.29439618938513024,
+        "title": "Pivoting on multiple columns causes data loss",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/124",
+        "url": "https://github.com/pandas-dev/pandas/issues/375",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Get view when selecting from hierarchical columns in DataFrame\n\nI think it currently reindexes"
+        "text_preview": "Pivoting on multiple columns causes data loss\n\nSeen on HEAD. This problem is new since 0.5.0. ``` In [3]: data Out[3]: foo bar baz spam data 0 foo1 bar1 baz1 spam2 20 1 foo1 bar2 baz1 spam3 30 2 foo2 bar2 baz1 spam2 40 3 foo1 bar1 baz2 spam1 50 4 foo3 bar1 baz2 spam1 60 In [4]: pandas.pivot_table(data, values=\"data\", rows=[\"foo\", \"bar\"], cols=[\"baz\", \"spam\"]) Out[4]: baz baz1 baz2 spam spam1 spam1 foo bar foo1 bar1 20 50 bar2 30 NaN foo2 bar2 40 NaN foo3 bar1 NaN 60 ``` As you can see, the `(\"ba"
       }
     ]
   },
@@ -1251,63 +1256,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7650240196168696,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-262-problem-01",
+        "score": 0.39583297401630185,
+        "title": "Index names lost when calling sort_index",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/262",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "Index names lost when calling sort_index\n\n``` MultiIndex names get lost in the returned dataframe after sort_index is used. Here is an example: In [1]: import pandas In [2]: pandas.__version__ Out[2]: '0.4.3' In [3]: index = pandas.MultiIndex.from_tuples([('x','y','z'), ('a','b','c'), ('p','q','r')], names=['one','two','three']) In [4]: df = pandas.DataFrame(randn(3, 5), index=index) In [5]: df Out[5]: 0 1 2 3 4 x y z -1.098 -0.3314 -0.5526 0.3791 1.12 a b c 1.141 0.3309 -0.6509 -0.561 -1.086 p "
       },
       {
         "rank": 2,
-        "chunk_id": "issue-92-problem-01",
-        "score": 0.760158213681886,
-        "title": "Enable DataFrame to be sorted by multiple columns",
+        "chunk_id": "issue-325-problem-01",
+        "score": 0.3693645833835738,
+        "title": "to_string on DataFrame may print column labels in the wrong order",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/92",
+        "url": "https://github.com/pandas-dev/pandas/issues/325",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Enable DataFrame to be sorted by multiple columns\n\nCode would look more or less like: ``` sorted_df = df.sort(['col1', 'col2']) ```"
+        "text_preview": "to_string on DataFrame may print column labels in the wrong order\n\nd = {'a': [1,2,3], 'b':[4,5,6]} from pandas import DataFrame df = DataFrame(d) df.to_string() Returns: a b 0 1 4 1 2 5 2 3 6 df.to_string(columns=['b','a']) Returns: a b 0 4 1 1 5 2 2 6 3"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-464-problem-01",
-        "score": 0.7460921858349304,
-        "title": "Insert DataFrame rows with dict / other interface",
+        "chunk_id": "issue-316-problem-01",
+        "score": 0.36074318165049674,
+        "title": "Raise warning or exception when calling Series.sort when do not own data",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/464",
+        "url": "https://github.com/pandas-dev/pandas/issues/316",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Insert DataFrame rows with dict / other interface\n\nwant to be able to have a syntactically easy way to insert one or more rows in a DataFrame"
+        "text_preview": "Raise warning or exception when calling Series.sort when do not own data\n\nFor example, when part of a DataFrame, can result in the source array being modified in place"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-3883-problem-01",
-        "score": 0.7419935171850942,
-        "title": "Feature Request: Pandas Tip of the Day",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.32519866649288587,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3883",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Feature Request: Pandas Tip of the Day\n\nI feel having such a feature would help people get better at Pandas, learn some advanced skills and better ways to do things, from people who have more experience with it. Maybe sort of a community blog or twitter feed. As an end user i feel it would be appreciated."
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       },
       {
         "rank": 5,
-        "chunk_id": "issue-11337-problem-01",
-        "score": 0.7338735445723396,
-        "title": "sort_index(inplace = True) produces SettingWithCopyWarning",
+        "chunk_id": "issue-61-maintainer-01-01",
+        "score": 0.3222806650953362,
+        "title": "DataFrame.__ne__ not implemented",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11337",
+        "url": "https://github.com/pandas-dev/pandas/issues/61",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "sort_index(inplace = True) produces SettingWithCopyWarning\n\nWhen I am trying to do `rows.sort_index(inplace = True)` I get SettingWithCopyWarning: `A value is trying to be set on a copy of a slice from a DataFrame` `rows = rows.sort_index()` can be used as a workaround to avoid the warning. Pandas version 0.17.0 installed by pip."
+        "text_preview": "done: https://github.com/wesm/pandas/commit/c8e5403cde56f685ba0dca644ed287d254be3fc3"
       }
     ]
   },
@@ -1320,32 +1325,20 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-11255-problem-01",
-        "score": 0.764353255756562,
-        "title": "Groupby ValueError: The truth value of a DataFrame is ambiguous.",
+        "chunk_id": "issue-262-problem-01",
+        "score": 0.4422749268850765,
+        "title": "Index names lost when calling sort_index",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11255",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "Groupby ValueError: The truth value of a DataFrame is ambiguous."
-      },
-      {
-        "rank": 2,
-        "chunk_id": "issue-467-problem-01",
-        "score": 0.7636013216215783,
-        "title": "Memory leak in 0.6.0",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/467",
+        "url": "https://github.com/pandas-dev/pandas/issues/262",
         "labels": [
           "bug"
         ],
-        "text_preview": "Memory leak in 0.6.0\n\nThe following code results in huge memory usage. Reported by a user ``` df = DataFrame(index=np.arange(175)) for i in range(8000): df[i] = 5 ```"
+        "text_preview": "Index names lost when calling sort_index\n\n``` MultiIndex names get lost in the returned dataframe after sort_index is used. Here is an example: In [1]: import pandas In [2]: pandas.__version__ Out[2]: '0.4.3' In [3]: index = pandas.MultiIndex.from_tuples([('x','y','z'), ('a','b','c'), ('p','q','r')], names=['one','two','three']) In [4]: df = pandas.DataFrame(randn(3, 5), index=index) In [5]: df Out[5]: 0 1 2 3 4 x y z -1.098 -0.3314 -0.5526 0.3791 1.12 a b c 1.141 0.3309 -0.6509 -0.561 -1.086 p "
       },
       {
-        "rank": 3,
+        "rank": 2,
         "chunk_id": "issue-316-problem-01",
-        "score": 0.7546011563496051,
+        "score": 0.4295842055189972,
         "title": "Raise warning or exception when calling Series.sort when do not own data",
         "source_type": "resolved_issue",
         "url": "https://github.com/pandas-dev/pandas/issues/316",
@@ -1355,28 +1348,40 @@
         "text_preview": "Raise warning or exception when calling Series.sort when do not own data\n\nFor example, when part of a DataFrame, can result in the source array being modified in place"
       },
       {
-        "rank": 4,
-        "chunk_id": "issue-12231-problem-01",
-        "score": 0.7514953969034134,
-        "title": "datetime index list when pd.concat does not infer frequency",
+        "rank": 3,
+        "chunk_id": "issue-66-problem-01",
+        "score": 0.4253242035222736,
+        "title": "Fancy indexing on single column of DataFrame",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/12231",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "datetime index list when pd.concat does not infer frequency\n\nThe cookbook [Data In/Out](http://pandas-docs.github.io/pandas-docs-travis/cookbook.html#data-in-out) points to: [how to read in multiple files, appending to create a single dataframe](http://stackoverflow.com/questions/25210819/speeding-up-data-import-function-pandas-and-appending-to-dataframe/25210900#25210900). When using the suggested procedure on 2 df with freq '10T' the index is without the freq after the concat."
+        "text_preview": "Fancy indexing on single column of DataFrame\n\nThings like this does not work ``` df.ix[boolean_vec, 'B'] = val ```"
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-377-maintainer-01-01",
+        "score": 0.38770661454637745,
+        "title": "mixed type dataframe loses type info",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/377",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "this is actually a bug with DataFrame.apply that I introduced recently. I will fix."
       },
       {
         "rank": 5,
-        "chunk_id": "issue-699-problem-01",
-        "score": 0.7507207387348656,
-        "title": "Resetting Index on DataFrame after DataFrame.set_index(..., drop=False)",
+        "chunk_id": "issue-500-problem-01",
+        "score": 0.3761040761538072,
+        "title": "Adding DataFrames with offsets yields naive index",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/699",
+        "url": "https://github.com/pandas-dev/pandas/issues/500",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "Resetting Index on DataFrame after DataFrame.set_index(..., drop=False)\n\npandas attempts to add the columns in the MultiIndex back into the DataFrame. Maybe there should be a parameter to reset_index (insert=False?)."
+        "text_preview": "Adding DataFrames with offsets yields naive index\n\nAdding two DataFrames with a DateRange index (with BusinessMonthEnd offset) yields a DataFrame with a simple 'Index'."
       }
     ]
   },
@@ -1389,63 +1394,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-1029-problem-01",
-        "score": 0.7236669382358484,
-        "title": "NOAA data study",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.4889697151662856,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/1029",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "NOAA data study\n\nhttp://blue.for.msu.edu/lab-notes/NOAA_0.1-1/NOAA-ws-data.pdf"
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
       },
       {
         "rank": 2,
-        "chunk_id": "issue-3234-problem-01",
-        "score": 0.7183121432359862,
-        "title": "doc: add How to rearrange a python pandas dataframe",
+        "chunk_id": "issue-322-problem-01",
+        "score": 0.4455481382499538,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3234",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "doc: add How to rearrange a python pandas dataframe"
+        "text_preview": "Round trip from CSV to CSV should leave data types unaltered\n\nI love where pandas is going. A use-case for which R's csv capabilities still win, though, is in editing a large csv file that's used as a poor-mans database. R will keep a column of integers as integers, pandas changes some of them to floats, some to strings! I'm not sure why there's inconsistency there, but I figure I'll kick the general issue your way and I'm happy to clarify as needed."
       },
       {
         "rank": 3,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.7055575495289812,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-492-problem-03",
+        "score": 0.4202991775677646,
+        "title": "Saving DataFrame with tuple index to HDFStore fails",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/492",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "ome2/hilboll/.virtualenvs/pydoas/lib/python2.7/site-packages/pandas/io/pytables.pyc in _write_block_manager(self, group, data) 347 group._v_attrs.ndim = data.ndim 348 for i, ax in enumerate(data.axes): --> 349 self._write_index(group, 'axis%d' % i, ax) 350 351 # Supporting mixed-type DataFrame objects...nontrivial /home2/hilboll/.virtualenvs/pydoas/lib/python2.7/site-packages/pandas/io/pytables.pyc in _write_index(self, group, key, index) 439 else: 440 setattr(group._v_attrs, '%s_variety' % key,"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-196-problem-01",
-        "score": 0.704524327493617,
-        "title": "summary() method to all pandas objects.",
+        "chunk_id": "issue-484-problem-01",
+        "score": 0.40330086961750855,
+        "title": "Type inference with list of lists in DataFrame constructor",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/196",
+        "url": "https://github.com/pandas-dev/pandas/issues/484",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "summary() method to all pandas objects.\n\nI always envy summary() function in R. It is really useful in displaying basic statistics of each object. How about supporting the method for all pandas objects?"
+        "text_preview": "Type inference with list of lists in DataFrame constructor\n\nper @aristotle137 ``` In [1216]: l = [[1, 'a'], [2, 'b']] ...: df = DataFrame(data = l, columns = [\"num\", \"str\"]) ...: In [1217]: df.dtypes Out[1217]: num object str object ```"
       },
       {
         "rank": 5,
-        "chunk_id": "issue-4327-problem-01",
-        "score": 0.7002192354671777,
-        "title": "Docs: change nosetest instruction",
+        "chunk_id": "issue-377-problem-01",
+        "score": 0.396021458416113,
+        "title": "mixed type dataframe loses type info",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/4327",
+        "url": "https://github.com/pandas-dev/pandas/issues/377",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Docs: change nosetest instruction\n\nRunning Ubuntu 12.10. The recommended way of running tests (http://pandas.pydata.org/pandas-docs/stable/install.html#running-the-test-suite) ``` nosetests pandas ``` did not work. I had to use: ``` nosetests --exe pandas ``` It would also be useful to know how to avoid the: ``` OperationalError: (1046, 'No database selected') ``` errors."
+        "text_preview": "mixed type dataframe loses type info\n\nI have a situation where joining objects of different types creates object where info() and dtypes disagree, and generally all datatypes revert to object: In [630]: a=DataFrame(['aa','bb','cc','dd','ee'],index=[1,2,3,4,5],columns=['a']) In [631]: b=DataFrame(randn(5,1),index=[1,2,3,4,5],columns=['b']) In [632]: a.dtypes Out[632]: a object In [633]: b.dtypes Out[633]: b float64 In [636]: a.info() <class 'pandas.core.frame.DataFrame'> Index: 5 entries, 1 to 5 "
       }
     ]
   },
@@ -1458,63 +1463,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-9288-problem-01",
-        "score": 0.7437196296879212,
-        "title": "Bug? selecting a column for GroupBy",
+        "chunk_id": "issue-492-problem-02",
+        "score": 0.46475607154601023,
+        "title": "Saving DataFrame with tuple index to HDFStore fails",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/9288",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "Bug? selecting a column for GroupBy"
-      },
-      {
-        "rank": 2,
-        "chunk_id": "issue-8660-problem-01",
-        "score": 0.7373011174990481,
-        "title": "apply changes the datatypes: strange behaviour/bug?",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8660",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "apply changes the datatypes: strange behaviour/bug?\n\nHello. I tried to apply a function to a dataframe and it changes the column types. See this example: http://nbviewer.ipython.org/urls/dl.dropboxusercontent.com/u/1118905/Calls-bug.ipynb Am I doing something wrong? Is it a bug? pandas 0.15.0"
-      },
-      {
-        "rank": 3,
-        "chunk_id": "issue-12172-problem-01",
-        "score": 0.7363704894588627,
-        "title": "Why does Series.plot() not have a kind='scatter' option?",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/12172",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "Why does Series.plot() not have a kind='scatter' option?\n\nI run into use-cases for this feature often. It seems so simple that it's hard to believe this is purely an oversight. So, why does `Series.plot()` not have a `kind='scatter'` option?"
-      },
-      {
-        "rank": 4,
-        "chunk_id": "issue-52-problem-01",
-        "score": 0.7342833640518985,
-        "title": "Improve fancy indexing when selecting cross-sections",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/52",
-        "labels": [
-          "feature"
-        ],
-        "text_preview": "Improve fancy indexing when selecting cross-sections\n\nSomething like ``` df.ix[0, ['C', 'B', A']] ``` is currently performing a wasteful reindex(columns=['C', 'B', A']), need to have some better way to infer the \"right\" order to perform the operations in"
-      },
-      {
-        "rank": 5,
-        "chunk_id": "issue-112-problem-01",
-        "score": 0.7331566104154176,
-        "title": ".stack() does not yet work when MultiIndex already present",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/112",
+        "url": "https://github.com/pandas-dev/pandas/issues/492",
         "labels": [
           "bug"
         ],
-        "text_preview": ".stack() does not yet work when MultiIndex already present\n\nThis will not be dealt with in 0.4 unless I get a lot of energy"
+        "text_preview": "The following code fails on pandas 0.6.1 ``` import numpy as np import pandas col = np.arange(10) idx = [(0.,1.), (2., 3.), (4., 5.)] data = np.random.randn(30).reshape((3, 10)) DF = pandas.DataFrame(data, index=idx, columns=col) H = pandas.HDFStore(\"test.h5\", \"w\") H['data'] = DF H.close() ``` The traceback is as follows: ``` --------------------------------------------------------------------------- ValueError Traceback (most recent call last) /home2/hilboll/<ipython-input-15-a313de079f58> in <"
+      },
+      {
+        "rank": 2,
+        "chunk_id": "issue-491-problem-01",
+        "score": 0.4403942206816919,
+        "title": "Cannot instantiate DataFrame with",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/491",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Cannot instantiate DataFrame with\n\nfrom pandas import DataFrame DataFrame([],[]) # DataFrame([]) does the same thing pandas\\core\\frame.pyc in **init**(self, data, index, columns, dtype, copy) 208 copy=copy) 209 elif isinstance(data, list): --> 210 if isinstance(data[0], (list, tuple)): 211 data, columns = _list_to_sdict(data, columns) 212 mgr = self._init_dict(data, index, columns, dtype=dtype) IndexError: list index out of range"
+      },
+      {
+        "rank": 3,
+        "chunk_id": "issue-98-problem-01",
+        "score": 0.43840015145345557,
+        "title": "Calling xs on DataFrame with index but no columns raises Exception",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/98",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Calling xs on DataFrame with index but no columns raises Exception\n\nexample: ``` In [1]: df = DataFrame(index=['a', 'b', 'c']) In [2]: df.ix['a'] ERROR: An unexpected error occurred while tokenizing input The following traceback may be corrupted or invalid The error message is: ('EOF in multi-line statement', (2, 0)) --------------------------------------------------------------------------- IndexError Traceback (most recent call last) /home/wesm/code/pandas/<ipython-input-2-6181dcf1ffea> in <mo"
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-377-maintainer-01-01",
+        "score": 0.43595930418937134,
+        "title": "mixed type dataframe loses type info",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/377",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "this is actually a bug with DataFrame.apply that I introduced recently. I will fix."
+      },
+      {
+        "rank": 5,
+        "chunk_id": "issue-76-maintainer-01-01",
+        "score": 0.4223925306005042,
+        "title": "Sparse cumsum functions do not work",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/76",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Fixed in: https://github.com/wesm/pandas/commit/05123af1b2f8db1bc4f05c22515ef378cbeefbd3"
       }
     ]
   },
@@ -1527,56 +1532,8 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-8660-problem-01",
-        "score": 0.741304546242405,
-        "title": "apply changes the datatypes: strange behaviour/bug?",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8660",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "apply changes the datatypes: strange behaviour/bug?\n\nHello. I tried to apply a function to a dataframe and it changes the column types. See this example: http://nbviewer.ipython.org/urls/dl.dropboxusercontent.com/u/1118905/Calls-bug.ipynb Am I doing something wrong? Is it a bug? pandas 0.15.0"
-      },
-      {
-        "rank": 2,
-        "chunk_id": "issue-373-problem-01",
-        "score": 0.7409993601448813,
-        "title": "DataFrame constructor when passed a Series",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/373",
-        "labels": [
-          "feature"
-        ],
-        "text_preview": "DataFrame constructor when passed a Series\n\nIf I do: a=Series([1,2,3],index=['a','b','c'],name='x') b=DataFrame(a) I would expect b to have a single column 'x' with indices a,b,c; instead only a.values is retained."
-      },
-      {
-        "rank": 3,
-        "chunk_id": "issue-12231-problem-01",
-        "score": 0.7388910562531923,
-        "title": "datetime index list when pd.concat does not infer frequency",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/12231",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "datetime index list when pd.concat does not infer frequency\n\nThe cookbook [Data In/Out](http://pandas-docs.github.io/pandas-docs-travis/cookbook.html#data-in-out) points to: [how to read in multiple files, appending to create a single dataframe](http://stackoverflow.com/questions/25210819/speeding-up-data-import-function-pandas-and-appending-to-dataframe/25210900#25210900). When using the suggested procedure on 2 df with freq '10T' the index is without the freq after the concat."
-      },
-      {
-        "rank": 4,
-        "chunk_id": "issue-8913-problem-01",
-        "score": 0.736896994872426,
-        "title": "Generate new DataFrame for two objects results in NaNs",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8913",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "Generate new DataFrame for two objects results in NaNs\n\nHi, I want to generate a DataFrame out of some data x0 and an index based some dates t0. df = pd.DataFrame(x0) Generates the dataframe containg all data correctly. df = pd.DataFrame(x0,t0) Generates a dataframe with the dates as index whereas 'Date' appears as first index and all data is cleared to NaNs. type(x0) pandas.core.frame.DataFrame type(t0) pandas.core.series.Series (generated with >t0=pd.to_datetime(pm0['Date']) )"
-      },
-      {
-        "rank": 5,
         "chunk_id": "issue-492-problem-01",
-        "score": 0.7364513669387313,
+        "score": 0.4674572332661943,
         "title": "Saving DataFrame with tuple index to HDFStore fails",
         "source_type": "resolved_issue",
         "url": "https://github.com/pandas-dev/pandas/issues/492",
@@ -1584,6 +1541,54 @@
           "bug"
         ],
         "text_preview": "Saving DataFrame with tuple index to HDFStore fails"
+      },
+      {
+        "rank": 2,
+        "chunk_id": "issue-505-problem-01",
+        "score": 0.4470356965782796,
+        "title": "skiprows in read_csv not working?",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/505",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "skiprows in read_csv not working?\n\nHi Wes, I'm trying to read in a csv file with few header lines at the beginning of the file starting w/ a '#'. I tried to use skiprows specifying a list of the first n rows to skip as [0,1,2,3,..,n] but I keep getting Index has duplicates ['#'] error. Is this a bug or I'm doing something wrong? Also, will this be the best place to post such issues? I'm using pandas v 0.6.0 with python 2.7.2 Thanks for the great work you are doing w/ pandas. I'm finding it very "
+      },
+      {
+        "rank": 3,
+        "chunk_id": "issue-322-problem-01",
+        "score": 0.4141874652555264,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Round trip from CSV to CSV should leave data types unaltered\n\nI love where pandas is going. A use-case for which R's csv capabilities still win, though, is in editing a large csv file that's used as a poor-mans database. R will keep a column of integers as integers, pandas changes some of them to floats, some to strings! I'm not sure why there's inconsistency there, but I figure I'll kick the general issue your way and I'm happy to clarify as needed."
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-225-problem-01",
+        "score": 0.4037344904206206,
+        "title": "read_csv interprets index column as dates",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/225",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "read_csv interprets index column as dates\n\nI loaded a dataset with an index column going from 1 to 304. Then I try to get the repr of the dataframe, but it raises `ValueError: year=100 is before 1900; the datetime strftime() methods require year >= 1900`. Looking at `df.index` shows that the numeric indices have been transformed into datetimes (the first 31 to days of this month, 32-60 as years 20xx, 61-99 as years 19xx, and higher numbers as a raw year)."
+      },
+      {
+        "rank": 5,
+        "chunk_id": "issue-81-problem-01",
+        "score": 0.3979031098778253,
+        "title": "bug in DataFrame/DataMatrix toCSV method when index=False",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/81",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "bug in DataFrame/DataMatrix toCSV method when index=False\n\nWhen index=False an extra column is added because the leading comma is never removed. ``` def toCSV(self, path, nanRep='', cols=None, header=True, index=True, mode='wb'): *<snip>* for idx in self.index: if index: f.write(str(idx)) for col in cols: *<snip>* f.write(',%s' % val) ```"
       }
     ]
   },
@@ -1596,63 +1601,63 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-6456-problem-01",
-        "score": 0.7011836543956942,
-        "title": "read_html and read_json should provide a cache",
+        "chunk_id": "issue-61-maintainer-01-01",
+        "score": 0.32235634192470525,
+        "title": "DataFrame.__ne__ not implemented",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/6456",
+        "url": "https://github.com/pandas-dev/pandas/issues/61",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "read_html and read_json should provide a cache\n\nHello, `pandas.io.html.read_html` should provide a cache such as what requests_cache provides https://requests-cache.readthedocs.org/en/latest/ persistence into sqlite, mongodb, redis... is very convenient. Maybe some other pandas functions could also use this cache mechanism. `pandas.io.json.read_json` for example This is what I do ``` import requests import requests_cache expire_after = 15*60 # expire_after=delay_second or None requests_cache.ins"
+        "text_preview": "done: https://github.com/wesm/pandas/commit/c8e5403cde56f685ba0dca644ed287d254be3fc3"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-196-problem-01",
-        "score": 0.6955573712054443,
-        "title": "summary() method to all pandas objects.",
+        "chunk_id": "issue-491-problem-01",
+        "score": 0.30198152362975383,
+        "title": "Cannot instantiate DataFrame with",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/196",
+        "url": "https://github.com/pandas-dev/pandas/issues/491",
         "labels": [
-          "feature"
+          "bug"
         ],
-        "text_preview": "summary() method to all pandas objects.\n\nI always envy summary() function in R. It is really useful in displaying basic statistics of each object. How about supporting the method for all pandas objects?"
+        "text_preview": "Cannot instantiate DataFrame with\n\nfrom pandas import DataFrame DataFrame([],[]) # DataFrame([]) does the same thing pandas\\core\\frame.pyc in **init**(self, data, index, columns, dtype, copy) 208 copy=copy) 209 elif isinstance(data, list): --> 210 if isinstance(data[0], (list, tuple)): 211 data, columns = _list_to_sdict(data, columns) 212 mgr = self._init_dict(data, index, columns, dtype=dtype) IndexError: list index out of range"
       },
       {
         "rank": 3,
-        "chunk_id": "issue-10284-problem-01",
-        "score": 0.6904429327447293,
-        "title": "How To Filter Pandas DataFrames Using Dynamic URL Query String",
+        "chunk_id": "issue-66-maintainer-01-01",
+        "score": 0.2986857033033901,
+        "title": "Fancy indexing on single column of DataFrame",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/10284",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "How To Filter Pandas DataFrames Using Dynamic URL Query String\n\nCurrently i am having an question in python pandas. I want to filter a dataframe using url query string dynamically. Detailed question: http://stackoverflow.com/questions/30658017/filter-pandas-dataframes-using-dynamic-url-query-string"
+        "text_preview": "This does work, at least with the git HEAD. Unit test written https://github.com/wesm/pandas/commit/1d45182cc726cd489ac6e37821889804fcc1c2c3"
       },
       {
         "rank": 4,
-        "chunk_id": "issue-7989-problem-01",
-        "score": 0.6864295576528909,
-        "title": "Reading \\x01 separated files",
+        "chunk_id": "issue-490-problem-02",
+        "score": 0.2970873426594078,
+        "title": "can't print embedded ndarray",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/7989",
+        "url": "https://github.com/pandas-dev/pandas/issues/490",
         "labels": [
-          "question"
+          "bug"
         ],
-        "text_preview": "Reading \\x01 separated files\n\nAssume that you have a csv file separated by the sequence `\\x01` (namely `chr(1)`): `0S15SOfKdx\\x013580\\x015738.0\\x011407348006000\\n0S15SOfKdx\\x0140\\x015738.0\\x011407351601000\\n` How can I load this in Pandas? I tried everything: - `pd.read_csv(my_file, sep=chr(1))` - `pd.read_csv(my_file, sep='\\x01')` with no luck. Is this a bug, or I am typing the separator incorrectly? I am on **Pandas 0.14.1** with **Python 3**."
+        "text_preview": "Just playing with pandas. I was using structured array. I tried converting my structured array to pandas. It was OK, until I tried with a field that was itself a (variable length) ndarray. arr = np.empty ((len(results),), dtype=[(... various fields ommitted, ``` ('err', object), ('bursts', int), ('per', float), ... ]) ``` Next the array is filled with data. The field 'err' is then filled in with a ndarray (vector) whose size is variable per instance. Now convert to df: from pandas import * df = "
       },
       {
         "rank": 5,
-        "chunk_id": "issue-4327-problem-01",
-        "score": 0.6858327328227237,
-        "title": "Docs: change nosetest instruction",
+        "chunk_id": "issue-511-problem-01",
+        "score": 0.289376567083682,
+        "title": "Certain DataFrame cannot be pickled to string",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/4327",
+        "url": "https://github.com/pandas-dev/pandas/issues/511",
         "labels": [
-          "docs"
+          "bug"
         ],
-        "text_preview": "Docs: change nosetest instruction\n\nRunning Ubuntu 12.10. The recommended way of running tests (http://pandas.pydata.org/pandas-docs/stable/install.html#running-the-test-suite) ``` nosetests pandas ``` did not work. I had to use: ``` nosetests --exe pandas ``` It would also be useful to know how to avoid the: ``` OperationalError: (1046, 'No database selected') ``` errors."
+        "text_preview": "Certain DataFrame cannot be pickled to string\n\nimport cPickle import numpy as np from pandas import Series s = Series({'a' : None}) s['a'] = np.inf cPickle.loads(cPickle.dumps(s)) ValueError: could not convert string to float"
       }
     ]
   },
@@ -1665,64 +1670,64 @@
     "suggested_chunks": [
       {
         "rank": 1,
-        "chunk_id": "issue-11337-problem-01",
-        "score": 0.7512168164404426,
-        "title": "sort_index(inplace = True) produces SettingWithCopyWarning",
+        "chunk_id": "issue-179-maintainer-02-01",
+        "score": 0.3793315988749047,
+        "title": "Pre-epoch dates giving OverflowError in mktime with HDFStore",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/11337",
+        "url": "https://github.com/pandas-dev/pandas/issues/179",
         "labels": [
-          "question"
+          "bug",
+          "feature"
         ],
-        "text_preview": "sort_index(inplace = True) produces SettingWithCopyWarning\n\nWhen I am trying to do `rows.sort_index(inplace = True)` I get SettingWithCopyWarning: `A value is trying to be set on a copy of a slice from a DataFrame` `rows = rows.sort_index()` can be used as a workaround to avoid the warning. Pandas version 0.17.0 installed by pip."
+        "text_preview": "Perhaps I should put a warning letting people know to upgrade their Python version if they get this bug?"
       },
       {
         "rank": 2,
-        "chunk_id": "issue-3883-problem-01",
-        "score": 0.7496848674550535,
-        "title": "Feature Request: Pandas Tip of the Day",
+        "chunk_id": "issue-322-maintainer-01-01",
+        "score": 0.36819717017450715,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
         "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/3883",
-        "labels": [
-          "docs"
-        ],
-        "text_preview": "Feature Request: Pandas Tip of the Day\n\nI feel having such a feature would help people get better at Pandas, learn some advanced skills and better ways to do things, from people who have more experience with it. Maybe sort of a community blog or twitter feed. As an end user i feel it would be appreciated."
-      },
-      {
-        "rank": 3,
-        "chunk_id": "issue-1876-problem-01",
-        "score": 0.7471225387120183,
-        "title": "Could the html documentation be provided for download",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/1876",
-        "labels": [
-          "feature",
-          "docs"
-        ],
-        "text_preview": "Could the html documentation be provided for download\n\nI like html documentation for offline browsing. I wonder if pandas could do the same as django or the official python documentation to provide a html tarball for download. Thank you. BTW, I have tried building the pandas html documentation from a git checkout and didn't succeed."
-      },
-      {
-        "rank": 4,
-        "chunk_id": "issue-8660-problem-01",
-        "score": 0.7456631127350158,
-        "title": "apply changes the datatypes: strange behaviour/bug?",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/8660",
-        "labels": [
-          "question"
-        ],
-        "text_preview": "apply changes the datatypes: strange behaviour/bug?\n\nHello. I tried to apply a function to a dataframe and it changes the column types. See this example: http://nbviewer.ipython.org/urls/dl.dropboxusercontent.com/u/1118905/Calls-bug.ipynb Am I doing something wrong? Is it a bug? pandas 0.15.0"
-      },
-      {
-        "rank": 5,
-        "chunk_id": "issue-988-problem-01",
-        "score": 0.7427224550528027,
-        "title": "NaN equality issue in Series",
-        "source_type": "resolved_issue",
-        "url": "https://github.com/pandas-dev/pandas/issues/988",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
         "labels": [
           "bug"
         ],
-        "text_preview": "NaN equality issue in Series\n\nHi Wes, Just a quick question on NaN equality, I haven't specifically looked it up, but upgrading to 0.7.2 broke my code and it seems it's down to how testing for equality with NaN behaves: ``` a = pandas.Series(['abc', nan]) ``` a == 'cba' outputs: ``` 0 False 1 NaN ``` rather than all False. This seems to most definitely be a bug. Especially as pandas.DataFrame(['abc', nan]) == 'cba' outputs the correct version: ``` 0 0 False 1 False ``` Many thanks, Marius"
+        "text_preview": "Could you post some sample text that pandas mishandles? The best way to address this is by writing some tests. The primary present limitation with type-handling in pandas compared with R is with NAs in integer columns. I just haven't got a great solution to that right now except to cast the column to float and use NaN."
+      },
+      {
+        "rank": 3,
+        "chunk_id": "issue-66-maintainer-01-01",
+        "score": 0.35424721041818,
+        "title": "Fancy indexing on single column of DataFrame",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/66",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "This does work, at least with the git HEAD. Unit test written https://github.com/wesm/pandas/commit/1d45182cc726cd489ac6e37821889804fcc1c2c3"
+      },
+      {
+        "rank": 4,
+        "chunk_id": "issue-290-problem-01",
+        "score": 0.3501830627122264,
+        "title": "DataFrame.to_csv throws exception",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/290",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "DataFrame.to_csv throws exception\n\nHi, i ran into a problem with the current master on github. Here's import cStringIO as StringIO import pandas f1 = StringIO.StringIO('a,1.0\\nb,2.0') df = pandas.DataFrame.from_csv(f1,header=None) newdf = pandas.DataFrame({'t': df[df.columns[0]]}) newdf.to_csv('/tmp/test.csv') The last line gives me an exception like this: Traceback (most recent call last): File \"/tmp/test.py\", line 6, in <module> newdf.to_csv('/tmp/test.csv') File \"/usr/lib/python2.7/dist-packa"
+      },
+      {
+        "rank": 5,
+        "chunk_id": "issue-322-maintainer-03-01",
+        "score": 0.3333891173865845,
+        "title": "Round trip from CSV to CSV should leave data types unaltered",
+        "source_type": "resolved_issue",
+        "url": "https://github.com/pandas-dev/pandas/issues/322",
+        "labels": [
+          "bug"
+        ],
+        "text_preview": "Closing this issue until a solution for the integer NA problem arises: http://pandas.pydata.org/pandas-docs/stable/gotchas.html#support-for-integer-na"
       }
     ]
   }
