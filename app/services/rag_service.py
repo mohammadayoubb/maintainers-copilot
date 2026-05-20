@@ -7,17 +7,19 @@ Architecture rule:
 - API routes should call this service.
 - This service coordinates retrieval, formatting, and error handling.
 
-For now, this service uses the local RAG pipeline from rag/pipeline.py.
-Later, it can be upgraded to use real embeddings, pgvector, tracing, and LLM
-answer generation without changing the API route shape.
+For now, this service uses saved local chunks and saved local embeddings.
+Later, the embedding file can be replaced by real sentence-transformer
+embeddings or pgvector without changing the API route shape.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from app.domain.errors import ToolFailureError
+from rag.build_embeddings import load_embeddings
 from rag.ingest import load_chunks_jsonl
 from rag.pipeline import (
     RagPipelineResult,
@@ -25,6 +27,9 @@ from rag.pipeline import (
     format_chunks_for_prompt,
     get_grounding_chunk_ids,
 )
+
+
+DEFAULT_EMBEDDINGS_PATH = Path("rag/data/embeddings_simple.jsonl")
 
 
 @dataclass(frozen=True)
@@ -57,6 +62,8 @@ class RagService:
 
         try:
             result = self._run_local_pipeline(request)
+        except ToolFailureError:
+            raise
         except Exception as exc:
             raise ToolFailureError("RAG retrieval failed.") from exc
 
@@ -68,7 +75,7 @@ class RagService:
         )
 
     def _run_local_pipeline(self, request: RagAnswerRequest) -> RagPipelineResult:
-        """Run the local RAG pipeline using saved chunks."""
+        """Run the local RAG pipeline using saved chunks and embeddings."""
 
         chunks = load_chunks_jsonl()
 
@@ -77,10 +84,23 @@ class RagService:
                 "No RAG chunks were found. Run the RAG ingestion pipeline first."
             )
 
-        chunk_embeddings = {
-            chunk.chunk_id: _simple_text_embedding(chunk.text)
+        if not DEFAULT_EMBEDDINGS_PATH.exists():
+            raise ToolFailureError(
+                "No RAG embeddings were found. Run python rag/build_embeddings.py first."
+            )
+
+        chunk_embeddings = load_embeddings(DEFAULT_EMBEDDINGS_PATH)
+
+        missing_embedding_ids = [
+            chunk.chunk_id
             for chunk in chunks
-        }
+            if chunk.chunk_id not in chunk_embeddings
+        ]
+
+        if missing_embedding_ids:
+            raise ToolFailureError(
+                "Some RAG chunks are missing embeddings. Rebuild the embedding file."
+            )
 
         pipeline = build_local_rag_pipeline(
             chunks=chunks,
@@ -97,10 +117,11 @@ class RagService:
 
 
 def _simple_text_embedding(text: str, dimensions: int = 32) -> list[float]:
-    """Create a deterministic temporary embedding for local service testing.
+    """Create a deterministic query embedding for the current simple backend.
 
-    This is not the final embedding model. It keeps the service testable before
-    the real embedding comparison and pgvector integration are connected.
+    This must match the simple embedding logic used by rag/build_embeddings.py.
+    It will be replaced once the service uses a real embedding model for both
+    chunks and queries.
     """
 
     vector = [0.0] * dimensions
