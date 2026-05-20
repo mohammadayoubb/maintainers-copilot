@@ -1,0 +1,18 @@
+# Evaluation thresholds for CI gates.
+#
+# These thresholds define the minimum acceptable scores for the classifier
+# and RAG pipeline. If scores drop below these values, CI should fail.
+#
+# Important:
+# Thresholds must not be zero or disabled because the project requires
+# committed eval gates that can actually catch regressions.
+
+classification:
+  min_accuracy: 0.65
+  min_macro_f1: 0.65
+
+rag:
+  hit_at_5_min: 0.70
+  mrr_at_10_min: 0.50
+  faithfulness_min: 0.70
+  answer_relevancy_min: 0.70
