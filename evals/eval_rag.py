@@ -2,12 +2,12 @@
 
 This script evaluates retrieval quality against the RAG golden set.
 
-For Day 3, we start with retrieval metrics:
+Current retrieval metrics:
 - hit@5
 - MRR@10
 
 Later, answer-generation metrics such as faithfulness and answer relevancy can
-be added once the full LLM answer generation path is connected.
+be added once the final LLM answer generation path is connected.
 """
 
 from __future__ import annotations
@@ -17,12 +17,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from rag.build_embeddings import load_embeddings
 from rag.ingest import DEFAULT_CHUNKS_PATH, load_chunks_jsonl
 from rag.pipeline import build_local_rag_pipeline
 
 
 GOLDEN_PATH = Path("evals/golden/rag_golden.jsonl")
 REPORT_PATH = Path("evals/eval_report.json")
+DEFAULT_EMBEDDINGS_PATH = Path("rag/data/embeddings_simple.jsonl")
 
 
 @dataclass(frozen=True)
@@ -77,17 +79,7 @@ def evaluate_retrieval(
     examples: list[RagGoldenExample],
     retrieved_chunk_ids_by_example: dict[str, list[str]],
 ) -> RagEvalResult:
-    """Calculate hit@5 and MRR@10 for retrieved chunk IDs.
-
-    hit@5:
-        1 if at least one ground-truth chunk appears in the top 5 results.
-
-    MRR@10:
-        Reciprocal rank of the first relevant chunk in the top 10 results.
-        If the first relevant chunk is rank 1, score is 1.0.
-        If rank 2, score is 0.5.
-        If no relevant chunk appears in top 10, score is 0.0.
-    """
+    """Calculate hit@5 and MRR@10 for retrieved chunk IDs."""
 
     if not examples:
         return RagEvalResult(
@@ -140,14 +132,9 @@ def run_local_retrieval_eval(
     *,
     golden_path: Path = GOLDEN_PATH,
     chunks_path: Path = DEFAULT_CHUNKS_PATH,
+    embeddings_path: Path = DEFAULT_EMBEDDINGS_PATH,
 ) -> RagEvalResult:
-    """Run retrieval eval using local chunks and placeholder embeddings.
-
-    This function is intentionally conservative:
-    - If real chunks do not exist yet, it returns zero metrics.
-    - If golden examples still contain TODO chunk IDs, it skips them.
-    - Real embeddings will be connected in a later step.
-    """
+    """Run retrieval eval using local chunks and saved embeddings."""
 
     examples = load_rag_golden_set(golden_path)
     chunks = load_chunks_jsonl(chunks_path)
@@ -157,15 +144,18 @@ def run_local_retrieval_eval(
             total_examples=len(examples),
             hit_at_5=0.0,
             mrr_at_10=0.0,
-            skipped_examples=len([item for item in examples if _has_placeholder_ground_truth(item)]),
+            skipped_examples=len(
+                [item for item in examples if _has_placeholder_ground_truth(item)]
+            ),
         )
 
-    # Temporary deterministic embeddings so the eval script can run before
-    # sentence-transformers/pgvector integration is fully connected.
-    chunk_embeddings = {
-        chunk.chunk_id: _simple_text_embedding(chunk.text)
-        for chunk in chunks
-    }
+    if not embeddings_path.exists():
+        raise FileNotFoundError(
+            f"Embeddings file not found: {embeddings_path}. "
+            "Run python rag/build_embeddings.py --backend simple first."
+        )
+
+    chunk_embeddings = load_embeddings(embeddings_path)
 
     pipeline = build_local_rag_pipeline(
         chunks=chunks,
@@ -205,6 +195,7 @@ def save_rag_eval_report(result: RagEvalResult, path: Path = REPORT_PATH) -> Non
         "hit_at_5": result.hit_at_5,
         "mrr_at_10": result.mrr_at_10,
         "skipped_examples": result.skipped_examples,
+        "embeddings_file": str(DEFAULT_EMBEDDINGS_PATH),
     }
 
     path.write_text(
@@ -246,11 +237,7 @@ def _has_placeholder_ground_truth(example: RagGoldenExample) -> bool:
 
 
 def _simple_text_embedding(text: str, dimensions: int = 32) -> list[float]:
-    """Create a deterministic lightweight embedding for early local tests.
-
-    This is not the final embedding model. It only lets the eval script run
-    before the real embedding comparison is connected.
-    """
+    """Create the same deterministic query embedding as the simple backend."""
 
     vector = [0.0] * dimensions
 
