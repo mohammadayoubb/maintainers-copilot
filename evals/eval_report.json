@@ -1,0 +1,275 @@
+{
+  "task": "classification",
+  "classifier_endpoint": "http://localhost:8000/classification/classify",
+  "metrics": {
+    "accuracy": 0.8,
+    "macro_f1": 0.7967449217449217,
+    "total_examples": 25,
+    "correct_examples": 20,
+    "per_class": {
+      "bug": {
+        "precision": 0.8571428571428571,
+        "recall": 0.8571428571428571,
+        "f1": 0.8571428571428571,
+        "support": 7
+      },
+      "feature": {
+        "precision": 0.7142857142857143,
+        "recall": 0.8333333333333334,
+        "f1": 0.7692307692307692,
+        "support": 6
+      },
+      "docs": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8333333333333334,
+        "f1": 0.8333333333333334,
+        "support": 6
+      },
+      "question": {
+        "precision": 0.8,
+        "recall": 0.6666666666666666,
+        "f1": 0.7272727272727272,
+        "support": 6
+      }
+    }
+  },
+  "prediction_counts": {
+    "bug": 7,
+    "feature": 7,
+    "docs": 6,
+    "question": 5
+  },
+  "examples": [
+    {
+      "id": "cls_001",
+      "title": "read_csv raises ValueError when parsing empty quoted fields",
+      "expected_label": "bug",
+      "predicted_label": "bug",
+      "confidence": 0.4140024483203888,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_002",
+      "title": "DataFrame merge gives incorrect result with duplicate index",
+      "expected_label": "bug",
+      "predicted_label": "bug",
+      "confidence": 0.5028079152107239,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_003",
+      "title": "to_datetime fails with timezone-aware strings",
+      "expected_label": "bug",
+      "predicted_label": "bug",
+      "confidence": 0.5172826647758484,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_004",
+      "title": "GroupBy aggregation crashes with nullable integer dtype",
+      "expected_label": "bug",
+      "predicted_label": "bug",
+      "confidence": 0.5772444009780884,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_005",
+      "title": "Excel writer corrupts file when sheet name contains unicode",
+      "expected_label": "bug",
+      "predicted_label": "bug",
+      "confidence": 0.5624817609786987,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_006",
+      "title": "Add support for reading compressed parquet files from remote URLs",
+      "expected_label": "feature",
+      "predicted_label": "feature",
+      "confidence": 0.6195053458213806,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_007",
+      "title": "Support ignore_index option in DataFrame.explode",
+      "expected_label": "feature",
+      "predicted_label": "feature",
+      "confidence": 0.47156333923339844,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_008",
+      "title": "Add option to preserve column metadata during concat",
+      "expected_label": "feature",
+      "predicted_label": "feature",
+      "confidence": 0.6721473336219788,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_009",
+      "title": "Feature request: allow custom NA values for read_json",
+      "expected_label": "feature",
+      "predicted_label": "feature",
+      "confidence": 0.6363372206687927,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_010",
+      "title": "Add native support for fiscal quarter offsets",
+      "expected_label": "feature",
+      "predicted_label": "docs",
+      "confidence": 0.37869298458099365,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": false
+    },
+    {
+      "id": "cls_011",
+      "title": "Documentation for merge_asof is missing tolerance examples",
+      "expected_label": "docs",
+      "predicted_label": "docs",
+      "confidence": 0.6951550245285034,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_012",
+      "title": "Typo in DataFrame.drop documentation",
+      "expected_label": "docs",
+      "predicted_label": "docs",
+      "confidence": 0.8714630007743835,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_013",
+      "title": "read_csv documentation should explain dtype_backend",
+      "expected_label": "docs",
+      "predicted_label": "docs",
+      "confidence": 0.8650164604187012,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_014",
+      "title": "Missing example for nullable BooleanDtype",
+      "expected_label": "docs",
+      "predicted_label": "bug",
+      "confidence": 0.3567359447479248,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": false
+    },
+    {
+      "id": "cls_015",
+      "title": "Improve installation docs for Windows users",
+      "expected_label": "docs",
+      "predicted_label": "docs",
+      "confidence": 0.8607912063598633,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_016",
+      "title": "How do I select rows where a column contains a list value?",
+      "expected_label": "question",
+      "predicted_label": "question",
+      "confidence": 0.5208231806755066,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_017",
+      "title": "Question about converting object column to datetime",
+      "expected_label": "question",
+      "predicted_label": "feature",
+      "confidence": 0.4204269349575043,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": false
+    },
+    {
+      "id": "cls_018",
+      "title": "How can I merge two DataFrames and keep only unmatched rows?",
+      "expected_label": "question",
+      "predicted_label": "question",
+      "confidence": 0.34334713220596313,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_019",
+      "title": "Usage question about pivot_table margins",
+      "expected_label": "question",
+      "predicted_label": "question",
+      "confidence": 0.35105520486831665,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_020",
+      "title": "How to handle missing values before groupby",
+      "expected_label": "question",
+      "predicted_label": "feature",
+      "confidence": 0.3342154026031494,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": false
+    },
+    {
+      "id": "cls_021",
+      "title": "Series.str.replace behaves differently after upgrade",
+      "expected_label": "bug",
+      "predicted_label": "question",
+      "confidence": 0.45979103446006775,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": false
+    },
+    {
+      "id": "cls_022",
+      "title": "Add option for case-insensitive column selection",
+      "expected_label": "feature",
+      "predicted_label": "feature",
+      "confidence": 0.7453447580337524,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_023",
+      "title": "Docs should clarify copy-on-write behavior",
+      "expected_label": "docs",
+      "predicted_label": "docs",
+      "confidence": 0.8625668883323669,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_024",
+      "title": "How do I flatten a MultiIndex after aggregation?",
+      "expected_label": "question",
+      "predicted_label": "question",
+      "confidence": 0.34868159890174866,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    },
+    {
+      "id": "cls_025",
+      "title": "DataFrame.to_json loses precision for large integers",
+      "expected_label": "bug",
+      "predicted_label": "bug",
+      "confidence": 0.6469278931617737,
+      "model": "fine-tuned-distilbert-pandas",
+      "correct": true
+    }
+  ],
+  "rag": {
+    "total_examples": 25,
+    "hit_at_5": 0.0,
+    "mrr_at_10": 0.0,
+    "skipped_examples": 25
+  }
+}
