@@ -29,7 +29,7 @@ from app.api.routes.health import router as health_router
 from app.domain.errors import DomainError
 from app.infra.startup_checks import run_startup_checks
 from app.api.routes.classification import router as classification_router
-
+from app.api.routes.tools import router as tools_router
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Run startup and shutdown logic for the FastAPI app.
@@ -64,3 +64,4 @@ app.add_exception_handler(DomainError, domain_error_handler)
 # This makes GET /health available.
 app.include_router(health_router)
 app.include_router(classification_router)
+app.include_router(tools_router)
