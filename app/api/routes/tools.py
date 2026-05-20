@@ -1,12 +1,13 @@
 """Tool API routes.
 
-This file exposes simple HTTP endpoints for model-server tools.
+This file exposes simple HTTP endpoints for chatbot tools.
 
 These endpoints will later be used by the chatbot tool-calling layer.
 
 Important architecture rule:
 Routes should handle HTTP input/output only.
-The actual model-server communication is handled through app.infra.model_client.
+Tool business logic should live in services.
+External communication should live in infra adapters.
 """
 
 from typing import Any
@@ -15,6 +16,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
 from app.infra.model_client import extract_entities, summarize_thread
+from app.services.rag_service import RagAnswerRequest, RagService
 
 # All routes in this file are grouped under /tools.
 router = APIRouter(prefix="/tools", tags=["tools"])
@@ -32,6 +34,13 @@ class SummarizeApiRequest(BaseModel):
     title: str = Field(..., min_length=1)
     body: str | None = None
     comments: list[str] = Field(default_factory=list)
+
+
+class RagApiRequest(BaseModel):
+    """Request body for retrieving grounded RAG context."""
+
+    question: str = Field(..., min_length=1)
+    metadata_filter: dict[str, Any] | None = None
 
 
 @router.post("/ner")
@@ -54,3 +63,27 @@ async def summarize_endpoint(request: SummarizeApiRequest) -> dict[str, Any]:
         body=request.body,
         comments=request.comments,
     )
+
+
+@router.post("/rag")
+async def rag_endpoint(request: RagApiRequest) -> dict[str, Any]:
+    """Retrieve grounded context for a maintainer question.
+
+    This route does not run retrieval directly. It delegates to RagService,
+    keeping HTTP concerns in the API layer and RAG logic in the service layer.
+    """
+
+    service = RagService()
+    response = service.retrieve_context(
+        RagAnswerRequest(
+            question=request.question,
+            metadata_filter=request.metadata_filter,
+        )
+    )
+
+    return {
+        "question": response.question,
+        "rewritten_query": response.rewritten_query,
+        "grounding_chunk_ids": response.grounding_chunk_ids,
+        "context": response.context,
+    }
