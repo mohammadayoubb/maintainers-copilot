@@ -60,10 +60,11 @@ services:
       - .env
 
     environment:
-      # From inside the API container, Vault is reached by service name.
+      # From inside the API container, services are reached by service name.
       VAULT_HOST: vault
       DATABASE_URL: postgresql+asyncpg://maintainer:maintainer@db:5432/maintainers_copilot
       DATABASE_SYNC_URL: postgresql+psycopg://maintainer:maintainer@db:5432/maintainers_copilot
+      MODEL_SERVER_URL: http://model-server:8001
 
     # The API depends on these services existing.
     # Later, startup checks verify required infrastructure more strictly.
@@ -73,24 +74,25 @@ services:
       - redis
       - minio
       - vault
+      - model-server
 
   model-server:
     # Separate service for ML/NLP inference endpoints.
-    # Torch and model dependencies are installed during image build.
+    # Dev version avoids heavy PyTorch install for local integration testing.
     build:
       context: .
-      dockerfile: Dockerfile.model-server
+      dockerfile: Dockerfile.model-server.dev
 
     working_dir: /app
 
-    # Run the model server only. Do not install dependencies here.
+    # Run the lightweight model server.
     command: uvicorn model_server.main:app --host 0.0.0.0 --port 8001 --reload
 
     ports:
       - "${MODEL_SERVER_PORT:-8001}:8001"
 
     volumes:
-      - .:/app
+      - ./model_server:/app/model_server
 
     env_file:
       - .env
@@ -171,7 +173,7 @@ services:
     environment:
       VAULT_DEV_ROOT_TOKEN_ID: ${VAULT_ROOT_TOKEN:-root}
       VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
-      
+
     ports:
       - "${VAULT_PORT:-8200}:8200"
 

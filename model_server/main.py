@@ -1,76 +1,108 @@
-"""Model server FastAPI application.
+"""Lightweight model server for local Day 4 chatbot tool testing.
 
-The model server is responsible for ML/NLP inference endpoints.
+This keeps the same HTTP contract as the real model server:
+- POST /classify
+- POST /ner
+- POST /summarize
 
-It exposes:
-- /health for service health checks
-- /classify for issue classification
-- /ner for code-shaped entity extraction
-- /summarize for issue thread summarization
-
-Keeping this service separate from the main API makes the architecture cleaner:
-the main API handles users, auth, chat, memory, and orchestration,
-while the model server handles ML/NLP inference.
+It avoids PyTorch so the Docker build stays small and fast.
 """
 
+from __future__ import annotations
+
+import re
+from typing import Any
+
 from fastapi import FastAPI
+from pydantic import BaseModel
 
-from model_server.classifier import classify_issue
-from model_server.ner import extract_entities
-from model_server.schemas import (
-    ClassifyIssueRequest,
-    ClassifyIssueResponse,
-    NerRequest,
-    NerResponse,
-    SummarizeThreadRequest,
-    SummarizeThreadResponse,
-)
-from model_server.summarizer import summarize_thread
-
-# Create a separate FastAPI app for model inference.
-app = FastAPI(
-    title="Maintainer's Copilot Model Server",
-    version="0.1.0",
-)
+app = FastAPI(title="Maintainer Copilot Model Server")
 
 
-@app.get("/health")
-async def health_check() -> dict[str, str]:
-    """Return a simple status response for the model server.
+class ClassifyRequest(BaseModel):
+    """Request body for issue classification."""
 
-    This confirms that the model-server service is running.
-    Later, the main API can use this endpoint to check whether
-    ML inference is available.
-    """
+    title: str
+    body: str | None = None
+
+
+class NerRequest(BaseModel):
+    """Request body for entity extraction."""
+
+    text: str
+
+
+class SummarizeRequest(BaseModel):
+    """Request body for thread summarization."""
+
+    title: str
+    body: str | None = None
+    comments: list[str] | None = None
+
+
+@app.get("/")
+def health() -> dict[str, str]:
+    """Basic health check."""
+    return {"status": "ok", "service": "model-server-dev"}
+
+
+@app.post("/classify")
+def classify(request: ClassifyRequest) -> dict[str, Any]:
+    """Classify an issue using simple rules for local integration testing."""
+    text = f"{request.title} {request.body or ''}".lower()
+
+    if any(
+        word in text
+        for word in ["bug", "error", "fails", "failure", "exception", "traceback"]
+    ):
+        label = "bug"
+        confidence = 0.75
+    elif any(
+        word in text
+        for word in ["feature", "enhancement", "support add", "request"]
+    ):
+        label = "feature"
+        confidence = 0.70
+    elif any(word in text for word in ["docs", "documentation", "readme", "guide"]):
+        label = "docs"
+        confidence = 0.70
+    else:
+        label = "question"
+        confidence = 0.65
+
     return {
-        "status": "ok",
-        "service": "model-server",
+        "label": label,
+        "confidence": confidence,
+        "model": "dev-rule-based-classifier",
     }
 
 
-@app.post("/classify", response_model=ClassifyIssueResponse)
-async def classify_endpoint(request: ClassifyIssueRequest) -> ClassifyIssueResponse:
-    """Classify a GitHub issue.
+@app.post("/ner")
+def ner(request: NerRequest) -> dict[str, Any]:
+    """Extract simple code-shaped entities."""
+    text = request.text
+    entities: list[dict[str, str]] = []
 
-    This endpoint wraps the classifier function so other services can call
-    classification through HTTP.
-    """
-    return classify_issue(request)
+    for match in re.findall(r"\b[a-zA-Z_][a-zA-Z0-9_]*\(\)?", text):
+        entities.append({"text": match, "type": "function_or_identifier"})
+
+    for match in re.findall(r"\b[\w\-]+\.(?:py|csv|json|md|txt|yml|yaml)\b", text):
+        entities.append({"text": match, "type": "file"})
+
+    for match in re.findall(r"\b[A-Z][A-Za-z]+Error\b", text):
+        entities.append({"text": match, "type": "error"})
+
+    return {"entities": entities}
 
 
-@app.post("/ner", response_model=NerResponse)
-async def ner_endpoint(request: NerRequest) -> NerResponse:
-    """Extract code-shaped entities from issue text.
+@app.post("/summarize")
+def summarize(request: SummarizeRequest) -> dict[str, Any]:
+    """Return a lightweight summary for local integration testing."""
+    body = request.body or ""
+    comments = request.comments or []
 
-    This endpoint is used as a chatbot tool later.
-    """
-    return extract_entities(request)
-
-
-@app.post("/summarize", response_model=SummarizeThreadResponse)
-async def summarize_endpoint(request: SummarizeThreadRequest) -> SummarizeThreadResponse:
-    """Summarize an issue thread.
-
-    This endpoint is used as a chatbot tool later.
-    """
-    return summarize_thread(request)
+    return {
+        "summary": f"{request.title}. {body[:180]}",
+        "resolution": "No final resolution detected in dev summarizer.",
+        "open_questions": [] if comments else ["No comments were provided."],
+    }

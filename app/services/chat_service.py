@@ -9,13 +9,14 @@ This service owns chatbot business logic:
 
 from __future__ import annotations
 
+import inspect
 from typing import Any
 
 from app.domain.errors import NotFoundError
 from app.infra.redaction import redact_text
 from app.repositories.conversation_repo import ConversationRepository
 from app.services.memory_service import MemoryService
-from app.services.rag_service import RagService
+from app.services.rag_service import RagAnswerRequest, RagService
 
 
 class ChatService:
@@ -28,11 +29,7 @@ class ChatService:
         rag_service: RagService,
         model_client: Any,
     ) -> None:
-        """Store service dependencies.
-
-        model_client is kept as Any because it is an infra adapter and may expose
-        classify/ner/summarize methods depending on the current project version.
-        """
+        """Store service dependencies."""
         self.conversation_repo = conversation_repo
         self.memory_service = memory_service
         self.rag_service = rag_service
@@ -74,7 +71,6 @@ class ChatService:
 
         assistant_response = await self._route_tool(
             user_id=user_id,
-            conversation_id=conversation_id,
             message=message,
         )
 
@@ -95,7 +91,6 @@ class ChatService:
         self,
         *,
         user_id: int,
-        conversation_id: int,
         message: str,
     ) -> str:
         """Route obvious user intent to one project tool.
@@ -108,34 +103,49 @@ class ChatService:
         try:
             if self._is_memory_write(normalized):
                 memory_text = self._extract_memory_text(message)
+
                 await self.memory_service.write_memory(
                     user_id=user_id,
                     content=memory_text,
                     memory_type="semantic",
                 )
+
                 return "Saved this as long-term memory."
 
             if "classify" in normalized or "label this" in normalized:
-                result = await self.model_client.classify_issue(
+                result = await self._call_maybe_async(
+                    self.model_client.classify_issue,
                     title="Chat-submitted issue",
                     body=message,
                 )
+
                 return self._format_classification(result)
 
-            if "extract entities" in normalized or "entities" in normalized or "ner" in normalized:
-                result = await self.model_client.extract_entities(text=message)
+            if (
+                "extract entities" in normalized
+                or "entities" in normalized
+                or "ner" in normalized
+            ):
+                result = await self._call_maybe_async(
+                    self.model_client.extract_entities,
+                    text=message,
+                )
+
                 return self._format_entities(result)
 
             if "summarize" in normalized or "summary" in normalized:
-                result = await self.model_client.summarize_thread(
+                result = await self._call_maybe_async(
+                    self.model_client.summarize_thread,
                     title="Chat-submitted thread",
                     body=message,
                     comments=[],
                 )
+
                 return self._format_summary(result)
 
             if self._looks_like_question(normalized):
-                result = await self.rag_service.answer_question(question=message)
+                result = await self._call_rag(message)
+
                 return self._format_rag_answer(result)
 
             return (
@@ -150,6 +160,29 @@ class ChatService:
                 "One of the chatbot tools is temporarily unavailable, so I could not "
                 "complete that tool call right now. The message was still saved."
             )
+
+    async def _call_maybe_async(self, func: Any, **kwargs: Any) -> Any:
+        """Call either a sync or async tool function.
+
+        The current model client uses sync module-level HTTP functions.
+        This helper keeps ChatService compatible with sync and async adapters.
+        """
+        result = func(**kwargs)
+
+        if inspect.isawaitable(result):
+            return await result
+
+        return result
+
+    async def _call_rag(self, question: str) -> Any:
+        """Call the RAG retrieval service using its request model."""
+        request = RagAnswerRequest(question=question)
+        result = self.rag_service.retrieve_context(request)
+
+        if inspect.isawaitable(result):
+            return await result
+
+        return result
 
     def _is_memory_write(self, normalized: str) -> bool:
         """Detect explicit memory-write requests only."""
@@ -183,6 +216,7 @@ class ChatService:
             "is",
             "are",
         )
+
         return normalized.endswith("?") or normalized.startswith(question_starters)
 
     def _build_title(self, message: str) -> str:
@@ -224,6 +258,16 @@ class ChatService:
 
         if answer:
             return str(answer)
+
+        context = self._read_value(result, "context", None)
+
+        if context:
+            return f"Retrieved grounding context:\n{context}"
+
+        chunks = self._read_value(result, "chunks", None)
+
+        if chunks:
+            return f"Retrieved {len(chunks)} relevant chunks: {chunks}"
 
         return str(result)
 
