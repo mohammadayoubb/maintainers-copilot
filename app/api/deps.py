@@ -18,6 +18,7 @@ from app.db.models import User
 from app.db.session import AsyncSessionLocal
 from app.domain.errors import PermissionDeniedError
 import app.infra.model_client as model_client
+from app.infra.redis import get_redis_client
 from app.repositories.audit_repo import AuditRepository
 from app.repositories.conversation_repo import ConversationRepository
 from app.repositories.memory_repo import MemoryRepository
@@ -27,6 +28,7 @@ from app.services.chat_service import ChatService
 from app.services.conversation_service import ConversationService
 from app.services.memory_service import MemoryService
 from app.services.rag_service import RagService
+from app.services.short_term_memory_service import ShortTermMemoryService
 from app.services.widget_service import WidgetService
 
 
@@ -118,17 +120,26 @@ def get_rag_service() -> RagService:
     return RagService()
 
 
+def get_short_term_memory_service() -> ShortTermMemoryService:
+    """Create ShortTermMemoryService for the current request."""
+    return ShortTermMemoryService(redis_client=get_redis_client())
+
+
 def get_chat_service(
     conversation_repo: ConversationRepository = Depends(get_conversation_repository),
     memory_service: MemoryService = Depends(get_memory_service),
     rag_service: RagService = Depends(get_rag_service),
+    short_term_memory_service: ShortTermMemoryService = Depends(
+        get_short_term_memory_service
+    ),
 ) -> ChatService:
-    """Create ChatService with all chatbot tool dependencies."""
+    """Create ChatService with chatbot tool dependencies."""
     return ChatService(
         conversation_repo=conversation_repo,
         memory_service=memory_service,
         rag_service=rag_service,
         model_client=model_client,
+        short_term_memory_service=short_term_memory_service,
     )
 
 
@@ -142,7 +153,7 @@ async def get_current_user(
 async def get_current_admin_user(
     user: User = Depends(current_active_user),
 ) -> User:
-    """Return the current user only if they is an admin."""
+    """Return the current user only if they are an admin."""
     if user.role != "admin":
         raise PermissionDeniedError("Admin access is required.")
 

@@ -3,6 +3,7 @@
 This service owns chatbot business logic:
 - validates conversation ownership
 - saves user and assistant messages
+- stores short-term conversation memory in Redis
 - routes clear user intents to project tools
 - writes explicit long-term memory only when requested
 """
@@ -17,6 +18,7 @@ from app.infra.redaction import redact_text
 from app.repositories.conversation_repo import ConversationRepository
 from app.services.memory_service import MemoryService
 from app.services.rag_service import RagAnswerRequest, RagService
+from app.services.short_term_memory_service import ShortTermMemoryService
 
 
 class ChatService:
@@ -28,12 +30,14 @@ class ChatService:
         memory_service: MemoryService,
         rag_service: RagService,
         model_client: Any,
+        short_term_memory_service: ShortTermMemoryService,
     ) -> None:
         """Store service dependencies."""
         self.conversation_repo = conversation_repo
         self.memory_service = memory_service
         self.rag_service = rag_service
         self.model_client = model_client
+        self.short_term_memory_service = short_term_memory_service
 
     async def handle_message(
         self,
@@ -69,15 +73,29 @@ class ChatService:
             content_redacted=redacted_message,
         )
 
+        await self.short_term_memory_service.append_message(
+            conversation_id=conversation_id,
+            role="user",
+            content=redacted_message,
+        )
+
         assistant_response = await self._route_tool(
             user_id=user_id,
             message=message,
         )
 
+        redacted_assistant_response = redact_text(assistant_response)
+
         assistant_message = await self.conversation_repo.create_message(
             conversation_id=conversation_id,
             role="assistant",
-            content_redacted=redact_text(assistant_response),
+            content_redacted=redacted_assistant_response,
+        )
+
+        await self.short_term_memory_service.append_message(
+            conversation_id=conversation_id,
+            role="assistant",
+            content=redacted_assistant_response,
         )
 
         return {
