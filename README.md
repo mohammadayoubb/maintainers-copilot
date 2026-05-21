@@ -12,6 +12,15 @@ It is an authenticated assistant for open-source maintainers. The system helps w
 - embeddable React widget support
 - evaluation gates in CI
 
+## Fresh Clone Startup
+
+This project is designed to run locally with Docker Compose.
+
+### 1. Create the environment file
+
+```bash
+cp .env.example .env
+
 ## Current Phase
 
 The project is currently in the Day 1 Foundations phase.
