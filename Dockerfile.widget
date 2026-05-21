@@ -1,0 +1,19 @@
+# Build the standalone React widget with Vite.
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY widget/package.json ./package.json
+RUN npm install
+
+COPY widget/index.html ./index.html
+COPY widget/vite.config.js ./vite.config.js
+COPY widget/src ./src
+
+RUN npm run build
+
+
+# Serve the built widget with nginx.
+FROM nginx:alpine
+
+COPY --from=builder /app/dist /usr/share/nginx/html

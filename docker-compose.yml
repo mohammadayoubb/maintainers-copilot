@@ -76,13 +76,16 @@ services:
       - vault
       - model-server
   widget:
-    image: nginx:alpine
-
-    volumes:
-      - ./widget:/usr/share/nginx/html:ro
+    # React/Vite embeddable widget served as static files by nginx.
+    build:
+      context: .
+      dockerfile: Dockerfile.widget
 
     ports:
       - "5174:80"
+
+    depends_on:
+      - api
 
   host:
     image: nginx:alpine
