@@ -21,7 +21,7 @@ Later, startup checks can also verify:
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 
 from app.api.exception_handlers import domain_error_handler
@@ -61,7 +61,18 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5174",
+        "http://localhost:8080",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:8080",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Register the global domain error handler.
 # Any DomainError raised inside routes/services will be converted into
 # a safe structured HTTP response.

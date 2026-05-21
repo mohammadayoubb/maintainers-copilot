@@ -20,6 +20,7 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        border: 1px solid #e5e7eb;
       }
 
       .header {
@@ -27,6 +28,31 @@
         background: #111827;
         color: white;
         font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .status {
+        font-size: 11px;
+        font-weight: 400;
+        color: #d1d5db;
+      }
+
+      .auth {
+        padding: 12px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #f9fafb;
+      }
+
+      .auth input {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 8px;
+      }
+
+      .auth button {
+        width: 100%;
       }
 
       .messages {
@@ -42,6 +68,7 @@
         border-radius: 12px;
         font-size: 14px;
         line-height: 1.4;
+        white-space: pre-wrap;
       }
 
       .assistant {
@@ -51,6 +78,11 @@
 
       .user {
         background: #dbeafe;
+      }
+
+      .error {
+        background: #fee2e2;
+        border: 1px solid #fecaca;
       }
 
       .composer {
@@ -77,6 +109,11 @@
         cursor: pointer;
       }
 
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
       .hint {
         font-size: 12px;
         color: #6b7280;
@@ -87,26 +124,55 @@
 
   <body>
     <div class="widget">
-      <div class="header">Maintainer Copilot</div>
+      <div class="header">
+        <span>Maintainer Copilot</span>
+        <span class="status" id="status">Not logged in</span>
+      </div>
+
+      <div class="auth" id="auth-box">
+        <input id="email-input" placeholder="Email" value="authuser@example.com" />
+        <input
+          id="password-input"
+          placeholder="Password"
+          type="password"
+          value="StrongPassword123!"
+        />
+        <button id="login-button" type="button">Login</button>
+      </div>
 
       <div class="messages" id="messages">
         <div class="hint" id="widget-id"></div>
 
         <div class="message assistant">
-          Hi, I am the embedded Maintainer Copilot widget. Ask me to classify an issue,
-          summarize a thread, or search RAG context.
+          Hi, I am the embedded Maintainer Copilot widget. Login, then ask me to classify
+          an issue, summarize a thread, or search RAG context.
         </div>
       </div>
 
       <form class="composer" id="chat-form">
         <input id="chat-input" placeholder="Ask about an issue..." />
-        <button type="submit">Send</button>
+        <button id="send-button" type="submit">Send</button>
       </form>
     </div>
 
     <script>
+      const API_BASE_URL = "http://localhost:8000";
+
       const params = new URLSearchParams(window.location.search);
       const widgetId = params.get("widget_id") || "demo-widget";
+
+      let token = null;
+      let conversationId = null;
+
+      const messages = document.getElementById("messages");
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("chat-input");
+      const statusLabel = document.getElementById("status");
+      const authBox = document.getElementById("auth-box");
+      const emailInput = document.getElementById("email-input");
+      const passwordInput = document.getElementById("password-input");
+      const loginButton = document.getElementById("login-button");
+      const sendButton = document.getElementById("send-button");
 
       document.getElementById("widget-id").textContent = "Widget ID: " + widgetId;
 
@@ -119,10 +185,6 @@
         "*"
       );
 
-      const messages = document.getElementById("messages");
-      const form = document.getElementById("chat-form");
-      const input = document.getElementById("chat-input");
-
       function addMessage(role, content) {
         const div = document.createElement("div");
         div.className = "message " + role;
@@ -130,6 +192,97 @@
         messages.appendChild(div);
         messages.scrollTop = messages.scrollHeight;
       }
+
+      async function login() {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+          addMessage("error", "Email and password are required.");
+          return;
+        }
+
+        loginButton.disabled = true;
+        loginButton.textContent = "Logging in...";
+
+        try {
+          const body = new URLSearchParams();
+          body.set("username", email);
+          body.set("password", password);
+
+          const response = await fetch(API_BASE_URL + "/auth/jwt/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body,
+          });
+
+          if (!response.ok) {
+            const error = await response.text();
+            addMessage("error", "Login failed: " + error);
+            return;
+          }
+
+          const data = await response.json();
+          token = data.access_token;
+
+          statusLabel.textContent = "Logged in";
+          authBox.style.display = "none";
+
+          addMessage("assistant", "Login successful. You can now chat with the backend.");
+        } catch (error) {
+          addMessage("error", "Login request failed: " + error);
+        } finally {
+          loginButton.disabled = false;
+          loginButton.textContent = "Login";
+        }
+      }
+
+      async function sendMessage(value) {
+        if (!token) {
+          addMessage("error", "Please login first.");
+          return;
+        }
+
+        const payload = {
+          message: value,
+        };
+
+        if (conversationId !== null) {
+          payload.conversation_id = conversationId;
+        }
+
+        sendButton.disabled = true;
+
+        try {
+          const response = await fetch(API_BASE_URL + "/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) {
+            const error = await response.text();
+            addMessage("error", "Chat request failed: " + error);
+            return;
+          }
+
+          const data = await response.json();
+          conversationId = data.conversation_id;
+
+          addMessage("assistant", data.response || "No response returned.");
+        } catch (error) {
+          addMessage("error", "Chat request failed: " + error);
+        } finally {
+          sendButton.disabled = false;
+        }
+      }
+
+      loginButton.addEventListener("click", login);
 
       form.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -143,10 +296,7 @@
         addMessage("user", value);
         input.value = "";
 
-        addMessage(
-          "assistant",
-          "Widget UI is connected. Backend chat auth will be wired in the next widget batch."
-        );
+        sendMessage(value);
       });
     </script>
   </body>
