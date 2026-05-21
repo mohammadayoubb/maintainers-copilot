@@ -1,0 +1,11 @@
+__pycache__/
+.env
+
+# Large local ML model artifacts
+ml/artifacts/final_transformer_model_pandas.zip
+ml/artifacts/final_transformer_model_pandas/
+
+*.pyc
+*.egg-info/
+maintainers_copilot.egg-info/
+evals/golden/rag_golden.backup.jsonl
