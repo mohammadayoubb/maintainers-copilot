@@ -36,6 +36,7 @@ from app.auth.backend import auth_backend
 from app.auth.schemas import UserCreate, UserRead, UserUpdate
 from app.auth.users import fastapi_users
 from app.api.routes.chat import router as chat_router
+from app.api.routes import widget_loader
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -95,5 +96,5 @@ app.include_router(classification_router)
 app.include_router(tools_router)
 app.include_router(day4_dev.router)
 app.include_router(chat_router)
-
+app.include_router(widget_loader.router)
 

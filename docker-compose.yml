@@ -75,7 +75,27 @@ services:
       - minio
       - vault
       - model-server
+  widget:
+    image: nginx:alpine
 
+    volumes:
+      - ./widget:/usr/share/nginx/html:ro
+
+    ports:
+      - "5174:80"
+
+  host:
+    image: nginx:alpine
+
+    volumes:
+      - ./demo/host:/usr/share/nginx/html:ro
+
+    ports:
+      - "8080:80"
+
+    depends_on:
+      - api
+      - widget
   model-server:
     # Separate service for ML/NLP inference endpoints.
     # Dev version avoids heavy PyTorch install for local integration testing.
@@ -120,6 +140,9 @@ services:
 
     depends_on:
       - api
+
+    environment:
+      API_BASE_URL: http://api:8000  
 
   db:
     # Postgres image with pgvector installed.

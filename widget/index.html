@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maintainer Copilot Widget</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: transparent;
+      }
+
+      .widget {
+        width: 100%;
+        height: 100vh;
+        background: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        padding: 14px 16px;
+        background: #111827;
+        color: white;
+        font-weight: 700;
+      }
+
+      .messages {
+        flex: 1;
+        padding: 14px;
+        overflow-y: auto;
+        background: #f9fafb;
+      }
+
+      .message {
+        padding: 10px 12px;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .assistant {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+      }
+
+      .user {
+        background: #dbeafe;
+      }
+
+      .composer {
+        display: flex;
+        gap: 8px;
+        padding: 12px;
+        border-top: 1px solid #e5e7eb;
+        background: white;
+      }
+
+      input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+      }
+
+      button {
+        padding: 10px 12px;
+        border: 0;
+        border-radius: 10px;
+        background: #111827;
+        color: white;
+        cursor: pointer;
+      }
+
+      .hint {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="widget">
+      <div class="header">Maintainer Copilot</div>
+
+      <div class="messages" id="messages">
+        <div class="hint" id="widget-id"></div>
+
+        <div class="message assistant">
+          Hi, I am the embedded Maintainer Copilot widget. Ask me to classify an issue,
+          summarize a thread, or search RAG context.
+        </div>
+      </div>
+
+      <form class="composer" id="chat-form">
+        <input id="chat-input" placeholder="Ask about an issue..." />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const widgetId = params.get("widget_id") || "demo-widget";
+
+      document.getElementById("widget-id").textContent = "Widget ID: " + widgetId;
+
+      window.parent.postMessage(
+        {
+          type: "maintainer-copilot-resize",
+          width: 380,
+          height: 560,
+        },
+        "*"
+      );
+
+      const messages = document.getElementById("messages");
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("chat-input");
+
+      function addMessage(role, content) {
+        const div = document.createElement("div");
+        div.className = "message " + role;
+        div.textContent = content;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const value = input.value.trim();
+
+        if (!value) {
+          return;
+        }
+
+        addMessage("user", value);
+        input.value = "";
+
+        addMessage(
+          "assistant",
+          "Widget UI is connected. Backend chat auth will be wired in the next widget batch."
+        );
+      });
+    </script>
+  </body>
+</html>
