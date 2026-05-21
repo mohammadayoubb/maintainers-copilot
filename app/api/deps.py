@@ -13,19 +13,22 @@ from collections.abc import AsyncGenerator
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.auth.users import current_active_user
+from app.db.models import User
 from app.db.session import AsyncSessionLocal
+from app.domain.errors import PermissionDeniedError
+import app.infra.model_client as model_client
 from app.repositories.audit_repo import AuditRepository
 from app.repositories.conversation_repo import ConversationRepository
 from app.repositories.memory_repo import MemoryRepository
 from app.repositories.widget_repo import WidgetRepository
 from app.services.audit_service import AuditService
+from app.services.chat_service import ChatService
 from app.services.conversation_service import ConversationService
 from app.services.memory_service import MemoryService
+from app.services.rag_service import RagService
 from app.services.widget_service import WidgetService
-from app.auth.users import current_active_user
-from app.services.chat_service import ChatService
-from app.db.models import User
-from app.domain.errors import PermissionDeniedError
+
 
 async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     """Provide one database session per request.
@@ -42,23 +45,46 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
             raise
 
 
-def get_audit_service(
+def get_audit_repository(
     session: AsyncSession = Depends(get_db_session),
+) -> AuditRepository:
+    """Create AuditRepository for the current request."""
+    return AuditRepository(session)
+
+
+def get_memory_repository(
+    session: AsyncSession = Depends(get_db_session),
+) -> MemoryRepository:
+    """Create MemoryRepository for the current request."""
+    return MemoryRepository(session)
+
+
+def get_conversation_repository(
+    session: AsyncSession = Depends(get_db_session),
+) -> ConversationRepository:
+    """Create ConversationRepository for the current request."""
+    return ConversationRepository(session)
+
+
+def get_widget_repository(
+    session: AsyncSession = Depends(get_db_session),
+) -> WidgetRepository:
+    """Create WidgetRepository for the current request."""
+    return WidgetRepository(session)
+
+
+def get_audit_service(
+    audit_repo: AuditRepository = Depends(get_audit_repository),
 ) -> AuditService:
     """Create AuditService for the current request."""
-    audit_repo = AuditRepository(session)
     return AuditService(audit_repo)
 
 
 def get_memory_service(
-    session: AsyncSession = Depends(get_db_session),
+    memory_repo: MemoryRepository = Depends(get_memory_repository),
+    audit_service: AuditService = Depends(get_audit_service),
 ) -> MemoryService:
     """Create MemoryService for the current request."""
-    audit_repo = AuditRepository(session)
-    audit_service = AuditService(audit_repo)
-
-    memory_repo = MemoryRepository(session)
-
     return MemoryService(
         memory_repo=memory_repo,
         audit_service=audit_service,
@@ -66,14 +92,10 @@ def get_memory_service(
 
 
 def get_conversation_service(
-    session: AsyncSession = Depends(get_db_session),
+    conversation_repo: ConversationRepository = Depends(get_conversation_repository),
+    audit_service: AuditService = Depends(get_audit_service),
 ) -> ConversationService:
     """Create ConversationService for the current request."""
-    audit_repo = AuditRepository(session)
-    audit_service = AuditService(audit_repo)
-
-    conversation_repo = ConversationRepository(session)
-
     return ConversationService(
         conversation_repo=conversation_repo,
         audit_service=audit_service,
@@ -81,36 +103,34 @@ def get_conversation_service(
 
 
 def get_widget_service(
-    session: AsyncSession = Depends(get_db_session),
+    widget_repo: WidgetRepository = Depends(get_widget_repository),
+    audit_service: AuditService = Depends(get_audit_service),
 ) -> WidgetService:
     """Create WidgetService for the current request."""
-    audit_repo = AuditRepository(session)
-    audit_service = AuditService(audit_repo)
-
-    widget_repo = WidgetRepository(session)
-
     return WidgetService(
         widget_repo=widget_repo,
         audit_service=audit_service,
     )
 
+
+def get_rag_service() -> RagService:
+    """Create RagService for the current request."""
+    return RagService()
+
+
 def get_chat_service(
-    session: AsyncSession = Depends(get_db_session),
+    conversation_repo: ConversationRepository = Depends(get_conversation_repository),
+    memory_service: MemoryService = Depends(get_memory_service),
+    rag_service: RagService = Depends(get_rag_service),
 ) -> ChatService:
-    """Create ChatService for the current request."""
-    audit_repo = AuditRepository(session)
-    audit_service = AuditService(audit_repo)
-
-    conversation_repo = ConversationRepository(session)
-    conversation_service = ConversationService(
-        conversation_repo=conversation_repo,
-        audit_service=audit_service,
-    )
-
+    """Create ChatService with all chatbot tool dependencies."""
     return ChatService(
         conversation_repo=conversation_repo,
-        conversation_service=conversation_service,
+        memory_service=memory_service,
+        rag_service=rag_service,
+        model_client=model_client,
     )
+
 
 async def get_current_user(
     user: User = Depends(current_active_user),
@@ -122,7 +142,7 @@ async def get_current_user(
 async def get_current_admin_user(
     user: User = Depends(current_active_user),
 ) -> User:
-    """Return the current user only if they are an admin."""
+    """Return the current user only if they is an admin."""
     if user.role != "admin":
         raise PermissionDeniedError("Admin access is required.")
 
