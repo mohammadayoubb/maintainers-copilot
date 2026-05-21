@@ -1,22 +1,22 @@
-# DECISIONS.md — Classification Section
+# Maintainer's Copilot Technical Decisions
 
-## Classification Dataset Decision
+## 1. Dataset Choice
 
-### Chosen Repository
-
-I selected:
+Chosen repository:
 
 ```text
 pandas-dev/pandas
 ```
 
-Repository URL:
+Reason:
 
-```text
-https://github.com/pandas-dev/pandas
-```
+- It is a mature open-source project.
+- It has many closed issues.
+- It has real maintainer discussions.
+- It contains technical issue reports involving functions, files, stack traces, and errors.
+- Its labels can be mapped into the required project labels.
 
-The project requires closed issues from one open-source repository and classification into four labels:
+Project labels:
 
 ```text
 bug
@@ -25,256 +25,323 @@ docs
 question
 ```
 
-I selected `pandas-dev/pandas` because it provides clean maintainer-applied labels that map directly to the required project labels:
+## 2. Label Mapping
 
-| GitHub Label | Project Label |
+The project maps original GitHub labels into four simplified maintainer triage labels.
+
+Example mapping:
+
+| Project label | GitHub label examples |
 |---|---|
-| Bug | bug |
-| Enhancement | feature |
-| Docs | docs |
-| Usage Question | question |
+| `bug` | bug, regression, crash, error |
+| `feature` | enhancement, feature request |
+| `docs` | documentation, docs |
+| `question` | question, support, usage |
 
-This made it more suitable than the earlier repositories I tested.
+The exact mapping should be kept in the dataset/preprocessing code and summarized here.
 
-### Repositories Rejected
+## 3. Time-Aware Split
 
-Before selecting Pandas, I tested several repositories:
+The dataset split is time-aware.
 
-| Repository | Reason Rejected |
+Reason:
+
+- Train data should be older.
+- Test data should be newer.
+- This better simulates real maintainer use, where the system is evaluated on future issues.
+
+## 4. Classification Models
+
+The project compares three approaches:
+
+| Model type | Purpose |
 |---|---|
-| `fastapi/fastapi` | The mapped dataset was heavily imbalanced and the `docs` class had too few usable examples. |
-| `streamlit/streamlit` | It had useful bug and feature labels, but the final mapped dataset still missed a usable docs class. |
-| `langchain-ai/langchain` | The fetched issue labels did not provide enough documentation examples, and pagination also limited the number of fetched issues. |
-| `microsoft/vscode` | It had strong bug, feature, and question labels, but no usable docs examples from the tested label mapping. |
+| Classical ML | Fast baseline |
+| Fine-tuned transformer | Main learned classifier |
+| LLM baseline | Flexible but slower/costlier comparison |
 
-The final decision was based on dataset quality, not project popularity. Since the classifier must support all four labels, I rejected repositories where one class was missing or too small.
+### Classical ML
 
----
+Used as a baseline to prove that the transformer adds value over a simpler approach.
 
-## Dataset Construction
+### Fine-Tuned Transformer
 
-### Fetching Strategy
-
-Instead of randomly fetching closed issues, I fetched closed issues by maintainer label group.
-
-This helped build a balanced dataset across the four required classes.
-
-The fetch groups were:
-
-| Target Label | GitHub Label |
-|---|---|
-| bug | Bug |
-| feature | Enhancement |
-| docs | Docs |
-| question | Usage Question |
-
-This produced a cleaner dataset because every fetched issue already had a maintainer-applied label that mapped directly to a project class.
-
-### Final Dataset Size
-
-The final processed dataset contains:
-
-```text
-1178 issues
-```
-
-Class distribution:
-
-| Label | Count |
-|---|---:|
-| bug | 319 |
-| docs | 289 |
-| question | 286 |
-| feature | 284 |
-
-This distribution is balanced enough for comparing the three classifiers.
-
-### Split Strategy
-
-I used a class-wise time-aware split.
-
-Within each label, issues were sorted by creation date, then split into:
-
-```text
-70% train
-15% validation
-15% test
-```
-
-This preserves time ordering inside each class while also making sure that every class appears in train, validation, and test.
-
-Split distribution:
-
-| Split | bug | docs | feature | question |
-|---|---:|---:|---:|---:|
-| train | 223 | 202 | 198 | 200 |
-| validation | 48 | 43 | 43 | 43 |
-| test | 48 | 44 | 43 | 43 |
-
-This avoids the failure case I saw in earlier repositories where a class disappeared from one split.
-
----
-
-## Classical ML Baseline
-
-### Model
-
-The classical baseline used:
-
-```text
-TF-IDF + Logistic Regression
-```
-
-This model was chosen because it is simple, fast, explainable, and gives a strong traditional ML baseline before comparing against deep learning and LLM approaches.
-
-### Results
-
-| Metric | Value |
-|---|---:|
-| Validation Accuracy | 0.7288 |
-| Validation Macro-F1 | 0.7299 |
-| Test Accuracy | 0.6292 |
-| Test Macro-F1 | 0.6287 |
-
-The classical model performed reasonably well, especially for a lightweight baseline. However, TF-IDF features are limited because they mostly capture word and phrase patterns rather than deeper semantic meaning.
-
----
-
-## Fine-Tuned Transformer
-
-### Model
-
-The fine-tuned transformer used:
+Model:
 
 ```text
 distilbert-base-uncased
 ```
 
-The model was trained for four-way issue classification:
+Purpose:
 
-```text
-bug
-feature
-docs
-question
-```
-
-### Hyperparameters
-
-| Hyperparameter | Value |
-|---|---:|
-| Epochs | 3 |
-| Learning Rate | 2e-5 |
-| Batch Size | 16 |
-| Max Length | 256 |
-| Weight Decay | 0.01 |
-| Seed | 42 |
-
-### Freeze Policy
-
-I used no freezing.
-
-The full DistilBERT encoder and classification head were fine-tuned.
-
-Reason:
-
-The dataset is balanced and domain-specific enough to let the transformer adapt to GitHub issue language. Full fine-tuning gives the model a better chance to learn the difference between bugs, feature requests, docs issues, and usage questions.
-
-### Results
-
-| Metric | Value |
-|---|---:|
-| Test Accuracy | 0.6910 |
-| Test Macro-F1 | 0.6892 |
-| Test Weighted-F1 | 0.6861 |
-
-Per-class F1:
-
-| Label | F1 |
-|---|---:|
-| bug | 0.5854 |
-| feature | 0.8889 |
-| docs | 0.6444 |
-| question | 0.6383 |
-
-The transformer outperformed the classical baseline overall. Its strongest class was `feature`, and its weakest class was `bug`.
-
-The model card includes the architecture, labels, hyperparameters, freeze policy, dataset split, final metrics, and SHA-256 hashes for saved model artifacts.
-
----
-
-## LLM Baseline
-
-### Model
-
-The LLM baseline used:
-
-```text
-gpt-4o-mini
-```
-
-The LLM was prompted to classify each test issue into exactly one of:
-
-```text
-bug
-feature
-docs
-question
-```
-
-It returned JSON with a predicted label and short reason.
-
-### Results
-
-| Metric | Value |
-|---|---:|
-| Test Accuracy | 0.6292 |
-| Test Macro-F1 | 0.5884 |
-| Test Weighted-F1 | 0.5891 |
-| Average Latency | 1.58 seconds/example |
-| Estimated Total Cost | $0.0159 |
-
-Per-class F1:
-
-| Label | F1 |
-|---|---:|
-| bug | 0.5942 |
-| feature | 0.8791 |
-| docs | 0.6842 |
-| question | 0.1961 |
-
-The LLM baseline performed well on `feature` and reasonably on `docs`, but it performed poorly on `question`. Many usage questions were misclassified as bugs, which reduced the macro-F1 score.
-
----
-
-## Three-Way Classification Comparison
-
-| Model | Accuracy | Macro-F1 | Notes |
-|---|---:|---:|---|
-| TF-IDF + Logistic Regression | 0.6292 | 0.6287 | Simple and fast classical baseline |
-| Fine-tuned DistilBERT | 0.6910 | 0.6892 | Best overall performance |
-| GPT-4o-mini LLM Baseline | 0.6292 | 0.5884 | Low setup cost, but weak on questions |
-
----
-
-## Deployment Choice
-
-### Selected Model
-
-I selected:
-
-```text
-Fine-tuned DistilBERT
-```
-
-### Reason
-
-The fine-tuned transformer achieved the best macro-F1 among the three classifiers.
-
-It also avoids per-request LLM cost and gives more predictable behavior than prompt-only classification. Compared to the classical baseline, it captures richer language patterns and performed better overall on the test set.
+- classify issue text into `bug`, `feature`, `docs`, or `question`
+- provide a production-friendly model with predictable cost and latency
 
 Deployment choice:
 
 ```text
-Fine-tuned DistilBERT ships because it achieved the highest macro-F1 while avoiding the recurring cost and latency of an LLM-based classifier.
+Fine-tuned DistilBERT classifier
 ```
+
+Reason:
+
+- better production control than an LLM baseline
+- lower cost than calling an LLM for every issue
+- faster and easier to deploy behind the model-server contract
+
+Final metric values should be filled from the metrics artifacts:
+
+```text
+ml/artifacts/transformer_metrics_pandas.json
+ml/artifacts/classical_metrics.json
+ml/artifacts/llm_baseline_metrics_pandas.json
+```
+
+## 5. LLM Baseline
+
+The LLM baseline was used for comparison, not as the main deployed classifier.
+
+Reason:
+
+- good for measuring how well a general model can classify issues
+- useful baseline
+- not ideal for every classification request because of cost, latency, and external dependency risk
+
+## 6. NER Tool
+
+NER is implemented as an integration tool that extracts code-shaped entities.
+
+Entity examples:
+
+- function names
+- file names
+- error classes
+- package names
+- versions
+- command snippets
+
+Reason:
+
+Issue triage often depends on quickly identifying the subsystem or error involved.
+
+## 7. Summarization Tool
+
+Summarization is exposed through the model server contract.
+
+Purpose:
+
+- condense long issue threads
+- identify likely resolution/status
+- list open questions for maintainers
+
+## 8. RAG Corpus
+
+The RAG corpus is built from:
+
+- resolved pandas issues
+- maintainer comments
+- structured chunks
+
+Reason:
+
+The chatbot should ground answers in project-specific maintainer history instead of relying only on generic model knowledge.
+
+## 9. Chunking Strategy
+
+The project avoids naive fixed-size chunking.
+
+For issues, chunks preserve issue structure:
+
+- problem description
+- maintainer answer
+- resolution-style comments
+
+Reason:
+
+Maintainer answers and issue problem statements are semantically different and should not be blindly mixed.
+
+## 10. Embedding Model Decision
+
+Compared embedding models:
+
+```text
+sentence-transformers/all-MiniLM-L6-v2
+BAAI/bge-small-en
+```
+
+Selected model:
+
+```text
+BAAI/bge-small-en
+```
+
+Reason:
+
+It performed best on the project's own RAG golden set.
+
+Final RAG retrieval results:
+
+```text
+hit@5 = 1.0000
+MRR@10 ≈ 0.7307
+```
+
+## 11. Hybrid Retrieval Weight
+
+Selected weighting:
+
+```text
+dense_weight = 0.8
+sparse_weight = 0.2
+```
+
+Reason:
+
+This gave the best retrieval quality on the RAG golden set while still preserving keyword sensitivity for technical issue terms.
+
+## 12. Query Transformation
+
+Technique:
+
+```text
+deterministic rule-based query expansion
+```
+
+Example:
+
+```text
+csv -> read_csv, parser, DataFrame, delimiter
+```
+
+Reason:
+
+- fast
+- cheap
+- deterministic
+- reproducible
+- good for technical GitHub issue retrieval
+
+## 13. RAG Fallback
+
+The production/evaluated path is embedding-based RAG.
+
+A local sparse fallback exists for graceful degradation when embedding dependencies are unavailable.
+
+Reason:
+
+- prevents chatbot failure during local integration
+- keeps the tool usable
+- shows graceful degradation
+- does not replace the evaluated BGE retrieval path
+
+## 14. Memory Type
+
+Long-term memory type:
+
+```text
+semantic
+```
+
+Reason:
+
+The assistant needs to remember reusable preferences or maintainer facts across conversations.
+
+Example:
+
+```text
+This user prefers concise maintainer answers.
+```
+
+Memory writes are explicit only.
+
+## 15. Redis TTL
+
+Short-term memory TTL:
+
+```text
+1800 seconds = 30 minutes
+```
+
+Reason:
+
+- long enough for normal pauses during a chat
+- short enough to avoid retaining temporary state forever
+
+## 16. Streamlit UI
+
+Streamlit is used for the internal/admin UI.
+
+Reason:
+
+- fast to build
+- good for internal tools
+- supports login and chat quickly
+- not intended as the production embedded surface
+
+## 17. Widget UI
+
+The widget is the production-shaped embedded surface.
+
+It is loaded through:
+
+```html
+<script src="http://localhost:8000/widget.js" data-widget-id="demo-widget"></script>
+```
+
+Reason:
+
+- host apps can embed it with one script tag
+- iframe isolation avoids CSS conflicts
+- postMessage supports resize behavior
+
+## 18. CORS
+
+Local CORS currently allows:
+
+```text
+http://localhost:5174
+http://localhost:8080
+http://127.0.0.1:5174
+http://127.0.0.1:8080
+```
+
+Reason:
+
+The browser widget and host app need to call the FastAPI backend during local demo.
+
+A future production version should enforce origins from the widget configuration table.
+
+## 19. Vault
+
+Vault stores secrets such as:
+
+- JWT signing key
+- API keys
+- service credentials
+
+The API loads required secrets during startup and refuses to boot if required secrets are missing.
+
+## 20. Redaction
+
+Redaction runs before sensitive text is stored or emitted.
+
+Reason:
+
+Users may paste stack traces, API keys, tokens, or credentials into issue text.
+
+## 21. Exception Handling
+
+Domain errors are mapped at the API boundary.
+
+Examples:
+
+| Domain error | HTTP status |
+|---|---|
+| `NotFoundError` | 404 |
+| `PermissionDeniedError` | 403 |
+| `ValidationDomainError` | 400 |
+| `ToolFailureError` | 502 |
+
+Reason:
+
+Users should see structured safe errors, not stack traces.
