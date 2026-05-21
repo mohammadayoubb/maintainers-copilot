@@ -144,7 +144,12 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(320), unique=True, index=True)
 
     # Lowercased/normalized email used by auth systems for lookups.
-    normalized_email: Mapped[str] = mapped_column(String(320), unique=True, index=True)
+    normalized_email: Mapped[str | None] = mapped_column(
+    String(320),
+    unique=True,
+    index=True,
+    nullable=True,
+)
 
     # Hashed password, never the plain password.
     hashed_password: Mapped[str] = mapped_column(String(1024))
