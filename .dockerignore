@@ -1,0 +1,31 @@
+# Git files are not needed inside Docker images.
+.git
+.gitignore
+
+# Python caches.
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local virtual environments.
+venv/
+.venv/
+
+# Local environment files should not be copied into images.
+.env
+
+# Large/generated ML artifacts should not be baked into every image by default.
+ml/artifacts/
+rag/data/embeddings_*.jsonl
+
+# Node/build artifacts.
+node_modules/
+dist/
+build/
+
+# OS/editor noise.
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,25 @@
+# Streamlit chatbot/admin image.
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# Install system packages needed by Python dependencies.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy dependency metadata first.
+COPY pyproject.toml ./
+
+# Install chatbot dependencies during image build.
+RUN pip install --upgrade pip \
+    && pip install -e ".[chatbot]"
+
+# Copy project code.
+COPY . .
+
+# Run Streamlit.
+CMD ["streamlit", "run", "streamlit_app/app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]

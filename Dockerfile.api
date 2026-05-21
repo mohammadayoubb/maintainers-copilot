@@ -1,0 +1,27 @@
+# API image for the main FastAPI backend.
+FROM python:3.11-slim
+
+# Prevent Python from writing .pyc files and enable unbuffered logs.
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set the container working directory.
+WORKDIR /app
+
+# Install system packages needed by Python dependencies.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy dependency metadata first so Docker can cache dependency installation.
+COPY pyproject.toml ./
+
+# Install project dependencies during image build, not at runtime.
+RUN pip install --upgrade pip \
+    && pip install -e .
+
+# Copy the project code.
+COPY . .
+
+# Run the API.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

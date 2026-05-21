@@ -1,0 +1,25 @@
+# Migration image for Alembic.
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# Install system packages needed by database drivers.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy dependency metadata first for better Docker caching.
+COPY pyproject.toml ./
+
+# Install dependencies once during image build.
+RUN pip install --upgrade pip \
+    && pip install -e .
+
+# Copy project code, including alembic.ini and migrations.
+COPY . .
+
+# Apply migrations when this container runs.
+CMD ["alembic", "upgrade", "head"]
