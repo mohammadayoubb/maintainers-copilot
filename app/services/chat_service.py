@@ -6,6 +6,7 @@ This service owns chatbot business logic:
 - stores short-term conversation memory in Redis
 - routes clear user intents to project tools
 - writes explicit long-term memory only when requested
+- formats tool outputs into maintainer-friendly chatbot responses
 """
 
 from __future__ import annotations
@@ -128,7 +129,7 @@ class ChatService:
                     memory_type="semantic",
                 )
 
-                return "Saved this as long-term memory."
+                return self._format_memory_write(memory_text)
 
             if "classify" in normalized or "label this" in normalized:
                 result = await self._call_maybe_async(
@@ -163,10 +164,13 @@ class ChatService:
                 return self._format_rag_answer(result)
 
             return (
-                "I can help with classification, entity extraction, summarization, "
-                "RAG questions, or explicit memory writes. Try: "
-                "'Classify this issue...', 'Extract entities...', 'Summarize...', "
-                "'What does the project say about...', or 'Remember that...'"
+                "I can help you triage maintainer work.\n\n"
+                "Try one of these:\n"
+                "- `Classify this issue: ...`\n"
+                "- `Extract entities from this issue: ...`\n"
+                "- `Summarize this thread: ...`\n"
+                "- `How should pandas maintainers handle ...?`\n"
+                "- `Remember that ...`"
             )
 
         except Exception:
@@ -176,11 +180,7 @@ class ChatService:
             )
 
     async def _call_maybe_async(self, func: Any, **kwargs: Any) -> Any:
-        """Call either a sync or async tool function.
-
-        The current model client uses sync module-level HTTP functions.
-        This helper keeps ChatService compatible with sync and async adapters.
-        """
+        """Call either a sync or async tool function."""
         result = func(**kwargs)
 
         if inspect.isawaitable(result):
@@ -247,53 +247,177 @@ class ChatService:
         """Create a short conversation title from the first user message."""
         return message[:60] if message else "New conversation"
 
+    def _format_memory_write(self, memory_text: str) -> str:
+        """Format explicit long-term memory write confirmation."""
+        return (
+            "Saved this as long-term memory.\n\n"
+            f"Memory saved:\n`{redact_text(memory_text)}`\n\n"
+            "This was an explicit memory write, so it was also recorded in the audit log."
+        )
+
     def _format_classification(self, result: Any) -> str:
-        """Format classifier output safely for chat."""
+        """Format classifier output as a maintainer-friendly triage answer."""
         label = self._read_value(result, "label", "unknown")
         confidence = self._read_value(result, "confidence", None)
         model = self._read_value(result, "model", "classifier")
 
-        if confidence is None:
-            return f"Classification result: {label} using {model}."
+        confidence_text = "unknown"
+        if confidence is not None:
+            confidence_text = str(confidence)
 
-        return f"Classification result: {label} with confidence {confidence} using {model}."
+        reason = self._classification_reason(label)
+        action = self._classification_action(label)
+
+        return (
+            f"I would classify this issue as **{label}**.\n\n"
+            f"**Confidence:** {confidence_text}\n\n"
+            f"**Model used:** `{model}`\n\n"
+            f"**Why:** {reason}\n\n"
+            f"**Suggested maintainer action:** {action}"
+        )
+
+    def _classification_reason(self, label: str) -> str:
+        """Return a short explanation for the predicted label."""
+        reasons = {
+            "bug": (
+                "The issue describes broken or unexpected behavior in an existing "
+                "feature, especially because it mentions a failure, error, exception, "
+                "or incorrect result."
+            ),
+            "feature": (
+                "The issue appears to request new behavior, expanded support, or an "
+                "enhancement rather than reporting an existing behavior as broken."
+            ),
+            "docs": (
+                "The issue appears to be about documentation, examples, guides, or "
+                "clarifying existing behavior for users."
+            ),
+            "question": (
+                "The issue appears to ask for help or clarification rather than "
+                "reporting a confirmed defect or requesting a concrete feature."
+            ),
+        }
+
+        return reasons.get(label, "The classifier returned a label outside the known set.")
+
+    def _classification_action(self, label: str) -> str:
+        """Return a suggested maintainer action for a predicted label."""
+        actions = {
+            "bug": (
+                "Ask for a minimal reproducible example, pandas version, Python version, "
+                "expected behavior, actual behavior, and a small input sample if relevant. "
+                "If reproducible, keep it labeled as a bug and route it to the relevant area."
+            ),
+            "feature": (
+                "Ask the reporter to clarify the use case, expected API behavior, and "
+                "whether there is an existing workaround. Then decide whether it fits "
+                "the project roadmap."
+            ),
+            "docs": (
+                "Ask which page or example is confusing, then route it to documentation. "
+                "If the fix is small, suggest a docs PR."
+            ),
+            "question": (
+                "Ask for missing context and consider redirecting to support channels if "
+                "it is not actionable as a GitHub issue."
+            ),
+        }
+
+        return actions.get(label, "Review manually before applying a maintainer label.")
 
     def _format_entities(self, result: Any) -> str:
-        """Format NER output safely for chat."""
+        """Format NER output as a clean list."""
         entities = self._read_value(result, "entities", [])
 
         if not entities:
-            return "No code-shaped entities were found."
+            return (
+                "I did not find code-shaped entities in this message.\n\n"
+                "Useful entities usually include function names, file names, error types, "
+                "package names, versions, commands, or environment variables."
+            )
 
-        return f"Extracted entities: {entities}"
+        lines = ["I found these code-shaped entities:\n"]
+
+        for entity in entities:
+            if isinstance(entity, dict):
+                text = entity.get("text", "")
+                entity_type = entity.get("type", "unknown")
+                lines.append(f"- `{text}` — {entity_type}")
+            else:
+                lines.append(f"- `{entity}`")
+
+        lines.append(
+            "\nSuggested maintainer action: use these entities to route the issue "
+            "to the right subsystem and ask for a minimal reproduction around the "
+            "most relevant function, file, or error."
+        )
+
+        return "\n".join(lines)
 
     def _format_summary(self, result: Any) -> str:
-        """Format summarizer output safely for chat."""
+        """Format summarizer output as a maintainer thread summary."""
         summary = self._read_value(result, "summary", None)
+        resolution = self._read_value(result, "resolution", None)
+        open_questions = self._read_value(result, "open_questions", [])
 
-        if summary:
-            return f"Summary: {summary}"
+        if not summary:
+            summary = str(result)
 
-        return f"Summary result: {result}"
+        if not resolution:
+            resolution = "No clear resolution was detected."
+
+        response = (
+            "**Thread summary**\n\n"
+            f"{summary}\n\n"
+            "**Likely resolution/status**\n\n"
+            f"{resolution}\n\n"
+        )
+
+        if open_questions:
+            response += "**Open questions**\n\n"
+            for question in open_questions:
+                response += f"- {question}\n"
+        else:
+            response += "**Open questions**\n\n- No obvious open questions detected.\n"
+
+        response += (
+            "\nSuggested maintainer action: confirm whether the reporter provided enough "
+            "information to reproduce the issue. If not, ask for a minimal reproducible example."
+        )
+
+        return response
 
     def _format_rag_answer(self, result: Any) -> str:
-        """Format RAG output safely for chat."""
+        """Format RAG output as a maintainer-style grounded answer."""
         answer = self._read_value(result, "answer", None)
 
         if answer:
             return str(answer)
 
         context = self._read_value(result, "context", None)
+        grounding_chunk_ids = self._read_value(result, "grounding_chunk_ids", [])
+        rewritten_query = self._read_value(result, "rewritten_query", None)
 
-        if context:
-            return f"Retrieved grounding context:\n{context}"
+        if not context:
+            return str(result)
 
-        chunks = self._read_value(result, "chunks", None)
-
-        if chunks:
-            return f"Retrieved {len(chunks)} relevant chunks: {chunks}"
-
-        return str(result)
+        return (
+            "**Maintainer guidance**\n\n"
+            "Based on the retrieved pandas issue context, I would handle this as a "
+            "potential bug triage case first.\n\n"
+            "**Recommended next steps**\n\n"
+            "1. Ask for a minimal reproducible example.\n"
+            "2. Ask for pandas version, Python version, and the exact input or CSV sample.\n"
+            "3. Confirm the exact error message and whether the behavior changed between versions.\n"
+            "4. If the failure is reproducible, keep it as a bug and route it to the relevant "
+            "I/O or parsing area.\n"
+            "5. If it is usage-related or caused by malformed input, clarify the expected behavior "
+            "and consider documentation follow-up.\n\n"
+            f"**Rewritten/retrieval query:** `{rewritten_query or 'not provided'}`\n\n"
+            f"**Grounding chunks:** {', '.join(grounding_chunk_ids) if grounding_chunk_ids else 'not provided'}\n\n"
+            "**Retrieved context used**\n\n"
+            f"{context[:2500]}"
+        )
 
     def _read_value(self, result: Any, key: str, default: Any) -> Any:
         """Read a value from either a dict or an object."""
