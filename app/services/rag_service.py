@@ -7,9 +7,12 @@ Architecture rule:
 - API routes should call this service.
 - This service coordinates retrieval, formatting, and error handling.
 
-For now, this service uses saved local chunks and saved local embeddings.
-Later, the embedding file can be replaced by real sentence-transformer
-embeddings or pgvector without changing the API route shape.
+This version uses the best Day 3 retrieval configuration measured on the
+25-example RAG golden set:
+
+- Embedding model: BAAI/bge-small-en
+- Dense weight: 0.8
+- Sparse weight: 0.2
 """
 
 from __future__ import annotations
@@ -20,6 +23,7 @@ from typing import Any
 
 from app.domain.errors import ToolFailureError
 from rag.build_embeddings import load_embeddings
+from rag.embeddings import build_embedder
 from rag.ingest import load_chunks_jsonl
 from rag.pipeline import (
     RagPipelineResult,
@@ -29,7 +33,11 @@ from rag.pipeline import (
 )
 
 
-DEFAULT_EMBEDDINGS_PATH = Path("rag/data/embeddings_simple.jsonl")
+EMBEDDING_MODEL_NAME = "BAAI/bge-small-en"
+DEFAULT_EMBEDDINGS_PATH = Path("rag/data/embeddings_BAAI_bge-small-en.jsonl")
+
+DENSE_WEIGHT = 0.8
+SPARSE_WEIGHT = 0.2
 
 
 @dataclass(frozen=True)
@@ -54,11 +62,7 @@ class RagService:
     """Service that coordinates RAG retrieval for the chatbot."""
 
     def retrieve_context(self, request: RagAnswerRequest) -> RagAnswerResponse:
-        """Retrieve grounding chunks for a maintainer question.
-
-        This method currently returns formatted context instead of generating
-        the final answer. That keeps Day 3 focused on retrieval quality first.
-        """
+        """Retrieve grounding chunks for a maintainer question."""
 
         try:
             result = self._run_local_pipeline(request)
@@ -75,7 +79,7 @@ class RagService:
         )
 
     def _run_local_pipeline(self, request: RagAnswerRequest) -> RagPipelineResult:
-        """Run the local RAG pipeline using saved chunks and embeddings."""
+        """Run the local RAG pipeline using saved BGE embeddings."""
 
         chunks = load_chunks_jsonl()
 
@@ -86,7 +90,9 @@ class RagService:
 
         if not DEFAULT_EMBEDDINGS_PATH.exists():
             raise ToolFailureError(
-                "No RAG embeddings were found. Run python rag/build_embeddings.py first."
+                "No BGE RAG embeddings were found. "
+                "Run: python rag/build_embeddings.py "
+                "--backend sentence-transformers --model-name BAAI/bge-small-en"
             )
 
         chunk_embeddings = load_embeddings(DEFAULT_EMBEDDINGS_PATH)
@@ -102,31 +108,19 @@ class RagService:
                 "Some RAG chunks are missing embeddings. Rebuild the embedding file."
             )
 
+        query_embedding = build_embedder(EMBEDDING_MODEL_NAME).encode([request.question])[0]
+
         pipeline = build_local_rag_pipeline(
             chunks=chunks,
             chunk_embeddings=chunk_embeddings,
-            retrieval_top_k=10,
+            retrieval_top_k=20,
             rerank_top_k=5,
+            dense_weight=DENSE_WEIGHT,
+            sparse_weight=SPARSE_WEIGHT,
         )
 
         return pipeline.retrieve(
             question=request.question,
-            query_embedding=_simple_text_embedding(request.question),
+            query_embedding=query_embedding,
             metadata_filter=request.metadata_filter,
         )
-
-
-def _simple_text_embedding(text: str, dimensions: int = 32) -> list[float]:
-    """Create a deterministic query embedding for the current simple backend.
-
-    This must match the simple embedding logic used by rag/build_embeddings.py.
-    It will be replaced once the service uses a real embedding model for both
-    chunks and queries.
-    """
-
-    vector = [0.0] * dimensions
-
-    for index, character in enumerate(text.lower()):
-        vector[index % dimensions] += ord(character) / 1000.0
-
-    return vector

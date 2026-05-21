@@ -25,9 +25,9 @@ from rag.pipeline import build_local_rag_pipeline
 GOLDEN_PATH = Path("evals/golden/rag_golden.jsonl")
 REPORT_PATH = Path("evals/eval_report.json")
 
-EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME = "BAAI/bge-small-en"
 DEFAULT_EMBEDDINGS_PATH = Path(
-    "rag/data/embeddings_sentence-transformers_all-MiniLM-L6-v2.jsonl"
+    "rag/data/embeddings_BAAI_bge-small-en.jsonl"
 )
 
 
@@ -157,7 +157,7 @@ def run_local_retrieval_eval(
         raise FileNotFoundError(
             f"Embeddings file not found: {embeddings_path}. "
             "Run python rag/build_embeddings.py --backend sentence-transformers "
-            "--model-name sentence-transformers/all-MiniLM-L6-v2 first."
+            "--model-name BAAI/bge-small-en first."
         )
 
     chunk_embeddings = load_embeddings(embeddings_path)
