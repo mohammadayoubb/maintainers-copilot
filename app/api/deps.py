@@ -1,34 +1,92 @@
 """FastAPI dependency helpers.
 
-This file contains reusable dependencies for API routes.
+This module wires API routes to services.
 
-Important architecture rule:
-Routes should receive dependencies from this file instead of creating
-database sessions, clients, or services directly.
-
-For now, this file exposes the database session dependency.
-Later, it can also expose:
-- current authenticated user
-- service objects
-- admin-only access checks
-- request ID / trace ID helpers
+Architecture rule:
+- Routes call services.
+- Services call repositories/infra.
+- Routes should not create SQL queries directly.
 """
 
 from collections.abc import AsyncGenerator
 
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.session import get_db_session
+from app.db.session import async_session
+from app.repositories.audit_repo import AuditRepository
+from app.repositories.conversation_repo import ConversationRepository
+from app.repositories.memory_repo import MemoryRepository
+from app.repositories.widget_repo import WidgetRepository
+from app.services.audit_service import AuditService
+from app.services.conversation_service import ConversationService
+from app.services.memory_service import MemoryService
+from app.services.widget_service import WidgetService
 
 
-async def get_session() -> AsyncGenerator[AsyncSession, None]:
-    """Provide a database session to FastAPI routes.
+async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
+    """Provide one database session per request.
 
-    This wraps the lower-level app.db.session.get_db_session function.
-
-    Why wrap it here?
-    Because API routes should import dependencies from app/api/deps.py,
-    not directly from lower-level infrastructure or database modules.
+    The session is committed if the request succeeds.
+    The session is rolled back if an exception happens.
     """
-    async for session in get_db_session():
-        yield session
+    async with async_session() as session:
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+
+
+def get_audit_service(
+    session: AsyncSession = Depends(get_db_session),
+) -> AuditService:
+    """Create AuditService for the current request."""
+    audit_repo = AuditRepository(session)
+    return AuditService(audit_repo)
+
+
+def get_memory_service(
+    session: AsyncSession = Depends(get_db_session),
+) -> MemoryService:
+    """Create MemoryService for the current request."""
+    audit_repo = AuditRepository(session)
+    audit_service = AuditService(audit_repo)
+
+    memory_repo = MemoryRepository(session)
+
+    return MemoryService(
+        memory_repo=memory_repo,
+        audit_service=audit_service,
+    )
+
+
+def get_conversation_service(
+    session: AsyncSession = Depends(get_db_session),
+) -> ConversationService:
+    """Create ConversationService for the current request."""
+    audit_repo = AuditRepository(session)
+    audit_service = AuditService(audit_repo)
+
+    conversation_repo = ConversationRepository(session)
+
+    return ConversationService(
+        conversation_repo=conversation_repo,
+        audit_service=audit_service,
+    )
+
+
+def get_widget_service(
+    session: AsyncSession = Depends(get_db_session),
+) -> WidgetService:
+    """Create WidgetService for the current request."""
+    audit_repo = AuditRepository(session)
+    audit_service = AuditService(audit_repo)
+
+    widget_repo = WidgetRepository(session)
+
+    return WidgetService(
+        widget_repo=widget_repo,
+        audit_service=audit_service,
+    )
