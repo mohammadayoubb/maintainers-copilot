@@ -23,4 +23,4 @@ RUN pip install --upgrade pip \
 COPY . .
 
 # Run model server.
-CMD ["uvicorn", "model_server.main:app", "--host", "0.0.0.0", "--port", "8001", "--reload"]
+CMD ["uvicorn", "model_server.main_dev:app", "--host", "0.0.0.0", "--port", "8001"]
