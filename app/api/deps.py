@@ -13,7 +13,7 @@ from collections.abc import AsyncGenerator
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.session import async_session
+from app.db.session import AsyncSessionLocal
 from app.repositories.audit_repo import AuditRepository
 from app.repositories.conversation_repo import ConversationRepository
 from app.repositories.memory_repo import MemoryRepository
@@ -30,7 +30,7 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     The session is committed if the request succeeds.
     The session is rolled back if an exception happens.
     """
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         try:
             yield session
             await session.commit()

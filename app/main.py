@@ -28,6 +28,7 @@ from app.api.exception_handlers import domain_error_handler
 from app.api.routes.health import router as health_router
 from app.domain.errors import DomainError
 from app.infra.startup_checks import run_startup_checks
+from app.api.routes import day4_dev
 from app.api.routes.classification import router as classification_router
 from app.api.routes.tools import router as tools_router
 @asynccontextmanager
@@ -65,3 +66,4 @@ app.add_exception_handler(DomainError, domain_error_handler)
 app.include_router(health_router)
 app.include_router(classification_router)
 app.include_router(tools_router)
+app.include_router(day4_dev.router)

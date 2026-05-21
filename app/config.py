@@ -43,7 +43,6 @@ class Settings(BaseSettings):
     api_port: int = Field(default=8000, alias="API_PORT")
     model_server_port: int = Field(default=8001, alias="MODEL_SERVER_PORT")
     streamlit_port: int = Field(default=8501, alias="STREAMLIT_PORT")
-
     # Infrastructure ports.
     postgres_port: int = Field(default=5432, alias="POSTGRES_PORT")
     redis_port: int = Field(default=6379, alias="REDIS_PORT")
@@ -62,6 +61,7 @@ class Settings(BaseSettings):
     llm_api_key: str | None = None
     minio_secret_key: str | None = None
     database_password: str | None = None
+    database_url: str | None = None
 
 
 @lru_cache
