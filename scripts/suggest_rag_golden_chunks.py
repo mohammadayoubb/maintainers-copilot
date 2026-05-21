@@ -4,14 +4,6 @@ The RAG golden set starts with placeholder ground-truth chunk IDs.
 This script helps replace those placeholders by retrieving candidate chunks
 for each golden question.
 
-Input:
-    evals/golden/rag_golden.jsonl
-    rag/data/chunks.jsonl
-    rag/data/embeddings_simple.jsonl
-
-Output:
-    rag/data/rag_golden_suggestions.json
-
 The output is for manual review. We should not blindly trust the suggestions.
 A human should inspect the suggested chunks and choose the best ground-truth
 chunk IDs for each golden example.
@@ -23,13 +15,17 @@ import json
 from pathlib import Path
 from typing import Any
 
-from evals.eval_rag import GOLDEN_PATH, RagGoldenExample, load_rag_golden_set
+from evals.eval_rag import GOLDEN_PATH, load_rag_golden_set
 from rag.build_embeddings import load_embeddings
+from rag.embeddings import build_embedder
 from rag.ingest import DEFAULT_CHUNKS_PATH, load_chunks_jsonl
 from rag.pipeline import build_local_rag_pipeline
 
 
-DEFAULT_EMBEDDINGS_PATH = Path("rag/data/embeddings_simple.jsonl")
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+DEFAULT_EMBEDDINGS_PATH = Path(
+    "rag/data/embeddings_sentence-transformers_all-MiniLM-L6-v2.jsonl"
+)
 DEFAULT_OUTPUT_PATH = Path("rag/data/rag_golden_suggestions.json")
 
 
@@ -52,10 +48,11 @@ def suggest_chunks_for_golden_set(
     if not embeddings_path.exists():
         raise RuntimeError(
             f"No embeddings found at {embeddings_path}. "
-            "Run rag/build_embeddings.py --backend simple first."
+            "Run the MiniLM embedding builder first."
         )
 
     chunk_embeddings = load_embeddings(embeddings_path)
+    embedder = build_embedder(EMBEDDING_MODEL_NAME)
 
     pipeline = build_local_rag_pipeline(
         chunks=chunks,
@@ -67,9 +64,11 @@ def suggest_chunks_for_golden_set(
     suggestions: list[dict[str, Any]] = []
 
     for example in examples:
+        query_embedding = embedder.encode([example.question])[0]
+
         result = pipeline.retrieve(
             question=example.question,
-            query_embedding=_simple_text_embedding(example.question),
+            query_embedding=query_embedding,
         )
 
         suggestions.append(
@@ -100,17 +99,6 @@ def suggest_chunks_for_golden_set(
     )
 
     print(f"Wrote suggestions for {len(suggestions)} golden examples to {output_path}")
-
-
-def _simple_text_embedding(text: str, dimensions: int = 32) -> list[float]:
-    """Create the same deterministic query embedding as the simple backend."""
-
-    vector = [0.0] * dimensions
-
-    for index, character in enumerate(text.lower()):
-        vector[index % dimensions] += ord(character) / 1000.0
-
-    return vector
 
 
 def main() -> None:

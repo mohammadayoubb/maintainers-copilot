@@ -21,8 +21,8 @@ from rag.retrieval import RetrievedChunk, hybrid_retrieve
 class RagPipelineConfig:
     """Configuration for one RAG retrieval run."""
 
-    dense_weight: float = 0.7
-    sparse_weight: float = 0.3
+    dense_weight: float = 0.8
+    sparse_weight: float = 0.2
     retrieval_top_k: int = 20
     rerank_top_k: int = 5
 
@@ -128,8 +128,8 @@ def build_local_rag_pipeline(
     *,
     chunks: list[RagChunk],
     chunk_embeddings: dict[str, list[float]],
-    dense_weight: float = 0.7,
-    sparse_weight: float = 0.3,
+    dense_weight: float = 0.8,
+    sparse_weight: float = 0.2,
     retrieval_top_k: int = 20,
     rerank_top_k: int = 5,
     reranker: Reranker | None = None,
