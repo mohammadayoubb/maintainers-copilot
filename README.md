@@ -1,7 +1,5 @@
 # Maintainer's Copilot
 
-Maintainer's Copilot is a Week 7 AI Engineering project that builds an authenticated AI assistant for open-source maintainers.
-
 The assistant helps maintainers triage GitHub issues by combining:
 
 - issue classification
@@ -939,20 +937,3 @@ git tag v0.1.0-week7
 git push origin v0.1.0-week7
 ```
 
----
-
-## Submission Block
-
-```text
-Project 7 - Maintainer's Copilot
-Repo: [GitHub URL]
-Tag: v0.1.0-week7
-Dataset: pandas-dev/pandas issues
-Classification: Classical ML vs Fine-tuned DistilBERT vs LLM baseline
-Deployment choice: Fine-tuned DistilBERT for evaluated classification, dev model server for local Docker smoke tests
-Embedding model: BAAI/bge-small-en
-RAG: hit@5=1.0000, MRR@10≈0.7307
-Memory: Redis short-term memory with 30-minute TTL; Postgres long-term memory with audit logs
-Interfaces: Streamlit internal chatbot and embeddable widget demo host
-Security: Vault secrets, JWT auth, redaction, structured domain exception handling
-```
