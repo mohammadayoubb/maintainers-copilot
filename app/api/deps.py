@@ -23,6 +23,7 @@ from app.services.conversation_service import ConversationService
 from app.services.memory_service import MemoryService
 from app.services.widget_service import WidgetService
 from app.auth.users import current_active_user
+from app.services.chat_service import ChatService
 from app.db.models import User
 from app.domain.errors import PermissionDeniedError
 
@@ -93,6 +94,23 @@ def get_widget_service(
         audit_service=audit_service,
     )
 
+def get_chat_service(
+    session: AsyncSession = Depends(get_db_session),
+) -> ChatService:
+    """Create ChatService for the current request."""
+    audit_repo = AuditRepository(session)
+    audit_service = AuditService(audit_repo)
+
+    conversation_repo = ConversationRepository(session)
+    conversation_service = ConversationService(
+        conversation_repo=conversation_repo,
+        audit_service=audit_service,
+    )
+
+    return ChatService(
+        conversation_repo=conversation_repo,
+        conversation_service=conversation_service,
+    )
 
 async def get_current_user(
     user: User = Depends(current_active_user),
