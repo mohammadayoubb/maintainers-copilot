@@ -31,6 +31,12 @@ from app.infra.startup_checks import run_startup_checks
 from app.api.routes import day4_dev
 from app.api.routes.classification import router as classification_router
 from app.api.routes.tools import router as tools_router
+from app.api.routes import auth as auth_routes
+from app.auth.backend import auth_backend
+from app.auth.schemas import UserCreate, UserRead, UserUpdate
+from app.auth.users import fastapi_users
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Run startup and shutdown logic for the FastAPI app.
@@ -61,9 +67,32 @@ app = FastAPI(
 app.add_exception_handler(DomainError, domain_error_handler)
 
 
+app.include_router(
+    fastapi_users.get_auth_router(auth_backend),
+    prefix="/auth/jwt",
+    tags=["auth"],
+)
+
+app.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
+)
+
+app.include_router(
+    fastapi_users.get_users_router(UserRead, UserUpdate),
+    prefix="/users",
+    tags=["users"],
+)
+
+app.include_router(auth_routes.router)
+
+
 # Register the health router.
 # This makes GET /health available.
 app.include_router(health_router)
 app.include_router(classification_router)
 app.include_router(tools_router)
 app.include_router(day4_dev.router)
+
+

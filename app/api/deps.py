@@ -22,7 +22,9 @@ from app.services.audit_service import AuditService
 from app.services.conversation_service import ConversationService
 from app.services.memory_service import MemoryService
 from app.services.widget_service import WidgetService
-
+from app.auth.users import current_active_user
+from app.db.models import User
+from app.domain.errors import PermissionDeniedError
 
 async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     """Provide one database session per request.
@@ -90,3 +92,20 @@ def get_widget_service(
         widget_repo=widget_repo,
         audit_service=audit_service,
     )
+
+
+async def get_current_user(
+    user: User = Depends(current_active_user),
+) -> User:
+    """Return the current authenticated active user."""
+    return user
+
+
+async def get_current_admin_user(
+    user: User = Depends(current_active_user),
+) -> User:
+    """Return the current user only if they are an admin."""
+    if user.role != "admin":
+        raise PermissionDeniedError("Admin access is required.")
+
+    return user

@@ -139,3 +139,18 @@ def require_app_secrets(required_keys: list[str]) -> dict[str, str]:
         raise RuntimeError(f"Missing required Vault secrets: {', '.join(missing_keys)}")
 
     return secrets
+
+def load_app_secrets_into_settings() -> None:
+    """Load Vault secrets into the cached application settings object.
+
+    Startup checks already verify that the required secrets exist.
+    This function copies those values into Settings so the rest of the app,
+    such as the JWT auth backend, can use them at runtime.
+    """
+    secrets = read_app_secrets()
+    settings = get_settings()
+
+    settings.jwt_signing_key = secrets.get("jwt_signing_key")
+    settings.llm_api_key = secrets.get("llm_api_key")
+    settings.database_password = secrets.get("database_password")
+    settings.minio_secret_key = secrets.get("minio_secret_key")

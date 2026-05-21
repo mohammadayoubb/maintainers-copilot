@@ -1,0 +1,15 @@
+"""fastapi-users integration objects."""
+
+from fastapi_users import FastAPIUsers
+
+from app.auth.backend import auth_backend
+from app.auth.user_manager import get_user_manager
+from app.db.models import User
+
+
+fastapi_users = FastAPIUsers[User, int](
+    get_user_manager,
+    [auth_backend],
+)
+
+current_active_user = fastapi_users.current_user(active=True)

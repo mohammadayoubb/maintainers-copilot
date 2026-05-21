@@ -16,8 +16,11 @@ Later, this file can also check:
 - eval thresholds are not disabled or set to zero
 """
 
-from app.infra.vault import check_vault_reachable, require_app_secrets
-
+from app.infra.vault import (
+    check_vault_reachable,
+    load_app_secrets_into_settings,
+    require_app_secrets,
+)
 # These are the secrets the app expects Vault to contain.
 # They are seeded locally by scripts/seed_vault.py.
 REQUIRED_VAULT_SECRETS = [
@@ -44,3 +47,4 @@ def run_startup_checks() -> None:
         raise RuntimeError("Vault is unreachable. Refusing to boot.")
 
     require_app_secrets(REQUIRED_VAULT_SECRETS)
+    load_app_secrets_into_settings()
