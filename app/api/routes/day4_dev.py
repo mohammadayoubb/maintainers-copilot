@@ -1,7 +1,7 @@
 """Temporary Day 4 development routes.
 
 These routes are only used to test the Day 4 service/repository/database flow
-before real authentication and production routes are added.
+before final production routes are added.
 
 Architecture rule:
 Routes only handle HTTP input/output and call services.
@@ -15,9 +15,12 @@ from pydantic import BaseModel, Field
 
 from app.api.deps import (
     get_conversation_service,
+    get_current_admin_user,
+    get_current_user,
     get_memory_service,
     get_widget_service,
 )
+from app.db.models import User
 from app.services.conversation_service import ConversationService
 from app.services.memory_service import MemoryService
 from app.services.widget_service import WidgetService
@@ -26,9 +29,12 @@ router = APIRouter(prefix="/dev/day4", tags=["day4-dev"])
 
 
 class CreateConversationRequest(BaseModel):
-    """Request body for creating a test conversation."""
+    """Request body for creating a test conversation.
 
-    user_id: int
+    user_id is no longer accepted from the client.
+    The authenticated user from the JWT owns the conversation.
+    """
+
     title: str | None = None
     widget_id: str | None = None
 
@@ -42,9 +48,12 @@ class AddMessageRequest(BaseModel):
 
 
 class WriteMemoryRequest(BaseModel):
-    """Request body for writing test long-term memory."""
+    """Request body for writing test long-term memory.
 
-    user_id: int
+    user_id is no longer accepted from the client.
+    The authenticated user from the JWT owns the memory.
+    """
+
     content: str
     memory_type: str = "semantic"
     source_conversation_id: int | None = None
@@ -52,9 +61,12 @@ class WriteMemoryRequest(BaseModel):
 
 
 class CreateWidgetRequest(BaseModel):
-    """Request body for creating a test widget config."""
+    """Request body for creating a test widget config.
 
-    actor_id: int | None = None
+    actor_id is no longer accepted from the client.
+    The authenticated admin user becomes the actor.
+    """
+
     allowed_origins: list[str]
     theme: dict[str, Any] = Field(
         default_factory=lambda: {
@@ -77,10 +89,11 @@ class CreateWidgetRequest(BaseModel):
 async def create_conversation(
     request: CreateConversationRequest,
     service: ConversationService = Depends(get_conversation_service),
+    current_user: User = Depends(get_current_user),
 ) -> dict[str, Any]:
-    """Create a test conversation."""
+    """Create a test conversation for the authenticated user."""
     conversation = await service.create_conversation(
-        user_id=request.user_id,
+        user_id=current_user.id,
         title=request.title,
         widget_id=request.widget_id,
     )
@@ -99,8 +112,15 @@ async def add_message(
     conversation_id: int,
     request: AddMessageRequest,
     service: ConversationService = Depends(get_conversation_service),
+    current_user: User = Depends(get_current_user),
 ) -> dict[str, Any]:
-    """Add a redacted message to a test conversation."""
+    """Add a redacted message to a test conversation.
+
+    For now, this only confirms the user is authenticated.
+    Conversation ownership enforcement can be added later.
+    """
+    _ = current_user
+
     message = await service.add_message(
         conversation_id=conversation_id,
         role=request.role,
@@ -122,8 +142,15 @@ async def add_message(
 async def list_messages(
     conversation_id: int,
     service: ConversationService = Depends(get_conversation_service),
+    current_user: User = Depends(get_current_user),
 ) -> dict[str, Any]:
-    """List messages for a test conversation."""
+    """List messages for a test conversation.
+
+    For now, this only confirms the user is authenticated.
+    Conversation ownership enforcement can be added later.
+    """
+    _ = current_user
+
     messages = await service.list_messages(conversation_id=conversation_id)
 
     return {
@@ -145,10 +172,11 @@ async def list_messages(
 async def write_memory(
     request: WriteMemoryRequest,
     service: MemoryService = Depends(get_memory_service),
+    current_user: User = Depends(get_current_user),
 ) -> dict[str, Any]:
-    """Write explicit test memory."""
+    """Write explicit test memory for the authenticated user."""
     memory = await service.write_memory(
-        user_id=request.user_id,
+        user_id=current_user.id,
         content=request.content,
         memory_type=request.memory_type,
         source_conversation_id=request.source_conversation_id,
@@ -165,16 +193,16 @@ async def write_memory(
     }
 
 
-@router.get("/memories/{user_id}")
+@router.get("/memories")
 async def list_memories(
-    user_id: int,
     service: MemoryService = Depends(get_memory_service),
+    current_user: User = Depends(get_current_user),
 ) -> dict[str, Any]:
-    """List test memories for one user."""
-    memories = await service.list_user_memories(user_id=user_id)
+    """List test memories for the authenticated user."""
+    memories = await service.list_user_memories(user_id=current_user.id)
 
     return {
-        "user_id": user_id,
+        "user_id": current_user.id,
         "memories": [
             {
                 "id": memory.id,
@@ -192,10 +220,14 @@ async def list_memories(
 async def create_widget(
     request: CreateWidgetRequest,
     service: WidgetService = Depends(get_widget_service),
+    current_admin: User = Depends(get_current_admin_user),
 ) -> dict[str, Any]:
-    """Create a test widget config."""
+    """Create a test widget config.
+
+    Requires an authenticated admin user.
+    """
     widget = await service.create_widget_config(
-        actor_id=request.actor_id,
+        actor_id=current_admin.id,
         allowed_origins=request.allowed_origins,
         theme=request.theme,
         greeting=request.greeting,
@@ -216,8 +248,14 @@ async def create_widget(
 @router.get("/widgets")
 async def list_widgets(
     service: WidgetService = Depends(get_widget_service),
+    current_admin: User = Depends(get_current_admin_user),
 ) -> dict[str, Any]:
-    """List test widget configs."""
+    """List test widget configs.
+
+    Requires an authenticated admin user.
+    """
+    _ = current_admin
+
     widgets = await service.list_widget_configs()
 
     return {
@@ -240,8 +278,14 @@ async def list_widgets(
 async def get_widget(
     public_widget_id: str,
     service: WidgetService = Depends(get_widget_service),
+    current_admin: User = Depends(get_current_admin_user),
 ) -> dict[str, Any]:
-    """Fetch one test widget config."""
+    """Fetch one test widget config.
+
+    Requires an authenticated admin user.
+    """
+    _ = current_admin
+
     widget = await service.get_widget_config(public_widget_id=public_widget_id)
 
     return {
