@@ -29,11 +29,10 @@ async def widget_loader() -> Response:
   iframe.style.position = "fixed";
   iframe.style.right = "24px";
   iframe.style.bottom = "24px";
-  iframe.style.width = "380px";
-  iframe.style.height = "560px";
+  iframe.style.width = "74px";
+  iframe.style.height = "74px";
   iframe.style.border = "0";
-  iframe.style.borderRadius = "16px";
-  iframe.style.boxShadow = "0 10px 35px rgba(0, 0, 0, 0.22)";
+  iframe.style.borderRadius = "18px";
   iframe.style.zIndex = "999999";
   iframe.style.background = "transparent";
 
