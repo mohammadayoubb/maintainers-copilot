@@ -121,11 +121,7 @@ class ChatService:
 
                 return self._format_classification(result)
 
-            if (
-                "extract entities" in normalized
-                or "entities" in normalized
-                or "ner" in normalized
-            ):
+            if self._is_entity_request(normalized):
                 result = await self._call_maybe_async(
                     self.model_client.extract_entities,
                     text=message,
@@ -199,6 +195,16 @@ class ChatService:
             return stripped[len("remember:") :].strip()
 
         return stripped
+
+    def _is_entity_request(self, normalized: str) -> bool:
+        """Detect entity extraction requests without matching words like maintainers."""
+        return (
+            "extract entities" in normalized
+            or "extract entity" in normalized
+            or "entity extraction" in normalized
+            or normalized.startswith("ner ")
+            or normalized == "ner"
+        )
 
     def _looks_like_question(self, normalized: str) -> bool:
         """Detect questions that should go to RAG."""
