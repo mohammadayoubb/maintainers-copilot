@@ -2,14 +2,12 @@
 
 This is the internal/admin-facing UI.
 
-Current Batch 13 goal:
-- working login
-- working registration
+Features:
+- login and registration
 - authenticated chat
-- JWT stored in Streamlit session state
-- conversation_id preserved across messages
-
-Visual polish comes later.
+- conversation_id preservation
+- memory inspector
+- admin widget configuration view/create
 """
 
 from __future__ import annotations
@@ -34,7 +32,7 @@ def api_request(
     token: str | None = None,
     json_body: dict[str, Any] | None = None,
     form_body: dict[str, str] | None = None,
-) -> tuple[bool, dict[str, Any]]:
+) -> tuple[bool, Any]:
     """Send an HTTP request to the FastAPI backend.
 
     The app uses urllib instead of requests so we do not need to add another
@@ -43,7 +41,6 @@ def api_request(
     url = f"{API_BASE_URL}{path}"
 
     headers: dict[str, str] = {}
-
     data: bytes | None = None
 
     if token:
@@ -141,7 +138,6 @@ def login_user(email: str, password: str) -> None:
         return
 
     st.session_state.token = access_token
-
     load_current_user()
 
     st.success("Login successful.")
@@ -224,15 +220,21 @@ def render_auth_panel() -> None:
     tab_login, tab_register = st.tabs(["Login", "Register"])
 
     with tab_login:
-        login_email = st.text_input("Email", key="login_email")
+        login_email = st.text_input(
+            "Email",
+            value="authuser@example.com",
+            key="login_email",
+        )
         login_password = st.text_input(
             "Password",
+            value="StrongPassword123!",
             type="password",
             key="login_password",
         )
 
         if st.button("Login"):
             login_user(login_email, login_password)
+            st.rerun()
 
     with tab_register:
         register_email = st.text_input("Email", key="register_email")
@@ -270,7 +272,7 @@ def render_user_sidebar() -> None:
         st.rerun()
 
 
-def render_chat() -> None:
+def render_chat_tab() -> None:
     """Render authenticated chat UI."""
     st.subheader("Chat")
 
@@ -278,37 +280,250 @@ def render_chat() -> None:
         st.info("Login first to use the chatbot.")
         return
 
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.write(message["content"])
-
-    user_input = st.chat_input(
-        "Ask about pandas issues, classify an issue, summarize a thread, or write memory..."
-    )
-
-    if user_input:
-        with st.chat_message("user"):
-            st.write(user_input)
-
-        send_chat_message(user_input)
-
-        st.rerun()
-
-
-def render_quick_examples() -> None:
-    """Render quick example prompts for testing."""
-    st.subheader("Quick test prompts")
-
-    examples = [
-        "Classify this issue: read_csv fails with ValueError",
+    quick_prompts = [
+        "Classify this issue: read_csv fails with ValueError in parser.py",
         "Extract entities from this issue: read_csv() fails with ValueError in parser.py",
-        "Summarize this thread: User reports read_csv failing. Maintainer asks for reproduction.",
+        "Summarize this thread: read_csv fails when parsing malformed CSV files. Maintainer says it needs a reproducible example.",
         "How should pandas maintainers handle a read_csv parsing bug?",
-        "Remember that this user prefers concise maintainer answers.",
+        "What do I prefer when answering maintainer issues?",
     ]
 
-    for example in examples:
-        st.code(example)
+    selected_prompt = st.selectbox(
+        "Quick test prompts",
+        options=[""] + quick_prompts,
+    )
+
+    if selected_prompt and st.button("Send selected prompt"):
+        send_chat_message(selected_prompt)
+        st.rerun()
+
+    with st.form("chat_form", clear_on_submit=True):
+        message = st.text_area(
+            "Message",
+            placeholder="Ask the maintainer copilot something...",
+            height=120,
+        )
+
+        submitted = st.form_submit_button("Send")
+
+    if submitted and message.strip():
+        send_chat_message(message.strip())
+        st.rerun()
+
+    st.divider()
+
+    if not st.session_state.messages:
+        st.info("No messages yet.")
+        return
+
+    for item in st.session_state.messages:
+        role = item.get("role", "assistant")
+        content = item.get("content", "")
+
+        with st.chat_message(role):
+            st.markdown(content)
+
+
+def render_memory_inspector_tab() -> None:
+    """Render the current user's long-term memories."""
+    st.subheader("Memory Inspector")
+
+    if not st.session_state.token:
+        st.info("Login first to inspect memories.")
+        return
+
+    st.caption(
+        "This reads long-term memories from Postgres through the backend API."
+    )
+
+    if st.button("Refresh memories"):
+        st.session_state.memory_refresh_clicked = True
+
+    ok, response = api_request(
+        method="GET",
+        path="/dev/day4/memories",
+        token=st.session_state.token,
+    )
+
+    if not ok:
+        st.error(f"Could not load memories: {response}")
+        return
+
+    memories = response
+
+    if isinstance(response, dict):
+        memories = (
+            response.get("memories")
+            or response.get("items")
+            or response.get("data")
+            or []
+        )
+
+    if not memories:
+        st.info("No saved memories found.")
+        return
+
+    st.write(f"Found `{len(memories)}` saved memories.")
+
+    rows: list[dict[str, Any]] = []
+
+    for memory in memories:
+        rows.append(
+            {
+                "id": memory.get("id"),
+                "memory_type": memory.get("memory_type"),
+                "content": memory.get("content"),
+                "created_at": memory.get("created_at"),
+            }
+        )
+
+    st.dataframe(rows, use_container_width=True)
+
+    with st.expander("Raw memory response"):
+        st.json(response)
+
+
+def render_widget_admin_tab() -> None:
+    """Render widget configuration tools for admin users."""
+    st.subheader("Widget Admin")
+
+    if not st.session_state.token:
+        st.info("Login first to manage widgets.")
+        return
+
+    user = st.session_state.user or {}
+    role = user.get("role")
+
+    if role != "admin":
+        st.warning("Only admin users can create or inspect widget configs.")
+        return
+
+    st.caption(
+        "This admin page uses the existing widget backend endpoints to create "
+        "and list embeddable widget configurations."
+    )
+
+    with st.form("create_widget_form"):
+        public_widget_id = st.text_input(
+            "Public widget ID",
+            value="demo-widget",
+        )
+        allowed_origins_text = st.text_area(
+            "Allowed origins, one per line",
+            value="http://localhost:8080",
+        )
+        theme = st.text_input("Theme", value="light")
+        greeting = st.text_input(
+            "Greeting",
+            value="Hi, I am Maintainer's Copilot.",
+        )
+        enabled_tools_text = st.text_area(
+            "Enabled tools, one per line",
+            value="classify_issue\nextract_entities\nsummarize_thread\nrag_answer\nwrite_memory",
+        )
+
+        submitted = st.form_submit_button("Create widget config")
+
+    if submitted:
+        allowed_origins = [
+            origin.strip()
+            for origin in allowed_origins_text.splitlines()
+            if origin.strip()
+        ]
+        enabled_tools = [
+            tool.strip()
+            for tool in enabled_tools_text.splitlines()
+            if tool.strip()
+        ]
+
+        ok, response = api_request(
+            method="POST",
+            path="/dev/day4/widgets",
+            token=st.session_state.token,
+            json_body={
+                "public_widget_id": public_widget_id,
+                "allowed_origins": allowed_origins,
+                "theme": theme,
+                "greeting": greeting,
+                "enabled_tools": enabled_tools,
+            },
+        )
+
+        if ok:
+            st.success("Widget config created.")
+            st.json(response)
+        else:
+            st.error(f"Could not create widget: {response}")
+
+    st.divider()
+
+    st.write("Existing widget configs")
+
+    ok, response = api_request(
+        method="GET",
+        path="/dev/day4/widgets",
+        token=st.session_state.token,
+    )
+
+    if not ok:
+        st.error(f"Could not load widgets: {response}")
+        return
+
+    widgets = response
+
+    if isinstance(response, dict):
+        widgets = (
+            response.get("widgets")
+            or response.get("items")
+            or response.get("data")
+            or []
+        )
+
+    if not widgets:
+        st.info("No widgets found.")
+        return
+
+    rows: list[dict[str, Any]] = []
+
+    for widget in widgets:
+        widget_id = widget.get("public_widget_id") or widget.get("id")
+
+        rows.append(
+            {
+                "id": widget.get("id"),
+                "public_widget_id": widget.get("public_widget_id"),
+                "theme": widget.get("theme"),
+                "allowed_origins": widget.get("allowed_origins"),
+                "enabled_tools": widget.get("enabled_tools"),
+                "embed_snippet": (
+                    f'<script src="http://localhost:8000/widget.js" '
+                    f'data-widget-id="{widget_id}"></script>'
+                ),
+            }
+        )
+
+    st.dataframe(rows, use_container_width=True)
+
+    with st.expander("Raw widget response"):
+        st.json(response)
+
+
+def render_account_tab() -> None:
+    """Render account/session diagnostics."""
+    st.subheader("Account")
+
+    if not st.session_state.token:
+        st.info("Login first to view account details.")
+        return
+
+    if st.button("Reload current user"):
+        load_current_user()
+        st.rerun()
+
+    st.json(st.session_state.user)
+
+    st.write("Current conversation ID:")
+    st.code(str(st.session_state.conversation_id))
 
 
 def main() -> None:
@@ -322,22 +537,34 @@ def main() -> None:
     initialize_session_state()
 
     st.title("Maintainer's Copilot")
-    st.caption("Internal Streamlit UI — working version first, visual polish later.")
+    st.caption("Internal/admin chatbot UI for pandas issue triage.")
 
     render_user_sidebar()
 
     if not st.session_state.token:
         render_auth_panel()
-    else:
-        load_current_user()
+        return
 
-        left_column, right_column = st.columns([2, 1])
+    tab_chat, tab_memory, tab_widgets, tab_account = st.tabs(
+        [
+            "Chat",
+            "Memory Inspector",
+            "Widget Admin",
+            "Account",
+        ]
+    )
 
-        with left_column:
-            render_chat()
+    with tab_chat:
+        render_chat_tab()
 
-        with right_column:
-            render_quick_examples()
+    with tab_memory:
+        render_memory_inspector_tab()
+
+    with tab_widgets:
+        render_widget_admin_tab()
+
+    with tab_account:
+        render_account_tab()
 
 
 if __name__ == "__main__":
