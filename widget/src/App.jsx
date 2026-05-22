@@ -3,15 +3,60 @@ import React, { useEffect, useMemo, useState } from "react";
 const API_BASE_URL =
   window.__MAINTAINERS_COPILOT_API_URL__ || "http://localhost:8000";
 
+function getWidgetIdFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("widget_id") || "demo-widget";
+}
+
+const DEFAULT_WIDGET_CONFIG = {
+  public_widget_id: "demo-widget",
+  greeting:
+    "Hi, I am Maintainer's Copilot. I can classify issues, extract code-shaped entities, summarize threads, and answer RAG questions.",
+  theme: {
+    primaryColor: "#111827",
+    position: "bottom-right"
+  },
+  enabled_tools: [
+    "classify_issue",
+    "extract_entities",
+    "summarize_thread",
+    "rag_answer",
+    "write_memory"
+  ]
+};
+
 const QUICK_ACTIONS = [
-  "Classify this issue: read_csv fails with ValueError in parser.py",
-  "Extract entities from this issue: read_csv() fails with ValueError in parser.py",
-  "How should pandas maintainers handle a read_csv parsing bug?"
+  {
+    tool: "classify_issue",
+    label: "Classify issue",
+    message: "Classify this issue: read_csv fails with ValueError in parser.py"
+  },
+  {
+    tool: "extract_entities",
+    label: "Extract entities",
+    message: "Extract entities from this issue: read_csv() fails with ValueError in parser.py"
+  },
+  {
+    tool: "summarize_thread",
+    label: "Summarize thread",
+    message:
+      "Summarize this thread: read_csv fails when parsing malformed CSV files. Maintainer says it needs a reproducible example."
+  },
+  {
+    tool: "rag_answer",
+    label: "RAG guidance",
+    message: "How should pandas maintainers handle a read_csv parsing bug?"
+  },
+  {
+    tool: "write_memory",
+    label: "Memory test",
+    message:
+      "Remember that this maintainer prefers concise answers with reproduction steps."
+  }
 ];
 
 function formatMessage(text) {
-  // Lightweight markdown support for demo-friendly chatbot responses.
-  return text
+  return String(text || "")
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\n/g, "<br />");
@@ -24,13 +69,11 @@ export default function App() {
   const [token, setToken] = useState("");
   const [conversationId, setConversationId] = useState(null);
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content:
-        "Hi, I am Maintainer's Copilot. I can classify issues, extract code-shaped entities, summarize threads, and answer RAG questions."
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
+  const [widgetConfig, setWidgetConfig] = useState(DEFAULT_WIDGET_CONFIG);
+  const [widgetConfigStatus, setWidgetConfigStatus] = useState(
+    "Using default widget config."
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -38,17 +81,81 @@ export default function App() {
     return isOpen ? 620 : 76;
   }, [isOpen]);
 
+  const widgetWidth = useMemo(() => {
+    return isOpen ? 380 : 76;
+  }, [isOpen]);
+
+  const primaryColor = widgetConfig.theme?.primaryColor || "#111827";
+
+  const quickActions = QUICK_ACTIONS.filter((action) => {
+    return widgetConfig.enabled_tools?.includes(action.tool);
+  });
+
   useEffect(() => {
-    // The host loader listens to this event and resizes the iframe.
+    async function loadWidgetConfig() {
+      const widgetId = getWidgetIdFromUrl();
+
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/widgets/public/${encodeURIComponent(widgetId)}`
+        );
+
+        if (!response.ok) {
+          setWidgetConfigStatus(
+            `Widget config '${widgetId}' was not found. Using default config.`
+          );
+          return;
+        }
+
+        const config = await response.json();
+
+        setWidgetConfig({
+          ...DEFAULT_WIDGET_CONFIG,
+          ...config,
+          theme: {
+            ...DEFAULT_WIDGET_CONFIG.theme,
+            ...(config.theme || {})
+          },
+          enabled_tools:
+            config.enabled_tools || DEFAULT_WIDGET_CONFIG.enabled_tools
+        });
+
+        setWidgetConfigStatus(`Loaded widget config '${widgetId}'.`);
+      } catch (err) {
+        setWidgetConfigStatus(
+          "Could not load widget config from API. Using default config."
+        );
+      }
+    }
+
+    loadWidgetConfig();
+  }, []);
+
+  useEffect(() => {
+    setMessages((current) => {
+      if (current.length > 0) {
+        return current;
+      }
+
+      return [
+        {
+          role: "assistant",
+          content: widgetConfig.greeting
+        }
+      ];
+    });
+  }, [widgetConfig.greeting]);
+
+  useEffect(() => {
     window.parent.postMessage(
       {
         type: "maintainers-copilot:resize",
         height: widgetHeight,
-        width: isOpen ? 380 : 76
+        width: widgetWidth
       },
       "*"
     );
-  }, [widgetHeight, isOpen]);
+  }, [widgetHeight, widgetWidth]);
 
   async function login() {
     setError("");
@@ -74,7 +181,7 @@ export default function App() {
       const data = await response.json();
       setToken(data.access_token);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Login failed.");
     } finally {
       setIsLoading(false);
     }
@@ -135,7 +242,7 @@ export default function App() {
         }
       ]);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Chat request failed.");
       setMessages((current) => [
         ...current,
         {
@@ -151,7 +258,7 @@ export default function App() {
 
   if (!isOpen) {
     return (
-      <>
+      <div style={{ "--mc-primary": primaryColor }}>
         <style>{styles}</style>
         <button
           className="mc-bubble"
@@ -160,12 +267,12 @@ export default function App() {
         >
           MC
         </button>
-      </>
+      </div>
     );
   }
 
   return (
-    <>
+    <div style={{ "--mc-primary": primaryColor }}>
       <style>{styles}</style>
 
       <section className="mc-panel">
@@ -214,15 +321,23 @@ export default function App() {
         {token && (
           <>
             <div className="mc-status">Authenticated widget session</div>
+            <div className="mc-config-status">{widgetConfigStatus}</div>
 
             <div className="mc-quick-actions">
-              {QUICK_ACTIONS.map((action) => (
+              {quickActions.length === 0 && (
+                <div className="mc-empty-tools">
+                  No quick actions enabled for this widget.
+                </div>
+              )}
+
+              {quickActions.map((action) => (
                 <button
-                  key={action}
-                  onClick={() => sendChat(action)}
+                  key={action.message}
+                  onClick={() => sendChat(action.message)}
                   disabled={isLoading}
+                  title={action.tool}
                 >
-                  {action}
+                  {action.label}
                 </button>
               ))}
             </div>
@@ -269,7 +384,7 @@ export default function App() {
           </button>
         </footer>
       </section>
-    </>
+    </div>
   );
 }
 
@@ -293,7 +408,7 @@ const styles = `
     height: 64px;
     border: none;
     border-radius: 999px;
-    background: #111827;
+    background: var(--mc-primary, #111827);
     color: white;
     font-weight: 800;
     cursor: pointer;
@@ -318,7 +433,7 @@ const styles = `
     justify-content: space-between;
     align-items: center;
     padding: 14px 14px;
-    background: #111827;
+    background: var(--mc-primary, #111827);
     color: #ffffff;
   }
 
@@ -371,14 +486,14 @@ const styles = `
 
   .mc-login input:focus,
   .mc-input-row input:focus {
-    border-color: #111827;
+    border-color: var(--mc-primary, #111827);
   }
 
   .mc-primary,
   .mc-send {
     border: none;
     border-radius: 11px;
-    background: #111827;
+    background: var(--mc-primary, #111827);
     color: white;
     padding: 10px 12px;
     font-weight: 800;
@@ -402,6 +517,12 @@ const styles = `
     font-weight: 700;
   }
 
+  .mc-config-status {
+    margin: 6px 12px 0;
+    color: #6b7280;
+    font-size: 11px;
+  }
+
   .mc-quick-actions {
     display: grid;
     gap: 7px;
@@ -418,6 +539,11 @@ const styles = `
     cursor: pointer;
     font-size: 12px;
     text-align: left;
+  }
+
+  .mc-empty-tools {
+    color: #6b7280;
+    font-size: 12px;
   }
 
   .mc-messages {
@@ -446,7 +572,7 @@ const styles = `
 
   .mc-msg.user {
     align-self: flex-end;
-    background: #111827;
+    background: var(--mc-primary, #111827);
     color: #ffffff;
   }
 
@@ -488,4 +614,4 @@ const styles = `
     border-top: 1px solid #e5e7eb;
     background: #ffffff;
   }
-`;
+`
