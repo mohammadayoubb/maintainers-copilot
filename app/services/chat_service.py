@@ -131,6 +131,14 @@ class ChatService:
 
                 return self._format_memory_write(memory_text)
 
+            if self._is_memory_lookup(normalized):
+                memories = await self.memory_service.list_user_memories(
+                    user_id=user_id,
+                    limit=5,
+                )
+
+                return self._format_memory_recall(memories)
+
             if "classify" in normalized or "label this" in normalized:
                 result = await self._call_maybe_async(
                     self.model_client.classify_issue,
@@ -202,6 +210,23 @@ class ChatService:
         """Detect explicit memory-write requests only."""
         return normalized.startswith("remember that") or normalized.startswith("remember:")
 
+    def _is_memory_lookup(self, normalized: str) -> bool:
+        """Detect requests that ask what the assistant remembers about the user."""
+        memory_lookup_phrases = (
+            "what do i prefer",
+            "what are my preferences",
+            "what is my preference",
+            "what did i ask you to remember",
+            "what do you remember",
+            "do you remember",
+            "my preference",
+            "my preferences",
+            "what do you know about me",
+            "what have you saved",
+            "what memory do you have",
+        )
+
+        return any(phrase in normalized for phrase in memory_lookup_phrases)
     def _extract_memory_text(self, message: str) -> str:
         """Remove the memory command prefix and keep the actual memory content."""
         stripped = message.strip()
@@ -254,6 +279,34 @@ class ChatService:
             f"Memory saved:\n`{redact_text(memory_text)}`\n\n"
             "This was an explicit memory write, so it was also recorded in the audit log."
         )
+    def _format_memory_recall(self, memories: list[Any]) -> str:
+        """Format saved long-term memories for the current user."""
+        if not memories:
+            return (
+                "I do not have any saved long-term memories for you yet.\n\n"
+                "You can save one explicitly by saying something like:\n"
+                "`Remember that this maintainer prefers concise answers.`"
+            )
+
+        lines = [
+            "Here is what I remember for your maintainer workflow:",
+            "",
+        ]
+
+        for index, memory in enumerate(memories, start=1):
+            memory_type = getattr(memory, "memory_type", "semantic")
+            content = redact_text(getattr(memory, "content", ""))
+
+            lines.append(f"{index}. `{memory_type}` memory: {content}")
+
+        lines.extend(
+            [
+                "",
+                "I will use these saved preferences when helping with future maintainer issues.",
+            ]
+        )
+
+        return "\n".join(lines)
 
     def _format_classification(self, result: Any) -> str:
         """Format classifier output as a maintainer-friendly triage answer."""
