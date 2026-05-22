@@ -1,7 +1,13 @@
 """Widget loader route.
 
-This route serves the script that a host page embeds with one script tag.
-The script injects an iframe that points to the standalone React widget.
+This route serves the JavaScript file that a host website embeds.
+
+The host only needs one script tag:
+
+<script src="http://localhost:8000/widget.js" data-widget-id="demo-widget"></script>
+
+The loader injects an iframe pointing to the standalone React/Vite widget.
+The widget then uses postMessage to ask the host iframe to resize.
 """
 
 from fastapi import APIRouter, Response
@@ -55,6 +61,6 @@ def widget_loader() -> Response:
         content=script,
         media_type="application/javascript",
         headers={
-            "Cache-Control": "no-store"
+            "Cache-Control": "no-store",
         },
     )
