@@ -21,7 +21,7 @@ dependencies = [
     "fastapi-users[sqlalchemy]>=14.0.0",
     "pwdlib[argon2]>=0.2.0",
     "redis>=5.0.0",
-    
+    "sentence-transformers",
 ]
 
 [project.optional-dependencies]

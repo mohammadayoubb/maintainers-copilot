@@ -19,11 +19,17 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Cache Hugging Face models
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-${{ runner.os }}-bge-small-en
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e .
-          pip install pytest ruff mypy
+          pip install pytest ruff
 
       - name: Run lint
         run: |
@@ -39,7 +45,7 @@ jobs:
 
       - name: Run RAG eval
         run: |
-          python evals/eval_rag.py
+          PYTHONPATH=. python evals/eval_rag.py
 
       - name: Upload eval artifacts
         uses: actions/upload-artifact@v4
