@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test-and-eval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install pytest ruff mypy
+
+      - name: Run lint
+        run: |
+          ruff check app model_server rag evals tests
+
+      - name: Run tests
+        run: |
+          pytest tests/test_redaction.py tests/test_exception_handlers.py -q
+
+      - name: Run classification eval
+        run: |
+          python evals/eval_classification.py
+
+      - name: Run RAG eval
+        run: |
+          python evals/eval_rag.py
+
+      - name: Upload eval artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-artifacts
+          path: |
+            evals/*.json
+            evals/**/*.json
+            evals/**/*.jsonl
